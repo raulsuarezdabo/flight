@@ -21,12 +21,12 @@
                             <h2><span class="glyphicon glyphicon-user">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock1}"/></span></h2>
                             <h:panelGrid columns="1">
                                 <h:outputLabel for="userName" value="#{msg.name}"/>
-                                <p:inputText id="userName" label="userName" required="true" placeholder="#{msg.namePlaceholder}" requiredMessage="#{msg.nameRequired}" validatorMessage="#{msg.nameInvalid}" size="40">
-                                    <f:validateLength minimum="5" maximum="40"/>
+                                <p:inputText id="userName" label="userName" required="true" placeholder="#{msg.namePlaceholder}" requiredMessage="#{msg.nameRequired}" validatorMessage="#{msg.nameInvalid}" size="35">
+                                    <f:validateLength minimum="5" maximum="35"/>
                                 </p:inputText>
                                 <h:message for="userName" style="color: crimson"/>
                                 <h:outputLabel for="userSurName" value="#{msg.surname}"/>
-                                <p:inputText id="userSurName" label="userSurName" required="true" placeholder="#{msg.surnamePlaceholder}" requiredMessage="#{msg.surnameRequired}" validatorMessage="#{msg.surnameInvalid}" size="40">
+                                <p:inputText id="userSurName" label="userSurName" required="true" placeholder="#{msg.surnamePlaceholder}" requiredMessage="#{msg.surnameRequired}" validatorMessage="#{msg.surnameInvalid}" size="35">
                                     <f:validateLength minimum="5" maximum="80"/>
                                 </p:inputText>
                                 <h:message for="userSurName" style="color: crimson"/>
@@ -41,14 +41,14 @@
                                 </p:inputText>
                                 <h:message for="userNif" style="color: crimson"/>
                             </h:panelGrid>
-                            <p:spacer height="40" />
+                            <p:spacer height="35" />
                             <h2><span class="glyphicon glyphicon-home">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock2}"/></span></h2>
                             <h:panelGrid columns="1">
                                 <h:outputLabel for="userPhone" value="#{msg.phone}" />
                                 <p:inputMask id="userPhone" mask="99 9999999" required="true" requiredMessage="#{msg.phoneRequired}" size="10" placeholder="#{msg.phonePlaceholder}"/>
                                 <h:message for="userPhone" style="color: crimson"/>
                                 <h:outputLabel for="userAddress" value="#{msg.address}"/>
-                                <p:inputText id="userAddress" label="userAddress" required="true" placeholder="#{msg.addressPlaceholder}" requiredMessage="#{msg.addressRequired}" validatorMessage="#{msg.addressInvalid}" size="40">
+                                <p:inputText id="userAddress" label="userAddress" required="true" placeholder="#{msg.addressPlaceholder}" requiredMessage="#{msg.addressRequired}" validatorMessage="#{msg.addressInvalid}" size="35">
                                     <f:validateLength minimum="20" maximum="200"/>
                                 </p:inputText>
                                 <h:message for="userAddress" style="color: crimson"/>
@@ -56,17 +56,17 @@
                             <h2><span class="glyphicon glyphicon-registration-mark">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock3}"/></span></h2>
                             <h:panelGrid columns="1">
                                 <h:outputLabel for="userEmail" value="#{msg.email}"/>
-                                <p:inputText id="userEmail" label="userEmail" required="true" placeholder="#{msg.emailPlaceholder}" requiredMessage="#{msg.emailRequired}" validatorMessage="#{msg.emailInvalid}" size="40">
+                                <p:inputText id="userEmail" label="userEmail" required="true" placeholder="#{msg.emailPlaceholder}" requiredMessage="#{msg.emailRequired}" validatorMessage="#{msg.emailInvalid}" size="35">
                                     <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
                                 </p:inputText>
                                 <h:message for="userEmail" style="color: crimson"/>
                                 <h:outputLabel for="userPassword1" value="#{msg.password}"/>
-                                <p:password id="userPassword1" match="userPassword2" label="userPassword1" required="true" placeholder="#{msg.passwordPlaceholder}" requiredMessage="#{msg.passwordRequired}" validatorMessage="#{msg.passwordInvalid}" size="40"/>
+                                <p:password id="userPassword1" match="userPassword2" label="userPassword1" required="true" placeholder="#{msg.passwordPlaceholder}" requiredMessage="#{msg.passwordRequired}" validatorMessage="#{msg.passwordInvalid}" size="35"/>
                                 <h:outputLabel for="userPassword2" value="#{msg.repassword}" />
-                                <p:password id="userPassword2" label="userPassword2" required="true" placeholder="#{msg.passwordPlaceholder}" requiredMessage="#{msg.passwordRequired}" validatorMessage="#{msg.passwordInvalid}" size="40"/>
+                                <p:password id="userPassword2" label="userPassword2" required="true" placeholder="#{msg.passwordPlaceholder}" requiredMessage="#{msg.passwordRequired}" validatorMessage="#{msg.passwordInvalid}" size="35"/>
                                 <h:message for="userPassword1" style="color: crimson"/>
                             </h:panelGrid>
-                            <p:spacer height="40" />
+                            <p:spacer height="35" />
                             <h:panelGrid columns="2">
                                 <p:commandButton value="Registrarse" update="userForm" action="new_user.xhtml"/>
                                 <p:button outcome="index.xhtml" value="Cancelar"/>
