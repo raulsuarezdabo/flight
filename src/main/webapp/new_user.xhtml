@@ -15,54 +15,64 @@
             </ui:define>
             <ui:define name="content">
                 <div class="container">
-                    <h1><h:outputText value="#{msg.titleUserRegister}"/></h1>
-                    <h:form id="userForm">
-                        <h2><h:outputText value="#{msg.titleUserRegisterBlock1}"/></h2>
-                        <p:panelGrid columns="1">
-                            <h:outputLabel for="userName" value="#{msg.name}"/>
-                            <p:inputText id="userName" label="userName" required="true" placeholder="#{msg.namePlaceholder}" requiredMessage="#{msg.nameRequired}" validatorMessage="#{msg.nameInvalid}">
-                                <f:validateLength minimum="5" maximum="40"/>
-                            </p:inputText>
-                            <p:message for="userName" display="text" style="inline-box-align: "/>
-                            <h:outputLabel for="userSurName" value="#{msg.surname}"/>
-                            <p:inputText id="userSurName" label="userSurName" required="true" placeholder="#{msg.surnamePlaceholder}" requiredMessage="#{msg.surnameRequired}" validatorMessage="#{msg.surnameInvalid}">
-                                <f:validateLength minimum="5" maximum="80"/>
-                            </p:inputText>
-                            <p:message for="userSurName" display="text"/>
-                            <h:outputLabel for="userBithDay" value="#{msg.birthday}"/>
-                            <p:inputMask id="userBirthDay" label="userBirthDay" mask="99/99/9999" required="true" placeholder="#{msg.birthdayPlaceholder}" requiredMessage="#{msg.birthdayRequired}" validatorMessage="#{msg.birthdayInvalid}" converterMessage="#{msg.birthdayInvalid}">
-                                <f:convertDateTime pattern="dd/MM/yyyy"  /> 
-                            </p:inputMask>
-                            <p:message for="userBirthDay" display="text"/>
-                            <h:outputLabel for="userNif" value="#{msg.nif}"/>
-                            <p:inputText id="userNif" label="userNif" required="true" placeholder="#{msg.nifPlaceholder}" requiredMessage="#{msg.nifRequired}" validatorMessage="#{msg.nifInvalid}">
-                                <f:validateRegex pattern="^(\d{8})([A-Z]{1})$"/>
-                            </p:inputText>
-                            <p:message for="userNif" display="text"/>
-                        </p:panelGrid>
-                        <p:spacer height="40" />
-                        <h2><h:outputText value="#{msg.titleUserRegisterBlock2}"/></h2>
-                        <p:panelGrid columns="1">
-                            <h:outputLabel for="userPhone" value="#{msg.phone}" />
-                            <p:inputMask id="userPhone" mask="99 9999999" required="true" requiredMessage="#{msg.phoneRequired}"/>
-                            <p:message for="userPhone" display="text"/>
-                        </p:panelGrid>
-                        <h2><h:outputText value="#{msg.titleUserRegisterBlock3}"/></h2>
-                        <p:panelGrid columns="1">
-                            <h:outputLabel for="userEmail" value="#{msg.email}"/>
-                            <p:inputText id="userEmail" label="userEmail" required="true" placeholder="#{msg.emailPlaceholder}" requiredMessage="#{msg.emailRequired}" validatorMessage="#{msg.emailInvalid}">
-                                <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                            </p:inputText>
-                            <p:message for="userEmail" display="text"/>
-                            
-                            <h:outputLabel for="userPassword1" value="#{msg.password}"/>
-                            <p:password id="userPassword1" match="userPassword2" label="userPassword1" required="true" placeholder="#{msg.passwordPlaceholder}" requiredMessage="#{msg.passwordRequired}" validatorMessage="#{msg.passwordInvalid}"/>
-                            <h:outputLabel for="userPassword2" value="#{msg.repassword}" />
-                            <p:password id="userPassword2" label="userPassword2" required="true" />
-                            <p:message for="userPassword1" display="text"/>
-                        </p:panelGrid>
-                        <p:commandButton value="Registrarse" update="userForm" action="new_user.xhtml"/>
-                    </h:form>
+                    <div class="row">
+                        <h1><h:outputText value="#{msg.titleUserRegister}"/></h1>
+                        <h:form id="userForm">
+                            <h2><span class="glyphicon glyphicon-user">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock1}"/></span></h2>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="userName" value="#{msg.name}"/>
+                                <p:inputText id="userName" label="userName" required="true" placeholder="#{msg.namePlaceholder}" requiredMessage="#{msg.nameRequired}" validatorMessage="#{msg.nameInvalid}" size="40">
+                                    <f:validateLength minimum="5" maximum="40"/>
+                                </p:inputText>
+                                <h:message for="userName" style="color: crimson"/>
+                                <h:outputLabel for="userSurName" value="#{msg.surname}"/>
+                                <p:inputText id="userSurName" label="userSurName" required="true" placeholder="#{msg.surnamePlaceholder}" requiredMessage="#{msg.surnameRequired}" validatorMessage="#{msg.surnameInvalid}" size="40">
+                                    <f:validateLength minimum="5" maximum="80"/>
+                                </p:inputText>
+                                <h:message for="userSurName" style="color: crimson"/>
+                                <h:outputLabel for="userBithDay" value="#{msg.birthday}"/>
+                                <p:inputMask id="userBirthDay" label="userBirthDay" mask="99/99/9999" required="true" placeholder="#{msg.birthdayPlaceholder}" requiredMessage="#{msg.birthdayRequired}" validatorMessage="#{msg.birthdayInvalid}" converterMessage="#{msg.birthdayInvalid}" size="10">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"  /> 
+                                </p:inputMask>
+                                <h:message for="userBirthDay" style="color: crimson"/>
+                                <h:outputLabel for="userNif" value="#{msg.nif}"/>
+                                <p:inputText id="userNif" label="userNif" required="true" placeholder="#{msg.nifPlaceholder}" requiredMessage="#{msg.nifRequired}" validatorMessage="#{msg.nifInvalid}" size="10">
+                                    <f:validateRegex pattern="^(\d{8})([A-Z]{1})$"/>
+                                </p:inputText>
+                                <h:message for="userNif" style="color: crimson"/>
+                            </h:panelGrid>
+                            <p:spacer height="40" />
+                            <h2><span class="glyphicon glyphicon-home">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock2}"/></span></h2>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="userPhone" value="#{msg.phone}" />
+                                <p:inputMask id="userPhone" mask="99 9999999" required="true" requiredMessage="#{msg.phoneRequired}" size="10" placeholder="#{msg.phonePlaceholder}"/>
+                                <h:message for="userPhone" style="color: crimson"/>
+                                <h:outputLabel for="userAddress" value="#{msg.address}"/>
+                                <p:inputText id="userAddress" label="userAddress" required="true" placeholder="#{msg.addressPlaceholder}" requiredMessage="#{msg.addressRequired}" validatorMessage="#{msg.addressInvalid}" size="40">
+                                    <f:validateLength minimum="20" maximum="200"/>
+                                </p:inputText>
+                                <h:message for="userAddress" style="color: crimson"/>
+                            </h:panelGrid>
+                            <h2><span class="glyphicon glyphicon-registration-mark">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock3}"/></span></h2>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="userEmail" value="#{msg.email}"/>
+                                <p:inputText id="userEmail" label="userEmail" required="true" placeholder="#{msg.emailPlaceholder}" requiredMessage="#{msg.emailRequired}" validatorMessage="#{msg.emailInvalid}" size="40">
+                                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                </p:inputText>
+                                <h:message for="userEmail" style="color: crimson"/>
+                                <h:outputLabel for="userPassword1" value="#{msg.password}"/>
+                                <p:password id="userPassword1" match="userPassword2" label="userPassword1" required="true" placeholder="#{msg.passwordPlaceholder}" requiredMessage="#{msg.passwordRequired}" validatorMessage="#{msg.passwordInvalid}" size="40"/>
+                                <h:outputLabel for="userPassword2" value="#{msg.repassword}" />
+                                <p:password id="userPassword2" label="userPassword2" required="true" placeholder="#{msg.passwordPlaceholder}" requiredMessage="#{msg.passwordRequired}" validatorMessage="#{msg.passwordInvalid}" size="40"/>
+                                <h:message for="userPassword1" style="color: crimson"/>
+                            </h:panelGrid>
+                            <p:spacer height="40" />
+                            <h:panelGrid columns="2">
+                                <p:commandButton value="Registrarse" update="userForm" action="new_user.xhtml"/>
+                                <p:button outcome="index.xhtml" value="Cancelar"/>
+                            </h:panelGrid>
+                        </h:form>
+                    </div>
                 </div>
             </ui:define>
         </ui:composition>
