@@ -6,6 +6,7 @@
     <application>
         <locale-config>
             <default-locale>es</default-locale>
+            <supported-locale>en</supported-locale>
         </locale-config>
         <resource-bundle>
             <base-name>com.mycompany.flight.messages</base-name>
@@ -19,4 +20,19 @@
             <to-view-id>index.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <!--<managed-bean>
+        <managed-bean-name></managed-bean-name>
+        <managed-bean-class></managed-bean-class>
+        <managed-bean-scope></managed-bean-scope>
+    </managed-bean>-->
+    <managed-bean>
+        <managed-bean-name>localeBean</managed-bean-name>
+        <managed-bean-class>com.mycompany.flight.language.LocaleBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>newUserBean</managed-bean-name>
+        <managed-bean-class>com.mycompany.flight.register.UserBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>
