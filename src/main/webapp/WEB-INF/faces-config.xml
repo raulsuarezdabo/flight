@@ -39,7 +39,7 @@
     </managed-bean>
     <managed-bean>
         <managed-bean-name>newUserBean</managed-bean-name>
-        <managed-bean-class>com.mycompany.flight.register.UserBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-    </managed-bean>
+        <managed-bean-class>com.mycompany.flight.register.NewUserBean</managed-bean-class>
+    
+        <managed-bean-scope>request</managed-bean-scope></managed-bean>
 </faces-config>

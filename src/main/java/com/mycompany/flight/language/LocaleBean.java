@@ -15,6 +15,9 @@ import javax.inject.Named;
 @SessionScoped
 public class LocaleBean implements Serializable {
 
+    /**
+     * Avaliable locations
+     */
     private HashMap<String, Locale> locales = null;
 
     /**

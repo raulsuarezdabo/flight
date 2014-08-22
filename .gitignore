@@ -20,4 +20,4 @@ nbproject/private/
 *.swp
 *.DS_Store
 *.lock
-/target/
+target/*
