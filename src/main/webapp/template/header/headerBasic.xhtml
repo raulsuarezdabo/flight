@@ -15,7 +15,7 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
+                        <li><h:link value="#{msg.home}" outcome="index"/></li>
                         <li><a href="#about">About</a></li>
                         <li><a href="#contact">Contact</a></li>
                         <li class="dropdown">
@@ -33,18 +33,16 @@
                     </ul>
                     <h:form>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><p:link href="new_user.xhtml" value="#{msg.registerUser}"/></li>
+                            <li><p:link outcome="new_user" value="#{msg.registerUser}"/></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><h:outputText value="#{msg.language}"/><span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
                                     <li class="dropdown-header"><h:outputText value="#{msg.avaliableLanguages}"/></li>
-                                    <li><h:commandLink value="#{msg.spanish}" action="#{localeBean.chooseLocaleFromLink(param1)}">
-                                            <f:param name="param1" value="es"/>
-                                        </h:commandLink>
+                                    <li>
+                                        <h:commandLink value="#{msg.spanish}" action="#{localeBean.chooseLocaleFromLink('ES')}"></h:commandLink>
                                     </li>
-                                    <li><h:commandLink value="#{msg.english}" action="#{localeBean.chooseLocaleFromLink(param1)}">
-                                            <f:param name="param1" value="en"/>
-                                        </h:commandLink>
+                                    <li>
+                                        <h:commandLink value="#{msg.english}" action="#{localeBean.chooseLocaleFromLink('EN')}"></h:commandLink>
                                     </li>
                                 </ul>
                             </li>
