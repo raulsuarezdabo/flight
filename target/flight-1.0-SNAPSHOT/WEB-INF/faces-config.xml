@@ -16,17 +16,27 @@
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
+            <description>Navigation case that show the home page</description>
             <from-outcome>index</from-outcome>
-            <to-view-id>index.xhtml</to-view-id>
+            <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>*</from-view-id>
         <navigation-case>
+            <description>Navigation case that show the form to sing up a new user</description>
             <from-outcome>new_user</from-outcome>
-            <to-view-id>new_user.xhtml</to-view-id>
+            <to-view-id>/register/new_user.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <!--<navigation-rule>
+        <from-view-id>register/new_user.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>failure</from-outcome>
+            <to-view-id>register/fails_new_user.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>register/success_new_user.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>-->
     <!--<managed-bean>
         <managed-bean-name></managed-bean-name>
         <managed-bean-class></managed-bean-class>
@@ -35,11 +45,11 @@
     <managed-bean>
         <managed-bean-name>localeBean</managed-bean-name>
         <managed-bean-class>com.mycompany.flight.language.LocaleBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
+        <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     <managed-bean>
         <managed-bean-name>newUserBean</managed-bean-name>
         <managed-bean-class>com.mycompany.flight.register.NewUserBean</managed-bean-class>
-    
-        <managed-bean-scope>request</managed-bean-scope></managed-bean>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
 </faces-config>

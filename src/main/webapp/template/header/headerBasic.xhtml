@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
     </h:head>
     <h:body>
@@ -15,10 +16,10 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><h:link value="#{msg.home}" outcome="index"/></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li class="dropdown">
+                        <li>
+                            <h:link value="#{msg.registerUser}" outcome="new_user" />
+                        </li>
+                        <!--<li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="#">Action</a></li>
@@ -29,11 +30,10 @@
                                 <li><a href="#">Separated link</a></li>
                                 <li><a href="#">One more separated link</a></li>
                             </ul>
-                        </li>
+                        </li>-->
                     </ul>
                     <h:form>
                         <ul class="nav navbar-nav navbar-right">
-                            <li><p:link outcome="new_user" value="#{msg.registerUser}"/></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><h:outputText value="#{msg.language}"/><span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">

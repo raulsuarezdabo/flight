@@ -11,19 +11,20 @@ import javax.inject.Named;
  *
  * @author raulsuarez
  */
-@Named(value = "localeBean")
-@SessionScoped
 public class LocaleBean implements Serializable {
 
     /**
      * Avaliable locations
      */
     private HashMap<String, Locale> locales = null;
+    private Locale current;
 
     /**
      * Default constructor
      */
     public LocaleBean() {
+        this.current = null;
+        current = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         locales = new HashMap<>(2);
         locales.put("EN", new Locale("en", "EN"));
         locales.put("ES", new Locale("es", "ES"));
@@ -36,5 +37,25 @@ public class LocaleBean implements Serializable {
     public void chooseLocaleFromLink(String local) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.getViewRoot().setLocale((Locale) locales.get(local));
+        this.current = context.getViewRoot().getLocale();
     }
+
+    /**
+     * Getter of the current language selected
+     * @return 
+     */
+    public Locale getCurrent() {
+        return current;
+    }
+
+    /**
+     * Setter of the current language selected
+     * @param current 
+     */
+    public void setCurrent(Locale current) {
+        this.current = current;
+    }
+    
+    
+    
 }
