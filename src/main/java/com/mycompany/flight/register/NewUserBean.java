@@ -183,8 +183,8 @@ public class NewUserBean {
      * Method that creates the new user
      * @return 
      */
-    public String singUpAction() {
-        return "success";
+    public Boolean singUpAction() {
+        return false;
     }
     
 }
