@@ -3,9 +3,7 @@ package com.mycompany.flight.language;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Locale;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 
 /**
  *
@@ -26,8 +24,8 @@ public class LocaleBean implements Serializable {
         this.current = null;
         current = FacesContext.getCurrentInstance().getViewRoot().getLocale();
         locales = new HashMap<>(2);
-        locales.put("EN", new Locale("en", "EN"));
-        locales.put("ES", new Locale("es", "ES"));
+        locales.put("EN", new Locale("EN", "EN"));
+        locales.put("ES", new Locale("ES", "ES"));
     }
 
     /**
