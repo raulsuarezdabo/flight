@@ -51,5 +51,9 @@
         <managed-bean-name>newUserBean</managed-bean-name>
         <managed-bean-class>com.mycompany.flight.register.NewUserBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
+        <!--<managed-property>
+            <property-name>userService</property-name>
+            <property-class>com.mycompany.flight.service.UserService</property-class>
+        </managed-property>-->
     </managed-bean>
 </faces-config>

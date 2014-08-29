@@ -72,82 +72,162 @@ public class UserEntity {
         this.password = password;
     }
 
+    /**
+     * Getter id property
+     * @return
+     */
     public Integer getId() {
         return id;
     }
 
+    /**
+     * Setter id property
+     * @param id 
+     */
     public void setId(Integer id) {
         this.id = id;
     }
 
+    /**
+     * Getter name property
+     * @return 
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Setter name property
+     * @param name 
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Getter surname property
+     * @return 
+     */
     public String getSurname() {
         return surname;
     }
 
+    /**
+     * Setter surname property
+     * @param surname 
+     */
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
+    /**
+     * Getter email property
+     * @return 
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Setter email property
+     * @param email 
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Getter phone property
+     * @return 
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     * Setter phone property
+     * @param phone 
+     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    /**
+     * Getter birthday property
+     * @return 
+     */
     public Date getBirthDay() {
         return birthDay;
     }
 
+    /**
+     * Setter birthday property
+     * @param birthDay 
+     */
     public void setBirthDay(Date birthDay) {
         this.birthDay = birthDay;
     }
 
+    /**
+     * Getter address property
+     * @return 
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * Setter address property
+     * @param address 
+     */
     public void setAddress(String address) {
         this.address = address;
     }
 
+    /**
+     * Getter nif property
+     * @return 
+     */
     public String getNif() {
         return nif;
     }
 
+    /**
+     * Setter nif property
+     * @param nif 
+     */
     public void setNif(String nif) {
         this.nif = nif;
     }
 
+    /**
+     * Getter password property
+     * @return 
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * Setter password property
+     * @param password 
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     * Getter role property
+     * @return 
+     */
     public RoleEntity getRole() {
         return role;
     }
 
+    /**
+     * Setter role property
+     * @param role 
+     */
     public void setRole(RoleEntity role) {
         this.role = role;
     }

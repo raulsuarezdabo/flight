@@ -1,5 +1,6 @@
 package com.mycompany.flight.register;
 
+import com.mycompany.flight.service.UserService;
 import java.util.Date;
 
 /**
@@ -44,7 +45,7 @@ public class NewUserBean {
      * password of the user
      */
     private String password;
-
+    
     /**
      * Getter of name
      *
