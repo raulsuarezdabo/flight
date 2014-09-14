@@ -47,6 +47,11 @@ public class NewUserBean {
     private String password;
     
     /**
+     * User service to use on the view
+     */
+    private UserService userService;
+    
+    /**
      * Getter of name
      *
      * @return name of the user
@@ -179,13 +184,26 @@ public class NewUserBean {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public UserService getUserService() {
+        return userService;
+    }
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
     
     /**
      * Method that creates the new user
      * @return 
      */
     public Boolean singUpAction() {
-        return false;
+        try {
+            return true;
+        }
+        catch(Exception e) {
+            return false;
+        }
     }
     
 }

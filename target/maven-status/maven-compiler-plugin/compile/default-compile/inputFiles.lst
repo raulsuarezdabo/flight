@@ -1,8 +1,8 @@
-/home/raulsuarez/NetBeansProjects/flight/src/main/java/com/mycompany/flight/entity/RoleEntity.java
-/home/raulsuarez/NetBeansProjects/flight/src/main/java/com/mycompany/flight/entity/UserEntity.java
-/home/raulsuarez/NetBeansProjects/flight/src/main/java/com/mycompany/flight/service/UserService.java
-/home/raulsuarez/NetBeansProjects/flight/src/main/java/com/mycompany/flight/dao/UserDAO.java
-/home/raulsuarez/NetBeansProjects/flight/src/main/java/com/mycompany/flight/register/NewUserBean.java
-/home/raulsuarez/NetBeansProjects/flight/src/main/java/com/mycompany/flight/dao/UserDAOImpl.java
-/home/raulsuarez/NetBeansProjects/flight/src/main/java/com/mycompany/flight/service/UserServiceImpl.java
-/home/raulsuarez/NetBeansProjects/flight/src/main/java/com/mycompany/flight/language/LocaleBean.java
+/Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/service/UserService.java
+/Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/register/NewUserBean.java
+/Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/dao/UserDAOImpl.java
+/Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/entity/RoleEntity.java
+/Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/service/UserServiceImpl.java
+/Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/entity/UserEntity.java
+/Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/language/LocaleBean.java
+/Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/dao/UserDAO.java

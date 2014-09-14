@@ -4,6 +4,7 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     <application>
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
         <locale-config>
             <default-locale>ES</default-locale>
             <supported-locale>EN</supported-locale>
@@ -51,9 +52,10 @@
         <managed-bean-name>newUserBean</managed-bean-name>
         <managed-bean-class>com.mycompany.flight.register.NewUserBean</managed-bean-class>
         <managed-bean-scope>request</managed-bean-scope>
-        <!--<managed-property>
+        <managed-property>
             <property-name>userService</property-name>
             <property-class>com.mycompany.flight.service.UserService</property-class>
-        </managed-property>-->
+            <value>#{userService}</value>
+        </managed-property>
     </managed-bean>
 </faces-config>

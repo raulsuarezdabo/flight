@@ -5,13 +5,11 @@ import com.mycompany.flight.entity.UserEntity;
 import java.util.HashMap;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 /**
  *
  * @author raulsuarez
  */
-@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -46,13 +44,14 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserEntity newUser(boolean persist) {
         try {
-            user = new UserEntity();
-            user.setName("ejemplo");
-            user.setEmail("email@ejemplo");
-            user.setNif("12345678D");
-            user.setPhone("659327919");
-            this.userDAO.addUser(user);
-            return user;
+//            user = new UserEntity();
+//            user.setName("ejemplo");
+//            user.setEmail("email@ejemplo");
+//            user.setNif("12345678D");
+//            user.setPhone("659327919");
+//            this.userDAO.addUser(user);
+//            return user;
+            return new UserEntity();
         } catch (Exception e) {
             return null;
         }
