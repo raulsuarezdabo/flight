@@ -21,3 +21,9 @@ nbproject/private/
 *.DS_Store
 *.lock
 target/*
+
+*.NavData
+
+*.war
+
+target/maven-archiver/pom.properties

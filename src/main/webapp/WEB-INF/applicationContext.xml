@@ -7,4 +7,28 @@
           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
 ">
     <bean id="userService" class="com.mycompany.flight.service.UserServiceImpl" ></bean>
+    
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close" >
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc::mysql://localhost:3306/flight" />
+        <property name="username" value="flight" />
+        <property name="password" value="flight" />
+    </bean>
+    <!-- HIBERNATE SESSION FACTORY BEAN DEFINITION -->
+    <bean id="mySessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" >
+        <property name="dataSource" ref="dataSource" />
+        <property name="annotatedClasses">
+            <list>
+                <value>com.mycompany.flight.entity.UserEntity</value>
+                <value>com.mycompany.flight.entity.RoleEntity</value>
+            </list>
+        </property>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.current_session_context_class">thread</prop>
+                <prop key="hibernate.show_sql">false</prop>
+            </props>
+        </property>
+    </bean>
 </beans>
