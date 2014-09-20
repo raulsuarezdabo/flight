@@ -27,3 +27,7 @@ target/*
 *.war
 
 target/maven-archiver/pom.properties
+
+nb-configuration.xml
+
+target/flight-1.0-SNAPSHOT.war

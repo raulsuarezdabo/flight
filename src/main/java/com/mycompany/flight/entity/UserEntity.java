@@ -49,13 +49,13 @@ public class UserEntity {
     @Column(name = "Password")
     private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "UserRole",
-            joinColumns = {
-                @JoinColumn(name = "UserID", referencedColumnName = "ID")},
-            inverseJoinColumns = {
-                @JoinColumn(name = "RoleID", referencedColumnName = "ID")})
-    private RoleEntity role;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinTable(name = "UserRole",
+//            joinColumns = {
+//                @JoinColumn(name = "UserID", referencedColumnName = "ID")},
+//            inverseJoinColumns = {
+//                @JoinColumn(name = "RoleID", referencedColumnName = "ID")})
+//    private RoleEntity role;
 
     public UserEntity() {
     }
@@ -216,20 +216,20 @@ public class UserEntity {
         this.password = password;
     }
 
-    /**
-     * Getter role property
-     * @return 
-     */
-    public RoleEntity getRole() {
-        return role;
-    }
-
-    /**
-     * Setter role property
-     * @param role 
-     */
-    public void setRole(RoleEntity role) {
-        this.role = role;
-    }
+//    /**
+//     * Getter role property
+//     * @return 
+//     */
+//    public RoleEntity getRole() {
+//        return role;
+//    }
+//
+//    /**
+//     * Setter role property
+//     * @param role 
+//     */
+//    public void setRole(RoleEntity role) {
+//        this.role = role;
+//    }
 
 }

@@ -44,14 +44,13 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserEntity newUser(boolean persist) {
         try {
-//            user = new UserEntity();
-//            user.setName("ejemplo");
-//            user.setEmail("email@ejemplo");
-//            user.setNif("12345678D");
-//            user.setPhone("659327919");
-//            this.userDAO.addUser(user);
-//            return user;
-            return new UserEntity();
+            user = new UserEntity();
+            user.setName("ejemplo");
+            user.setEmail("email@ejemplo");
+            user.setNif("12345678D");
+            user.setPhone("659327919");
+            this.userDAO.addUser(user);
+            return user;
         } catch (Exception e) {
             return null;
         }

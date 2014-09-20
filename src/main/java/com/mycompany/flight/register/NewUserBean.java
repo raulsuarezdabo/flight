@@ -1,5 +1,6 @@
 package com.mycompany.flight.register;
 
+import com.mycompany.flight.entity.UserEntity;
 import com.mycompany.flight.service.UserService;
 import java.util.Date;
 
@@ -199,6 +200,10 @@ public class NewUserBean {
      */
     public Boolean singUpAction() {
         try {
+            UserEntity user = this.userService.newUser(true);
+            if (user == null) {
+                return false;
+            }
             return true;
         }
         catch(Exception e) {
