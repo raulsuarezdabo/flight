@@ -1,5 +1,7 @@
 /Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/service/UserService.java
 /Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/register/NewUserBean.java
+/Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/dao/RoleDAO.java
+/Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/dao/RoleDAOImpl.java
 /Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/dao/UserDAOImpl.java
 /Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/entity/RoleEntity.java
 /Users/raulsuarez/Sites/flight/src/main/java/com/mycompany/flight/service/UserServiceImpl.java

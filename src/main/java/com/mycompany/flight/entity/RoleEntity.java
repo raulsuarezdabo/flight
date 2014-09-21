@@ -18,6 +18,10 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Role")
 public class RoleEntity {
+    /**
+     * Predefined roles to the users
+     */
+    public static final int USER_ROLE = 1;
 
     @Id
     @GeneratedValue

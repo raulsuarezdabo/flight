@@ -1,6 +1,8 @@
 package com.mycompany.flight.service;
 
+import com.mycompany.flight.dao.RoleDAOImpl;
 import com.mycompany.flight.dao.UserDAOImpl;
+import com.mycompany.flight.entity.RoleEntity;
 import com.mycompany.flight.entity.UserEntity;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -17,6 +19,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDAOImpl userDAO;
+    
+    @Autowired
+    private RoleDAOImpl roleDAO;
 
     /**
      * property that contains the user to manage
@@ -68,6 +73,8 @@ public class UserServiceImpl implements UserService {
             user.setNif(nif);
             user.setPhone(phone.trim());
             user.setBirthDay(new java.sql.Date(birthday.getTime()));
+            RoleEntity userRole = this.roleDAO.findById(RoleEntity.USER_ROLE);
+            user.setRole(userRole);
             this.userDAO.addUser(user);
             return user;
         } catch (Exception e) {
