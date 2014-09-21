@@ -56,7 +56,6 @@ public class UserEntity {
 //            inverseJoinColumns = {
 //                @JoinColumn(name = "RoleID", referencedColumnName = "ID")})
 //    private RoleEntity role;
-
     public UserEntity() {
     }
 
@@ -74,6 +73,7 @@ public class UserEntity {
 
     /**
      * Getter id property
+     *
      * @return
      */
     public Integer getId() {
@@ -82,7 +82,8 @@ public class UserEntity {
 
     /**
      * Setter id property
-     * @param id 
+     *
+     * @param id
      */
     public void setId(Integer id) {
         this.id = id;
@@ -90,7 +91,8 @@ public class UserEntity {
 
     /**
      * Getter name property
-     * @return 
+     *
+     * @return
      */
     public String getName() {
         return name;
@@ -98,7 +100,8 @@ public class UserEntity {
 
     /**
      * Setter name property
-     * @param name 
+     *
+     * @param name
      */
     public void setName(String name) {
         this.name = name;
@@ -106,7 +109,8 @@ public class UserEntity {
 
     /**
      * Getter surname property
-     * @return 
+     *
+     * @return
      */
     public String getSurname() {
         return surname;
@@ -114,7 +118,8 @@ public class UserEntity {
 
     /**
      * Setter surname property
-     * @param surname 
+     *
+     * @param surname
      */
     public void setSurname(String surname) {
         this.surname = surname;
@@ -122,7 +127,8 @@ public class UserEntity {
 
     /**
      * Getter email property
-     * @return 
+     *
+     * @return
      */
     public String getEmail() {
         return email;
@@ -130,7 +136,8 @@ public class UserEntity {
 
     /**
      * Setter email property
-     * @param email 
+     *
+     * @param email
      */
     public void setEmail(String email) {
         this.email = email;
@@ -138,7 +145,8 @@ public class UserEntity {
 
     /**
      * Getter phone property
-     * @return 
+     *
+     * @return
      */
     public String getPhone() {
         return phone;
@@ -146,7 +154,8 @@ public class UserEntity {
 
     /**
      * Setter phone property
-     * @param phone 
+     *
+     * @param phone
      */
     public void setPhone(String phone) {
         this.phone = phone;
@@ -154,7 +163,8 @@ public class UserEntity {
 
     /**
      * Getter birthday property
-     * @return 
+     *
+     * @return
      */
     public Date getBirthDay() {
         return birthDay;
@@ -162,7 +172,8 @@ public class UserEntity {
 
     /**
      * Setter birthday property
-     * @param birthDay 
+     *
+     * @param birthDay
      */
     public void setBirthDay(Date birthDay) {
         this.birthDay = birthDay;
@@ -170,7 +181,8 @@ public class UserEntity {
 
     /**
      * Getter address property
-     * @return 
+     *
+     * @return
      */
     public String getAddress() {
         return address;
@@ -178,7 +190,8 @@ public class UserEntity {
 
     /**
      * Setter address property
-     * @param address 
+     *
+     * @param address
      */
     public void setAddress(String address) {
         this.address = address;
@@ -186,7 +199,8 @@ public class UserEntity {
 
     /**
      * Getter nif property
-     * @return 
+     *
+     * @return
      */
     public String getNif() {
         return nif;
@@ -194,7 +208,8 @@ public class UserEntity {
 
     /**
      * Setter nif property
-     * @param nif 
+     *
+     * @param nif
      */
     public void setNif(String nif) {
         this.nif = nif;
@@ -202,7 +217,8 @@ public class UserEntity {
 
     /**
      * Getter password property
-     * @return 
+     *
+     * @return
      */
     public String getPassword() {
         return password;
@@ -210,7 +226,8 @@ public class UserEntity {
 
     /**
      * Setter password property
-     * @param password 
+     *
+     * @param password
      */
     public void setPassword(String password) {
         this.password = password;
@@ -231,5 +248,4 @@ public class UserEntity {
 //    public void setRole(RoleEntity role) {
 //        this.role = role;
 //    }
-
 }

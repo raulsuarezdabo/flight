@@ -200,7 +200,7 @@ public class NewUserBean {
      */
     public Boolean singUpAction() {
         try {
-            UserEntity user = this.userService.newUser(true);
+            UserEntity user = this.userService.newUser(this.email, this.password, this.name, this.surname, this.address, this.nif, this.phone, this.birthday);
             if (user == null) {
                 return false;
             }
