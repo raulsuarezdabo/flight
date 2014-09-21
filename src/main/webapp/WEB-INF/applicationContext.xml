@@ -23,6 +23,7 @@
             <list>
                 <value>com.mycompany.flight.entity.UserEntity</value>
                 <value>com.mycompany.flight.entity.RoleEntity</value>
+                <value>com.mycompany.flight.entity.CountryEntity</value>
             </list>
         </property>
         <property name="hibernateProperties">
