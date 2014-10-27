@@ -49,6 +49,14 @@ public class UserEntity {
     @Column(name = "Password")
     private String password;
 
+    @OneToOne
+    @JoinColumn(name = "CountryCode")
+    private CountryEntity country;
+    
+    @OneToOne
+    @JoinColumn(name = "CityId")
+    private CityEntity city;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinTable(name = "UserRole",
             joinColumns = {
@@ -56,11 +64,11 @@ public class UserEntity {
             inverseJoinColumns = {
                 @JoinColumn(name = "RoleID", referencedColumnName = "ID")})
     private RoleEntity role;
-    
+
     public UserEntity() {
     }
 
-    public UserEntity(Integer id, String name, String surname, String email, String phone, Date birthDay, String address, String nif, String password) {
+    public UserEntity(Integer id, String name, String surname, String email, String phone, Date birthDay, String address, String nif, String password, CountryEntity country, CityEntity city) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -70,6 +78,8 @@ public class UserEntity {
         this.address = address;
         this.nif = nif;
         this.password = password;
+        this.country = country;
+        this.city = city;
     }
 
     /**
@@ -236,7 +246,8 @@ public class UserEntity {
 
     /**
      * Getter role property
-     * @return 
+     *
+     * @return
      */
     public RoleEntity getRole() {
         return role;
@@ -244,9 +255,45 @@ public class UserEntity {
 
     /**
      * Setter role property
-     * @param role 
+     *
+     * @param role
      */
     public void setRole(RoleEntity role) {
         this.role = role;
     }
+
+    /**
+     * Getter of countryentity
+     *
+     * @return CountryEntity
+     */
+    public CountryEntity getCountry() {
+        return country;
+    }
+
+    /**
+     * Setter countryEntity
+     *
+     * @param country CountryEntity
+     */
+    public void setCountry(CountryEntity country) {
+        this.country = country;
+    }
+    
+    /**
+     * Getter for city entity
+     * @return 
+     */
+    public CityEntity getCity() {
+        return this.city;
+    }
+
+    /**
+     * Setter city entity
+     * @param city 
+     */
+    public void setCity(CityEntity city) {
+        this.city = city;
+    }
+
 }

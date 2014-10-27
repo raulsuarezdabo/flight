@@ -1,14 +1,9 @@
 package com.mycompany.flight.entity;
 
-import java.util.List;
-import javax.persistence.CascadeType;
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -17,16 +12,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Country")
-public class CountryEntity {
-
-    /**
-     * Predefined roles to the users
-     */
-    public static final int USER_ROLE = 1;
-
+public class CountryEntity implements Serializable {
+    
     @Id
     @Column(name = "Code", unique = true, nullable = false)
-    private int code;
+    private String code;
 
     @Column(name = "Name", nullable = false)
     private String name;
@@ -38,22 +28,19 @@ public class CountryEntity {
     private String region;
 
     @Column(name = "SurfaceArea", nullable = false)
-    private float surfaceArea;
+    private Integer surfaceArea;
 
     @Column(name = "IndepYear", nullable = false)
-    private int indepYear;
+    private Float indepYear;
 
     @Column(name = "Population", nullable = false)
-    private double population;
-
-    @Column(name = "LifeExpentacy", nullable = false)
-    private float lifeExpentacy;
+    private Integer population;
 
     @Column(name = "GNP", nullable = false)
-    private float gnp;
+    private Float gnp;
 
     @Column(name = "GNPOld", nullable = false)
-    private float gnpOld;
+    private Float gnpOld;
 
     @Column(name = "LocalName", nullable = false)
     private String localName;
@@ -65,7 +52,7 @@ public class CountryEntity {
     private String headOfState;
 
     @Column(name = "Capital", nullable = false)
-    private int capital;
+    private Integer capital;
 
     @Column(name = "Code2", nullable = false)
     private String code2;
@@ -75,49 +62,12 @@ public class CountryEntity {
      */
     public CountryEntity() {
     }
-
-    /**
-     * Parametrice constructor
-     *
-     * @param code
-     * @param name
-     * @param continent
-     * @param region
-     * @param surfaceArea
-     * @param indepYear
-     * @param population
-     * @param lifeExpentacy
-     * @param gnp
-     * @param gnpOld
-     * @param localName
-     * @param governmentForm
-     * @param headOfState
-     * @param capital
-     * @param code2
-     */
-    public CountryEntity(Integer code, String name, String continent, String region, float surfaceArea, int indepYear, double population, float lifeExpentacy, float gnp, float gnpOld, String localName, String governmentForm, String headOfState, int capital, String code2) {
-        this.code = code;
-        this.name = name;
-        this.continent = continent;
-        this.region = region;
-        this.surfaceArea = surfaceArea;
-        this.indepYear = indepYear;
-        this.population = population;
-        this.lifeExpentacy = lifeExpentacy;
-        this.gnp = gnp;
-        this.gnpOld = gnpOld;
-        this.localName = localName;
-        this.governmentForm = governmentForm;
-        this.headOfState = headOfState;
-        this.capital = capital;
-        this.code2 = code2;
-    }
-
+    
     /**
      * Getter code
      * @return int
      */
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
@@ -125,7 +75,7 @@ public class CountryEntity {
      * Setter code
      * @param code 
      */
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
@@ -181,7 +131,7 @@ public class CountryEntity {
      * Getter surfaceArea
      * @return float
      */
-    public float getSurfaceArea() {
+    public Integer getSurfaceArea() {
         return surfaceArea;
     }
 
@@ -189,7 +139,7 @@ public class CountryEntity {
      * Setter surfaceArea
      * @param surfaceArea 
      */
-    public void setSurfaceArea(float surfaceArea) {
+    public void setSurfaceArea(Integer surfaceArea) {
         this.surfaceArea = surfaceArea;
     }
 
@@ -197,7 +147,7 @@ public class CountryEntity {
      * Getter intepYear
      * @return 
      */
-    public int getIndepYear() {
+    public Float getIndepYear() {
         return indepYear;
     }
 
@@ -205,7 +155,7 @@ public class CountryEntity {
      * Setter indepYeear
      * @param indepYear 
      */
-    public void setIndepYear(int indepYear) {
+    public void setIndepYear(Float indepYear) {
         this.indepYear = indepYear;
     }
 
@@ -213,7 +163,7 @@ public class CountryEntity {
      * Getter population
      * @return double
      */
-    public double getPopulation() {
+    public Integer getPopulation() {
         return population;
     }
 
@@ -221,31 +171,15 @@ public class CountryEntity {
      * Setter population
      * @param population 
      */
-    public void setPopulation(double population) {
+    public void setPopulation(Integer population) {
         this.population = population;
-    }
-
-    /**
-     * Getter lifeExpentacy
-     * @return float
-     */
-    public float getLifeExpentacy() {
-        return lifeExpentacy;
-    }
-
-    /**
-     * Setter lifeExpentacy
-     * @param lifeExpentacy 
-     */
-    public void setLifeExpentacy(float lifeExpentacy) {
-        this.lifeExpentacy = lifeExpentacy;
     }
 
     /**
      * Getter Gnp
      * @return float
      */
-    public float getGnp() {
+    public Float getGnp() {
         return gnp;
     }
 
@@ -253,7 +187,7 @@ public class CountryEntity {
      * Setter Gnp
      * @param gnp 
      */
-    public void setGnp(float gnp) {
+    public void setGnp(Float gnp) {
         this.gnp = gnp;
     }
 
@@ -261,7 +195,7 @@ public class CountryEntity {
      * Getter GnpOld
      * @return float
      */
-    public float getGnpOld() {
+    public Float getGnpOld() {
         return gnpOld;
     }
 
@@ -269,7 +203,7 @@ public class CountryEntity {
      * Setter gnpOld
      * @param gnpOld 
      */
-    public void setGnpOld(float gnpOld) {
+    public void setGnpOld(Float gnpOld) {
         this.gnpOld = gnpOld;
     }
 
@@ -325,7 +259,7 @@ public class CountryEntity {
      * Getter capital
      * @return int
      */
-    public int getCapital() {
+    public Integer getCapital() {
         return capital;
     }
 
@@ -333,7 +267,7 @@ public class CountryEntity {
      * Setter capital
      * @param capital 
      */
-    public void setCapital(int capital) {
+    public void setCapital(Integer capital) {
         this.capital = capital;
     }
 
@@ -353,4 +287,13 @@ public class CountryEntity {
         this.code2 = code2;
     }
 
+    /**
+     * method to override the object to string
+     * @return 
+     */
+    @Override
+    public String toString() {
+        System.out.println("CountryEntity toString:" + this.name);
+        return this.code;
+    }
 }

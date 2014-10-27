@@ -3,6 +3,7 @@
               xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    <!-- APPLICATIONS CONF -->
     <application>
         <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
         <locale-config>
@@ -14,6 +15,13 @@
             <var>msg</var>
         </resource-bundle>
     </application>
+    <!-- VALIDATORS -->
+    <validator>
+        <validator-id>ageValidator</validator-id>
+        <validator-class>com.mycompany.flight.jsf.validator.AgeValidator</validator-class>
+    </validator>
+    <!-- CONVERTER DECLARATIONS -->
+    <!-- NAVIGATIONS RULES -->
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>
@@ -43,6 +51,7 @@
         <managed-bean-class></managed-bean-class>
         <managed-bean-scope></managed-bean-scope>
     </managed-bean>-->
+    <!-- MANAGED BEANS -->
     <managed-bean>
         <managed-bean-name>localeBean</managed-bean-name>
         <managed-bean-class>com.mycompany.flight.language.LocaleBean</managed-bean-class>
@@ -51,11 +60,21 @@
     <managed-bean>
         <managed-bean-name>newUserBean</managed-bean-name>
         <managed-bean-class>com.mycompany.flight.register.NewUserBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
+        <managed-bean-scope>view</managed-bean-scope>
         <managed-property>
             <property-name>userService</property-name>
             <property-class>com.mycompany.flight.service.UserService</property-class>
             <value>#{userService}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>countryDAO</property-name>
+            <property-class>com.mycompany.flight.dao.CountryDAO</property-class>
+            <value>#{countryDAO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>cityDAO</property-name>
+            <property-class>com.mycompany.flight.dao.CityDAO</property-class>
+            <value>#{cityDAO}</value>
         </managed-property>
     </managed-bean>
 </faces-config>

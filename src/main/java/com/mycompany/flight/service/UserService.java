@@ -1,5 +1,7 @@
 package com.mycompany.flight.service;
 
+import com.mycompany.flight.entity.CityEntity;
+import com.mycompany.flight.entity.CountryEntity;
 import com.mycompany.flight.entity.UserEntity;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,7 +25,7 @@ public interface UserService {
      * @param birthday
      * @return new User entity persisted or not depending on the persist @param
      */
-    public UserEntity newUser(String email, String password, String name, String surname, String address, String nif, String phone, Date birthday);
+    public UserEntity newUser(String email, String name, String surname, String address, String nif, String phone, Date birthday, CountryEntity country, CityEntity city);
 
     /**
      * Update the user entity

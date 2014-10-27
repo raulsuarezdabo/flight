@@ -2,6 +2,8 @@ package com.mycompany.flight.service;
 
 import com.mycompany.flight.dao.RoleDAOImpl;
 import com.mycompany.flight.dao.UserDAOImpl;
+import com.mycompany.flight.entity.CityEntity;
+import com.mycompany.flight.entity.CountryEntity;
 import com.mycompany.flight.entity.RoleEntity;
 import com.mycompany.flight.entity.UserEntity;
 import java.security.MessageDigest;
@@ -58,23 +60,35 @@ public class UserServiceImpl implements UserService {
      * @param nif
      * @param phone
      * @param birthday
+     * @param country
+     * @param city
      * @return new User entity persisted or not depending on the persist @param
      */
     @Override
     @Transactional
-    public UserEntity newUser(String email, String password, String name, String surname, String address, String nif, String phone, Date birthday) {
+    public UserEntity newUser(
+            String email, 
+            String name, 
+            String surname, 
+            String address, 
+            String nif, 
+            String phone, 
+            Date birthday, 
+            CountryEntity country, 
+            CityEntity city
+    ) {
         try {
             user = new UserEntity();
             user.setEmail(email);
-            user.setPassword(this.get_md5(password));
             user.setName(name);
             user.setSurname(surname);
             user.setAddress(address);
             user.setNif(nif);
             user.setPhone(phone.trim());
             user.setBirthDay(new java.sql.Date(birthday.getTime()));
+            user.setCountry(country);
+            user.setCity(city);
             RoleEntity userRole = this.roleDAO.findById(RoleEntity.USER_ROLE);
-            user.setRole(userRole);
             this.userDAO.addUser(user);
             return user;
         } catch (Exception e) {
