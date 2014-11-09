@@ -8,8 +8,11 @@ import com.mycompany.flight.entity.RoleEntity;
 import com.mycompany.flight.entity.UserEntity;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,6 +27,9 @@ public class UserServiceImpl implements UserService {
     
     @Autowired
     private RoleDAOImpl roleDAO;
+    
+    @Autowired
+    private EmailServiceImpl email;
 
     /**
      * property that contains the user to manage
@@ -61,6 +67,7 @@ public class UserServiceImpl implements UserService {
      * @param phone
      * @param birthday
      * @param country
+     * @param locale
      * @param city
      * @return new User entity persisted or not depending on the persist @param
      */
@@ -75,9 +82,12 @@ public class UserServiceImpl implements UserService {
             String phone, 
             Date birthday, 
             CountryEntity country, 
-            CityEntity city
+            CityEntity city,
+            Locale locale
     ) {
         try {
+            ArrayList to = new ArrayList();
+            
             user = new UserEntity();
             user.setEmail(email);
             user.setName(name);
@@ -90,8 +100,13 @@ public class UserServiceImpl implements UserService {
             user.setCity(city);
             RoleEntity userRole = this.roleDAO.findById(RoleEntity.USER_ROLE);
             this.userDAO.addUser(user);
+            
+            to.add(user);
+            
+            this.email.sendMail(to, null, "wellcome", locale);
             return user;
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }

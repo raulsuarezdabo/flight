@@ -5,6 +5,7 @@ import com.mycompany.flight.dao.CountryDAO;
 import com.mycompany.flight.entity.CityEntity;
 import com.mycompany.flight.entity.CountryEntity;
 import com.mycompany.flight.entity.UserEntity;
+import com.mycompany.flight.language.LocaleBean;
 import com.mycompany.flight.service.UserService;
 import com.mycompany.flight.utils.Utils;
 import java.io.Serializable;
@@ -12,7 +13,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import javax.faces.application.FacesMessage;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
 /**
@@ -355,17 +359,23 @@ public class NewUserBean implements Serializable {
      */
     public Boolean singUpAction() {
         try {
+            FacesContext ctx = FacesContext.getCurrentInstance();
+            ExternalContext extCtx = ctx.getExternalContext();
+            Map<String, Object> sessionMap = extCtx.getSessionMap();
+            LocaleBean locale = (LocaleBean) sessionMap.get("localeBean");
+            
             UserEntity user = this.userService.newUser(
-                this.email, 
-                this.name, 
-                this.surname, 
-                this.address, 
-                this.nif, 
-                this.phone, 
-                this.birthday, 
-                Utils.getCountryFromList(this.country, this.countries), 
-                Utils.getCityFromList(this.city, this.cities)
-            );
+                    this.email,
+                    this.name,
+                    this.surname,
+                    this.address,
+                    this.nif,
+                    this.phone,
+                    this.birthday,
+                    Utils.getCountryFromList(this.country, this.countries),
+                    Utils.getCityFromList(this.city, this.cities),
+                    locale.getCurrent()
+                );
             if (user == null) {
                 return false;
             }

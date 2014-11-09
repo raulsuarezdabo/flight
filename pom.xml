@@ -88,6 +88,12 @@
             <artifactId>spring-web</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <!-- DEPENDENCIES FOR SENDING MAILS -->
+        <dependency>
+            <groupId>com.mandrillapp.wrapper.lutung</groupId>
+            <artifactId>lutung</artifactId>
+            <version>0.0.5</version>
+        </dependency>
     </dependencies>
 
     <build>

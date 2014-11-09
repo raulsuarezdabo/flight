@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ## FILE TO DECLARE THE TEMPLATES AND TAG STRUCTURE FOR EACH ONE -->
+<collection>
+    <item id="wellcome">
+        <template>wellcome.html</template>
+        <from>
+            <email>no-reply@flight-now.com</email>
+            <name>Wellcome Flight Now!</name>
+        </from>
+        <tags>
+            <tag>wellcome</tag>
+            <tag>new-user</tag>
+        </tags>
+    </item>
+</collection>

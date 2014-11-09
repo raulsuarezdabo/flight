@@ -38,4 +38,5 @@
     <bean id="userService" class="com.mycompany.flight.service.UserServiceImpl" ></bean>
     <bean id="countryDAO" class="com.mycompany.flight.dao.CountryDAOImpl" ></bean>
     <bean id="cityDAO" class="com.mycompany.flight.dao.CityDAOImpl" ></bean>
+    <bean id="email" class="com.mycompany.flight.service.EmailServiceImpl" scope="singleton"></bean>
 </beans>
