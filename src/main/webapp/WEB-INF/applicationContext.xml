@@ -34,9 +34,27 @@
             </props>
         </property>
     </bean>
+    <!-- TEMPLATE & MAILING ENGINE -->
+    <bean id="email" class="com.mycompany.flight.service.EmailServiceImpl" scope="singleton"></bean>
+    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="velocityProperties">
+            <props>
+                <prop key="resource.loader">file</prop>
+                <prop key="file.resource.loader.class">
+                    org.apache.velocity.runtime.resource.loader.FileResourceLoader
+                </prop>
+                <prop key="file.resource.loader.path">${webapp.root}/WEB-INF/velocity</prop>
+                <prop key="file.resource.loader.cache">false</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <property name="cache" value="true"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".vm"/>
+    </bean>
     <!-- BEANS OF THE PROYECT -->
     <bean id="userService" class="com.mycompany.flight.service.UserServiceImpl" ></bean>
     <bean id="countryDAO" class="com.mycompany.flight.dao.CountryDAOImpl" ></bean>
     <bean id="cityDAO" class="com.mycompany.flight.dao.CityDAOImpl" ></bean>
-    <bean id="email" class="com.mycompany.flight.service.EmailServiceImpl" scope="singleton"></bean>
 </beans>

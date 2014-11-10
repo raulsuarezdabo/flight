@@ -99,15 +99,17 @@ public class EmailServiceImpl implements EmailService {
     /**
      * method to send an email
      *
-     * @param receiver
+     * @param receivers
+     * @param content
      * @param type
+     * @param locale
      */
     @Override
     public void sendMail(ArrayList<UserEntity> receivers, HashMap content, String type, Locale locale) {
         // create your message
         MandrillMessage message = new MandrillMessage();
         message.setSubject(this.getSubject(type, locale));
-        message.setHtml("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        message.setHtml("Lorem ipsum");
         message.setAutoText(true);
         message.setFromEmail(this.getFromEmail(type));
         message.setFromName(this.getFromName(type));
@@ -137,7 +139,7 @@ public class EmailServiceImpl implements EmailService {
      * @return
      */
     private ArrayList<Recipient> prepareRecipientList(ArrayList<UserEntity> users) {
-        ArrayList<Recipient> recipients = new ArrayList<Recipient>();
+        ArrayList<Recipient> recipients = new ArrayList<>();
         try {
             Iterator iterator = users.iterator();
             while (iterator.hasNext()) {
@@ -275,5 +277,15 @@ public class EmailServiceImpl implements EmailService {
         subject = resource.getString("subjectEmail" + type.substring(0, 1).toUpperCase() + type.substring(1));
 
         return subject;
+    }
+    
+    /**
+     * Method that renders the template from the view
+     * @param type
+     * @return 
+     */
+    private String renderTemplate(String type) {
+        String template = this.getTemplate(type);
+        return null;
     }
 }
