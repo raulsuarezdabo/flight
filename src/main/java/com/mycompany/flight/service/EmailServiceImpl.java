@@ -30,6 +30,9 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+import freemarker.template.Configuration;
+import freemarker.template.TemplateException;
 
 /**
  *
@@ -40,6 +43,8 @@ public class EmailServiceImpl implements EmailService {
     private MandrillApi mandrillApi;
 
     private Document doc;
+
+    private Configuration freemarkerConfiguration;
 
     private static final String FROM_NAME = "Flight Now!";
     private static final String FROM_EMAIL = "no-reply@suarez.com.es";
@@ -96,6 +101,14 @@ public class EmailServiceImpl implements EmailService {
         this.doc = doc;
     }
 
+    public void setFreemarkerConfiguration(Configuration freemarkerConfiguration) {
+        this.freemarkerConfiguration = freemarkerConfiguration;
+    }
+
+    public Configuration getFreemarkerConfiguration() {
+        return freemarkerConfiguration;
+    }
+
     /**
      * method to send an email
      *
@@ -106,27 +119,24 @@ public class EmailServiceImpl implements EmailService {
      */
     @Override
     public void sendMail(ArrayList<UserEntity> receivers, HashMap content, String type, Locale locale) {
-        // create your message
-        MandrillMessage message = new MandrillMessage();
-        message.setSubject(this.getSubject(type, locale));
-        message.setHtml("Lorem ipsum");
-        message.setAutoText(true);
-        message.setFromEmail(this.getFromEmail(type));
-        message.setFromName(this.getFromName(type));
-        // Receivers block
-        ArrayList<Recipient> recipients = this.prepareRecipientList(receivers);
-        message.setTo(recipients);
-        message.setPreserveRecipients(true);
-        ArrayList<String> tags = null;
-        tags = this.getTags(type);
-        message.setTags(tags);
+
         try {
-            // ... add more message details if you want to!   
-            MandrillMessageStatus[] messageStatusReports = mandrillApi
-                    .messages().send(message, false);
-        } catch (MandrillApiError ex) {
-            Logger.getLogger(EmailServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+            // create your message
+            MandrillMessage message = new MandrillMessage();
+            message.setSubject(this.getSubject(type, locale));
+            message.setHtml(this.renderTemplate(type));
+            message.setAutoText(true);
+            message.setFromEmail(this.getFromEmail(type));
+            message.setFromName(this.getFromName(type));
+            // Receivers block
+            ArrayList<Recipient> recipients = this.prepareRecipientList(receivers);
+            message.setTo(recipients);
+            message.setPreserveRecipients(true);
+            ArrayList<String> tags = null;
+            tags = this.getTags(type);
+            message.setTags(tags);
+            MandrillMessageStatus[] messageStatusReports = mandrillApi.messages().send(message, false);
+        } catch (IOException | TemplateException | MandrillApiError ex) {
             Logger.getLogger(EmailServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -184,9 +194,8 @@ public class EmailServiceImpl implements EmailService {
             }
         } catch (XPathExpressionException e) {
             System.out.println(e.getMessage());
-        } finally {
-            return tags;
         }
+        return tags;
     }
 
     /**
@@ -207,9 +216,8 @@ public class EmailServiceImpl implements EmailService {
             }
         } catch (XPathExpressionException e) {
             System.out.println(e.getMessage());
-        } finally {
-            return (email == null) ? FROM_EMAIL : email;
         }
+        return (email == null) ? FROM_EMAIL : email;
     }
 
     /**
@@ -230,9 +238,8 @@ public class EmailServiceImpl implements EmailService {
             }
         } catch (XPathExpressionException e) {
             System.out.println(e.getMessage());
-        } finally {
-            return (name == null) ? FROM_NAME : name;
         }
+        return (name == null) ? FROM_NAME : name;
     }
 
     /**
@@ -253,9 +260,8 @@ public class EmailServiceImpl implements EmailService {
             }
         } catch (XPathExpressionException e) {
             System.out.println(e.getMessage());
-        } finally {
-            return template;
         }
+        return template;
     }
 
     /**
@@ -278,14 +284,15 @@ public class EmailServiceImpl implements EmailService {
 
         return subject;
     }
-    
+
     /**
      * Method that renders the template from the view
+     *
      * @param type
-     * @return 
+     * @return
      */
-    private String renderTemplate(String type) {
+    private String renderTemplate(String type) throws IOException, TemplateException {
         String template = this.getTemplate(type);
-        return null;
+        return FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerConfiguration.getTemplate(template, "UTF-8"), null);
     }
 }
