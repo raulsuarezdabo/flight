@@ -7,6 +7,8 @@ package com.mycompany.flight.dao;
 
 import com.mycompany.flight.entity.UserEntity;
 import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -101,7 +103,19 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public UserEntity findByEmail(String email) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        UserEntity user;
+        try {
+            Session session = this.sessionFactory.getCurrentSession();
+            Transaction transaction = session.beginTransaction();
+            Query query = session.createQuery("FROM UserEntity  WhERE email = :email ");
+            query.setParameter("email", email);
+            query.setMaxResults(1);
+            user = (UserEntity) query.uniqueResult();
+            transaction.commit();
+            return user;
+        } catch(HibernateException e) {
+            return null;
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package com.mycompany.flight.register;
 
 import com.mycompany.flight.dao.CityDAO;
 import com.mycompany.flight.dao.CountryDAO;
+import com.mycompany.flight.dao.UserDAO;
 import com.mycompany.flight.entity.CityEntity;
 import com.mycompany.flight.entity.CountryEntity;
 import com.mycompany.flight.entity.UserEntity;
@@ -9,15 +10,12 @@ import com.mycompany.flight.language.LocaleBean;
 import com.mycompany.flight.service.UserService;
 import com.mycompany.flight.utils.Utils;
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 
 /**
  *
@@ -76,6 +74,11 @@ public class NewUserBean implements Serializable {
      * DAO of countries
      */
     private CountryDAO countryDAO;
+
+    /**
+     * DAO of user
+     */
+    private UserDAO userDAO;
 
     /**
      * List of countries
@@ -143,7 +146,16 @@ public class NewUserBean implements Serializable {
      * @param email email of the user
      */
     public void setEmail(String email) {
-        this.email = email;
+        if (this.userDAO.findByEmail(email) == null) {
+            this.email = email;
+        } else {
+            // Bring the error message using the Faces Context
+            String errorMessage = FacesContext.getCurrentInstance().getApplication().
+                getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("emailExist");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                errorMessage, errorMessage);
+            FacesContext.getCurrentInstance().addMessage("userForm:userEmail", message);
+        }
     }
 
     /**
@@ -353,6 +365,24 @@ public class NewUserBean implements Serializable {
     }
 
     /**
+     * Getter of user DAO
+     *
+     * @return UserDao
+     */
+    public UserDAO getUserDAO() {
+        return userDAO;
+    }
+
+    /**
+     * Setter of userDAO
+     *
+     * @param userDAO
+     */
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
+    /**
      * Method that creates the new user
      *
      * @return
@@ -363,7 +393,7 @@ public class NewUserBean implements Serializable {
             ExternalContext extCtx = ctx.getExternalContext();
             Map<String, Object> sessionMap = extCtx.getSessionMap();
             LocaleBean locale = (LocaleBean) sessionMap.get("localeBean");
-            
+
             UserEntity user = this.userService.newUser(
                     this.email,
                     this.name,
@@ -375,7 +405,7 @@ public class NewUserBean implements Serializable {
                     Utils.getCountryFromList(this.country, this.countries),
                     Utils.getCityFromList(this.city, this.cities),
                     locale.getCurrent()
-                );
+            );
             if (user == null) {
                 return false;
             }

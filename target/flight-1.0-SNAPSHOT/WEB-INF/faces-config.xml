@@ -76,5 +76,10 @@
             <property-class>com.mycompany.flight.dao.CityDAO</property-class>
             <value>#{cityDAO}</value>
         </managed-property>
+        <managed-property>
+            <property-name>userDAO</property-name>
+            <property-class>com.mycompany.flight.dao.UserDAO</property-class>
+            <value>#{userDAO}</value>
+        </managed-property>
     </managed-bean>
 </faces-config>
