@@ -82,4 +82,14 @@
             <value>#{userDAO}</value>
         </managed-property>
     </managed-bean>
+    <managed-bean>
+        <managed-bean-name>loginBean</managed-bean-name>
+        <managed-bean-class>com.mycompany.flight.security.LoginBean</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+        <managed-property>
+            <property-name>AuthenticationManager</property-name>
+            <property-class>org.springframework.security.authentication.AuthenticationManager</property-class>
+            <value>#{authenticationManager}</value>
+        </managed-property>
+    </managed-bean>
 </faces-config>

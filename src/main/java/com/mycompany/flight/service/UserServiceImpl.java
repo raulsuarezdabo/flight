@@ -9,18 +9,20 @@ import com.mycompany.flight.entity.UserEntity;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  *
  * @author raulsuarez
  */
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private UserDAOImpl userDAO;
@@ -59,7 +61,6 @@ public class UserServiceImpl implements UserService {
     /**
      *
      * @param email
-     * @param password
      * @param name
      * @param surname
      * @param address
@@ -157,6 +158,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getByEmail(String email) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
