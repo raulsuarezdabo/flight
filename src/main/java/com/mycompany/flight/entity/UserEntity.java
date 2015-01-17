@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Type;
 
 /**
  * UserEntity that mapped from the DB model
@@ -48,6 +49,10 @@ public class UserEntity {
 
     @Column(name = "Password")
     private String password;
+    
+    @Column(name = "CreatedAt")
+    @Type(type="timestamp")
+    private Date createdAt;
 
     @OneToOne
     @JoinColumn(name = "CountryCode")
@@ -68,7 +73,7 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(Integer id, String name, String surname, String email, String phone, Date birthDay, String address, String nif, String password, CountryEntity country, CityEntity city) {
+    public UserEntity(Integer id, String name, String surname, String email, String phone, Date birthDay, String address, String nif, String password, CountryEntity country, CityEntity city, Date createdAt) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -80,6 +85,7 @@ public class UserEntity {
         this.password = password;
         this.country = country;
         this.city = city;
+        this.createdAt = createdAt;
     }
 
     /**
@@ -295,5 +301,23 @@ public class UserEntity {
     public void setCity(CityEntity city) {
         this.city = city;
     }
+
+    /**
+     * Getter createdAt
+     * @return Date
+     */
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * Setter createdAt
+     * @param createdAt 
+     */
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+    
+    
 
 }
