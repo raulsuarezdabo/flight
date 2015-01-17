@@ -33,11 +33,12 @@
             <artifactId>all-themes</artifactId>  
             <version>1.0.10</version>  
         </dependency>
+        <!--
         <dependency>
             <groupId>com.ocpsoft</groupId>
             <artifactId>prettyfaces-jsf2</artifactId>
             <version>3.3.3</version>
-        </dependency>
+        </dependency>-->
         <!-- HIBERNATE FRAMEWORK DEPENDENCIES -->
         <dependency>
             <groupId>org.hibernate</groupId>
