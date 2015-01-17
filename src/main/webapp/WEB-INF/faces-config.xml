@@ -40,6 +40,11 @@
             <from-outcome>new_user</from-outcome>
             <to-view-id>/register/new_user.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <description>Navigation case that show the form to sing in a user</description>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/register/login.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>register/new_user.xhtml</from-view-id>
