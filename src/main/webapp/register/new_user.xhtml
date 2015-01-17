@@ -92,7 +92,7 @@
                             </h:panelGrid>
                             <p:spacer height="35" />
                             <h:panelGrid columns="2">
-                                <p:commandButton value="Registrarse" action="#{newUserBean.singUpAction()}" process="@form" partialSubmit="true">
+                                <p:commandButton value="#{msg.registerUserButton}" action="#{newUserBean.singUpAction()}" process="@form" partialSubmit="true">
                                 </p:commandButton>
                                 <p:button outcome="index" value="Cancelar"/>
                             </h:panelGrid>

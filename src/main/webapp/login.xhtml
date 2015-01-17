@@ -3,37 +3,51 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
     </h:head>
     <h:body role="document">
         <ui:composition template="/template/basicTemplate.xhtml">
-            <ui:param name="showBreadcrumbs" value="false"/>
-            <ui:define name="headerTitle">Titulo de mi página index</ui:define>
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleLogin}" /></ui:define>
             <ui:define name="meta">
                 <meta name="description" content="Descripción de mi página index"></meta>
             </ui:define>
+            <ui:define name="breadcrumbs">
+                <li class="active"><h:outputText value="#{msg.titleLogin}"/></li>
+            </ui:define>
             <ui:define name="content">
                 <div class="container">
-                    <div align="right" style="">
-                        <h:form  id="loginFormId" prependId="false">
-                            <div id="loginFieldsPnlId">
-                                <div id="loginFieldUsrContId">
-                                    <h:outputText id="outTxtUserNameId" value="Username: " name="outTxtUserNameNm"></h:outputText>
-                                    <h:inputText id="userName" required="true" value="#{loginBean.userName}" requiredMessage="Please enter username"></h:inputText>
-                                    <h:outputLabel id="outLblUserNameId" for="userName" name="outLblUserNameNm"></h:outputLabel>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <h1><h:outputText value="#{msg.titleLogin}"></h:outputText></h1>
+                            <h:form  id="loginFormId" prependId="false">
+                                <div class="form-group" id="loginFieldsPnlId">
+                                    <!--<div id="loginFieldUsrContId">-->
+                                    <h:outputLabel for="userName" value="#{msg.email}"></h:outputLabel>
+                                    <!--<h:outputText id="outTxtUserNameId" name="outTxtUserNameNm"></h:outputText>-->
+                                    <h:inputText class="form-control" id="userName" required="true" value="#{loginBean.userName}" requiredMessage="#{msg.emailRequired}"></h:inputText>
+                                    <!--<h:outputLabel id="outLblUserNameId" for="userName" name="outLblUserNameNm"></h:outputLabel>-->
+                                    <!--</div>-->
                                 </div>
-                                <div id="loginFieldPassContId">
-                                    <h:outputText id="outTxtPasswordId" value="Password: " name="outTxtPasswordNm"></h:outputText>
-                                    <h:inputSecret id="password"  required="true" value="#{loginBean.password}" requiredMessage="Please enter password" name="inTxtPasswordNm"></h:inputSecret>
-                                    <h:outputLabel id="outLblPasswordId" for="password" name="outLblPasswordNm"></h:outputLabel>
+                                <div class="form-group">
+                                    <!--<div id="loginFieldPassContId">-->
+                                    <h:outputLabel for="password" value="#{msg.password}"></h:outputLabel>
+                                    <!--<h:outputText id="outTxtPasswordId" value="Password: " name="outTxtPasswordNm"></h:outputText>-->
+                                    <h:inputSecret class="form-control" id="password"  required="true" value="#{loginBean.password}" requiredMessage="#{msg.passwordRequired}" name="inTxtPasswordNm"></h:inputSecret>
+                                    <!--<h:outputLabel id="outLblPasswordId" for="password" name="outLblPasswordNm"></h:outputLabel>-->
+                                    <!--</div>-->
                                 </div>
-                            </div>
-                            <div id="loginBtnPanelId">
-                                <h:commandButton id="btnLoginId" value="Login" action="#{loginBean.login}" styleClass="loginPanelBtn"></h:commandButton>
-                                <h:commandButton id="btnCancelId" value="Cancel" action="#{loginBean.cancel}" styleClass="loginPanelBtn" immediate="true" update="loginFormId"></h:commandButton>
-                            </div>
-                        </h:form>
+                                <div id="loginBtnPanelId">
+                                    <p:commandButton id="btnLoginId" value="#{msg.buttonLogin}" action="#{loginBean.login}" styleClass="loginPanelBtn"></p:commandButton>
+                                    <!--<p:button outcome="index" value="cancel"/>-->
+                                    <p:commandButton id="btnCancelId" value="#{msg.buttonCancel}" action="#{loginBean.cancel}" styleClass="loginPanelBtn" immediate="true" update="loginFormId"></p:commandButton>
+                                </div>
+                            </h:form>
+                        </div>
+                        <div class="col-md-4"></div>
                     </div>
                     <div>
                         <h:messages></h:messages>
