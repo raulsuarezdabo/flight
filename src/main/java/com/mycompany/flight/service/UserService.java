@@ -61,4 +61,6 @@ public interface UserService {
      * @return
      */
     public UserEntity getByEmail(String email);
+
+    public Boolean forgotAccount(String email, Locale current);
 }

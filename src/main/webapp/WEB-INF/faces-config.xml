@@ -45,6 +45,11 @@
             <from-outcome>login</from-outcome>
             <to-view-id>/register/login.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <description>Navigation case that show the form to sing in a user</description>
+            <from-outcome>forgot-account</from-outcome>
+            <to-view-id>/register/forgot-account.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>register/new_user.xhtml</from-view-id>
@@ -55,6 +60,17 @@
         <navigation-case>
             <from-outcome>true</from-outcome>
             <to-view-id>register/success_new_user.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>register/forgot-account.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>false</from-outcome>
+            <to-view-id>register/forgot-account-fails.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>true</from-outcome>
+            <to-view-id>register/forgot-account-success.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <!--<managed-bean>
@@ -101,6 +117,21 @@
             <property-name>AuthenticationManager</property-name>
             <property-class>org.springframework.security.authentication.AuthenticationManager</property-class>
             <value>#{authenticationManager}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>forgotUserBean</managed-bean-name>
+        <managed-bean-class>com.mycompany.flight.register.ForgotUserBean</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+        <managed-property>
+            <property-name>userDAO</property-name>
+            <property-class>com.mycompany.flight.dao.UserDAO</property-class>
+            <value>#{userDAO}</value>
+        </managed-property>
+        <managed-property>
+            <property-name>userService</property-name>
+            <property-class>com.mycompany.flight.service.UserService</property-class>
+            <value>#{userService}</value>
         </managed-property>
     </managed-bean>
 </faces-config>

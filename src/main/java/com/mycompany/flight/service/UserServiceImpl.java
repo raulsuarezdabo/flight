@@ -169,4 +169,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
+    public Boolean forgotAccount(String email, Locale current) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

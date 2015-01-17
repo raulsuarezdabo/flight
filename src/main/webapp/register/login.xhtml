@@ -45,6 +45,10 @@
                                     <!--<p:button outcome="index" value="cancel"/>-->
                                     <p:commandButton id="btnCancelId" value="#{msg.buttonCancel}" action="#{loginBean.cancel}" styleClass="loginPanelBtn" immediate="true" update="loginFormId"></p:commandButton>
                                 </div>
+                                <p:spacer height="35" />
+                                <div class="form-group">
+                                    <h:link value="#{msg.titleForgotAccount}" outcome="forgot-account" />
+                                </div>
                             </h:form>
                         </div>
                         <div class="col-md-4"></div>
