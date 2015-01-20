@@ -62,5 +62,11 @@ public interface UserService {
      */
     public UserEntity getByEmail(String email);
 
+    /**
+     * Process to recover the access by e-mail
+     * @param email
+     * @param current
+     * @return success or not
+     */
     public Boolean forgotAccount(String email, Locale current);
 }

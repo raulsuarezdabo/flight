@@ -1,10 +1,8 @@
 package com.mycompany.flight.register;
 
 import com.mycompany.flight.dao.UserDAO;
-import com.mycompany.flight.entity.UserEntity;
 import com.mycompany.flight.language.LocaleBean;
 import com.mycompany.flight.service.UserService;
-import com.mycompany.flight.utils.Utils;
 import java.io.Serializable;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
@@ -56,6 +54,7 @@ public class ForgotUserBean implements Serializable {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 errorMessage, errorMessage);
             FacesContext.getCurrentInstance().addMessage("userForm:userEmail", message);
+            this.email = email;
             
         } else {
             this.email = email;

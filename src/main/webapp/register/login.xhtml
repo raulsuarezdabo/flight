@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
     </h:head>
     <h:body role="document">
@@ -19,43 +19,35 @@
             </ui:define>
             <ui:define name="content">
                 <div class="container">
-                    <div class="row">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-4">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <h:form id="userForm">
                             <h1><h:outputText value="#{msg.titleLogin}"></h:outputText></h1>
-                            <h:form  id="loginFormId" prependId="false">
-                                <div class="form-group" id="loginFieldsPnlId">
-                                    <!--<div id="loginFieldUsrContId">-->
-                                    <h:outputLabel for="userName" value="#{msg.email}"></h:outputLabel>
-                                    <!--<h:outputText id="outTxtUserNameId" name="outTxtUserNameNm"></h:outputText>-->
-                                    <h:inputText class="form-control" id="userName" required="true" value="#{loginBean.userName}" requiredMessage="#{msg.emailRequired}"></h:inputText>
-                                    <!--<h:outputLabel id="outLblUserNameId" for="userName" name="outLblUserNameNm"></h:outputLabel>-->
-                                    <!--</div>-->
-                                </div>
-                                <div class="form-group">
-                                    <!--<div id="loginFieldPassContId">-->
-                                    <h:outputLabel for="password" value="#{msg.password}"></h:outputLabel>
-                                    <!--<h:outputText id="outTxtPasswordId" value="Password: " name="outTxtPasswordNm"></h:outputText>-->
-                                    <h:inputSecret class="form-control" id="password"  required="true" value="#{loginBean.password}" requiredMessage="#{msg.passwordRequired}" name="inTxtPasswordNm"></h:inputSecret>
-                                    <!--<h:outputLabel id="outLblPasswordId" for="password" name="outLblPasswordNm"></h:outputLabel>-->
-                                    <!--</div>-->
-                                </div>
-                                <div id="loginBtnPanelId">
-                                    <p:commandButton id="btnLoginId" value="#{msg.buttonLogin}" action="#{loginBean.login}" styleClass="loginPanelBtn"></p:commandButton>
-                                    <!--<p:button outcome="index" value="cancel"/>-->
-                                    <p:commandButton id="btnCancelId" value="#{msg.buttonCancel}" action="#{loginBean.cancel}" styleClass="loginPanelBtn" immediate="true" update="loginFormId"></p:commandButton>
-                                </div>
-                                <p:spacer height="35" />
-                                <div class="form-group">
-                                    <h:link value="#{msg.titleForgotAccount}" outcome="forgot-account" />
-                                </div>
-                            </h:form>
-                        </div>
-                        <div class="col-md-4"></div>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="userEmail" value="#{msg.email}"/>
+                                <p:inputText value="#{userLoginBean.email}" id="userEmail" label="userEmail" required="true" placeholder="#{msg.emailPlaceholder}" requiredMessage="#{msg.emailRequired}" validatorMessage="#{msg.emailInvalid}" size="35" immediate="true" >
+                                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                    <f:ajax event="blur" render="userEmailMessage"/>
+                                </p:inputText>
+                                <h:message for="userEmail" style="color: crimson" id="userEmailMessage" />
+                                <h:outputLabel for="userPassword" value="#{msg.password}"/>
+                                <p:password value="#{userLoginBean.password}" id="userPassword" label="userPassword" required="true" placeholder="#{msg.passwordPlaceholder}" requiredMessage="#{msg.passwordRequired}" validatorMessage="#{msg.passwordInvalid}" size="35" immediate="true" >
+                                    <f:ajax event="blur" render="userPasswordMessage"/>
+                                </p:password>
+                                <h:message for="userPassword" style="color: crimson" id="userPasswordMessage" />
+                            </h:panelGrid>
+                            <p:spacer height="35" />
+                            <h:panelGrid columns="2">
+                                <p:commandButton value="#{msg.buttonLogin}" action="#{userLoginBean.checkAction()}" process="@form" partialSubmit="true"></p:commandButton>
+                                <p:button outcome="index" value="Cancelar"/>
+                            </h:panelGrid>
+                            <p:spacer height="35" />
+                            <h:panelGrid columns="1">
+                                <h:link value="#{msg.titleForgotAccount}" outcome="forgot-account" />
+                            </h:panelGrid>
+                        </h:form>
                     </div>
-                    <div>
-                        <h:messages></h:messages>
-                    </div>
+                    <div class="col-md-3"></div>
                 </div>
             </ui:define>
         </ui:composition>

@@ -110,19 +110,9 @@
         </managed-property>
     </managed-bean>
     <managed-bean>
-        <managed-bean-name>loginBean</managed-bean-name>
-        <managed-bean-class>com.mycompany.flight.security.LoginBean</managed-bean-class>
-        <managed-bean-scope>request</managed-bean-scope>
-        <managed-property>
-            <property-name>AuthenticationManager</property-name>
-            <property-class>org.springframework.security.authentication.AuthenticationManager</property-class>
-            <value>#{authenticationManager}</value>
-        </managed-property>
-    </managed-bean>
-    <managed-bean>
         <managed-bean-name>forgotUserBean</managed-bean-name>
         <managed-bean-class>com.mycompany.flight.register.ForgotUserBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>view</managed-bean-scope>
         <managed-property>
             <property-name>userDAO</property-name>
             <property-class>com.mycompany.flight.dao.UserDAO</property-class>
@@ -132,6 +122,16 @@
             <property-name>userService</property-name>
             <property-class>com.mycompany.flight.service.UserService</property-class>
             <value>#{userService}</value>
+        </managed-property>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>userLoginBean</managed-bean-name>
+        <managed-bean-class>com.mycompany.flight.security.UserLoginBean</managed-bean-class>
+        <managed-bean-scope>view</managed-bean-scope>
+        <managed-property>
+            <property-name>authenticationManager</property-name>
+            <property-class>org.springframework.security.authentication.AuthenticationManager</property-class>
+            <value>#{authenticationManager}</value>
         </managed-property>
     </managed-bean>
 </faces-config>

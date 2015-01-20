@@ -39,7 +39,7 @@
     </sec:authentication-manager>
 
     <!-- Inject authentication Manager to our LoginBean -->
-    <beans:bean id="loginBean" name="loginBean" class="com.mycompany.flight.security.LoginBean" scope="prototype">
+    <!--<beans:bean id="userLoginBean" name="userLoginBean" class="com.mycompany.flight.security.UserLoginBean" scope="prototype">
         <beans:property name="authenticationManager" ref="authenticationManager"></beans:property>
-    </beans:bean>
+    </beans:bean>-->
 </beans:beans>
