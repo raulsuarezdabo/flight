@@ -9,37 +9,23 @@
     http://www.springframework.org/schema/security
     http://www.springframework.org/schema/security/spring-security-3.2.xsd">
     <!-- Enable method level Spring Security by annotations  -->
-    <sec:global-method-security pre-post-annotations="enabled" />  
-    <sec:http auto-config="true" use-expressions="true">
-
-        <!-- Page level Spring Security : Intercept access to resources in /pages/secure/** -->
-       <!-- <sec:intercept-url pattern="/pages/secure/**" access="hasRole('ROLE_MODERATOR')" />-->
-
+    <sec:http use-expressions="true">
         <!-- Page level Spring Security : Permit access to resources in /pages/unsecure/** -->
-        <sec:intercept-url pattern="/**" access="permitAll"/>
-
-        <!-- Page level Spring Security : Intercept access to resources in /** -->
-        <!--<sec:intercept-url pattern="/**" access="hasRole('ROLE_MODERATOR')"/>-->
-
-        <!-- Page level Spring Security : Enable Primefaces -->
-        <sec:intercept-url pattern="/javax.faces.resource/**" access="permitAll"/>
+        <sec:intercept-url pattern="/faces/profile/**" access="hasRole('USER_ROLE')"/>
   
         <!-- Define login page for Spring Security -->      
-        <sec:form-login login-page="/faces/register/login.xhtml"/>
-
-        <!-- Define logout properties for Spring Security -->
-        <sec:logout invalidate-session="true" delete-cookies="true" logout-success-url="/"></sec:logout>
+        <sec:form-login 
+            login-page="/faces/register/login.xhtml" 
+            authentication-failure-url="/faces/register/login-fails.xhtml"
+            authentication-success-handler-ref="myAuthenticationSuccessHandler"
+            authentication-failure-handler-ref="myAuthenticationFailureHandler"
+        />
     </sec:http>
    
     <!-- Set customUserDetailsService class as the authentication Manager for Spring Security-->
     <sec:authentication-manager alias="authenticationManager">
         <sec:authentication-provider user-service-ref="userService">
-            <sec:password-encoder hash="plaintext"></sec:password-encoder>
+            <!--<sec:password-encoder hash="plaintext"></sec:password-encoder>-->
         </sec:authentication-provider>
     </sec:authentication-manager>
-
-    <!-- Inject authentication Manager to our LoginBean -->
-    <!--<beans:bean id="userLoginBean" name="userLoginBean" class="com.mycompany.flight.security.UserLoginBean" scope="prototype">
-        <beans:property name="authenticationManager" ref="authenticationManager"></beans:property>
-    </beans:bean>-->
 </beans:beans>

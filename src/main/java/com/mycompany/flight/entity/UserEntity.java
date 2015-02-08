@@ -1,6 +1,8 @@
 package com.mycompany.flight.entity;
 
 import java.sql.Date;
+import java.util.Collection;
+import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.hibernate.annotations.Type;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * UserEntity that mapped from the DB model
@@ -19,7 +24,8 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 @Table(name = "User")
-public class UserEntity {
+public class UserEntity implements UserDetails {
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue
@@ -69,6 +75,37 @@ public class UserEntity {
             inverseJoinColumns = {
                 @JoinColumn(name = "RoleID", referencedColumnName = "ID")})
     private RoleEntity role;
+    
+    /* Spring Security fields*/
+    /**
+     * Role List with the avaible Roles
+     */
+    @Transient
+    private List<RoleEntity> authorities;
+    
+    /**
+     * Boolean for controlling if the account is expired
+     */
+    @Transient
+    private boolean accountNonExpired = true;
+    
+    /**
+     * Boolean for controlling if the account is locked
+     */
+    @Transient
+    private boolean accountNonLocked = true;
+    
+    /**
+     * Boolean for controlling if the credentials has been expired
+     */
+    @Transient
+    private boolean credentialsNonExpired = true;
+    
+    /**
+     * Boolean for controlling if have been enabled or not
+     */
+    @Transient
+    private boolean enabled = true;
 
     public UserEntity() {
     }
@@ -237,6 +274,7 @@ public class UserEntity {
      *
      * @return
      */
+    @Override
     public String getPassword() {
         return password;
     }
@@ -317,7 +355,92 @@ public class UserEntity {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
-    
-    
 
+    
+    /**
+     * Getter for name
+     * @return String
+     */
+    @Override
+    public String getUsername() {
+        return this.name;
+    }
+
+    /**
+     * Getter for accountNonExpired
+     * @return booelan
+     */
+    @Override
+    public boolean isAccountNonExpired() {
+        return this.accountNonExpired;
+    }
+    
+    /**
+     * Setter for accountNonExpired
+     * @param accountNonExpired boolean
+     */
+    public void setAccountNonExpired(boolean accountNonExpired) {
+        this.accountNonExpired = accountNonExpired;
+    }
+
+    /**
+     * Getter for the accountLocket
+     * @return 
+     */
+    @Override
+    public boolean isAccountNonLocked() {
+        return this.accountNonLocked;
+    }
+    
+    /**
+     * Setter for locking the account
+     * @param accountNonLocked boolean
+     */
+    public void setAccountNonLocked(boolean accountNonLocked) {
+        this.accountNonLocked = accountNonLocked;
+    }
+
+    /**
+     * Getter for credentialsNonExpired
+     * @return boolean
+     */
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return this.credentialsNonExpired;
+    }
+    
+    /**
+     * Setter for credentialsNonExpired
+     * @param credentialsNonExpired boolean
+     */
+    public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+        this.credentialsNonExpired = credentialsNonExpired;
+    }
+
+    /**
+     * Getter for enabled
+     * @return boolean
+     */
+    @Override
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    /**
+     * Getter of Authorities
+     * @return 
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.authorities;
+    }
+    
+    /**
+     * Setter of authorities from a List of Roles
+     * @param authorities 
+     */
+    public void setAuthorities(List<RoleEntity> authorities) {
+        this.authorities = authorities;
+    }
+    
 }

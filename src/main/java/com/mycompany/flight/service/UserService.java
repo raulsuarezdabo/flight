@@ -69,4 +69,12 @@ public interface UserService {
      * @return success or not
      */
     public Boolean forgotAccount(String email, Locale current);
+
+    /**
+     * method that check if the credentials are correct
+     * @param email
+     * @param password
+     * @return 
+     */
+    public boolean checkCredentails(String email, String password);
 }

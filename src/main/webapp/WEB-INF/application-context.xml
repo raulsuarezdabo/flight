@@ -34,5 +34,6 @@
     <bean id="countryDAO" class="com.mycompany.flight.dao.CountryDAOImpl" ></bean>
     <bean id="cityDAO" class="com.mycompany.flight.dao.CityDAOImpl" ></bean>
     <bean id="userDAO" class="com.mycompany.flight.dao.UserDAOImpl" ></bean>
-    <bean id="authenticationManager" class="org.springframework.security.authentication.AuthenticationManager"></bean>
+    <bean id="myAuthenticationSuccessHandler" class="com.mycompany.flight.security.handler.MyAuthenticationSuccessHandler"></bean>
+    <bean id="myAuthenticationFailureHandler" class="com.mycompany.flight.security.handler.MyAuthenticationFailureHandler"></bean>
 </beans>

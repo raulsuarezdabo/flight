@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.springframework.security.core.GrantedAuthority;
 
 /**
  *
@@ -17,7 +18,9 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Role")
-public class RoleEntity {
+public class RoleEntity implements GrantedAuthority {
+    
+    private static final long serialVersionUID = 1L;
     /**
      * Predefined roles to the users
      */
@@ -69,6 +72,15 @@ public class RoleEntity {
 
     public void setUserList(List<UserEntity> userList) {
         this.userList = userList;
+    }
+
+    /**
+     * Method that returns Authority name (Spring security integration)
+     * @return  String
+     */
+    @Override
+    public String getAuthority() {
+        return this.name;
     }
 
 }

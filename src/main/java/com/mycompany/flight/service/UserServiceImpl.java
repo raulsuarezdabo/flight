@@ -14,7 +14,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -164,14 +163,47 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
-    public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public UserEntity loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity user = this.userDAO.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("User " + email + " not found!");
+        }
+        return user;
     }
 
     @Override
     public Boolean forgotAccount(String email, Locale current) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    /**
+     * method that check if the given email and password match with a created account or not
+     * @param email
+     * @param password
+     * @return boolean
+     */
+    @Override
+    public boolean checkCredentails(String email, String password) {
+        try {
+            UserEntity user = this.userDAO.findByEmail(email);
+            if (user == null) {
+                throw new Exception("User not found");
+            }
+            if (user.getPassword().compareTo(password) != 0) {
+                throw new Exception("User password not match");
+            }
+            return true;
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
 }
