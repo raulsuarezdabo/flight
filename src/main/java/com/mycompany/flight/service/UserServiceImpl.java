@@ -238,5 +238,17 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
     }
     
-
+    /**
+     * Method that clears the current user's session
+     * @return boolean
+     */
+    @Override
+    public boolean logout () {
+        try {
+            SecurityContextHolder.clearContext();
+            return true;
+        } catch ( Exception e ) {
+            return false;
+        }
+    }
 }

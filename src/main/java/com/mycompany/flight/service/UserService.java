@@ -89,4 +89,10 @@ public interface UserService {
      * @return UserEntity
      */
     public UserEntity getLoggedUser();
+    
+    /**
+     * Method that destroy the current user's session
+     * @return boolean
+     */
+    public boolean logout();
 }

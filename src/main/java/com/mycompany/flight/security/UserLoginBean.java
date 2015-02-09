@@ -2,9 +2,14 @@ package com.mycompany.flight.security;
 
 import com.mycompany.flight.entity.UserEntity;
 import com.mycompany.flight.service.UserService;
+import static com.sun.j3d.utils.timer.J3DTimer.getValue;
 import java.io.IOException;
 import java.io.Serializable;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -70,7 +75,8 @@ public class UserLoginBean implements Serializable {
 
     /**
      * Getter userService
-     * @return 
+     *
+     * @return
      */
     public UserService getUserService() {
         return userService;
@@ -78,7 +84,8 @@ public class UserLoginBean implements Serializable {
 
     /**
      * Setter userService
-     * @param userService 
+     *
+     * @param userService
      */
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -100,59 +107,41 @@ public class UserLoginBean implements Serializable {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/j_spring_security_check");
             dispatcher.forward(request, response);
             FacesContext.getCurrentInstance().responseComplete();
-        }
-        else {
+        } else {
             String errorMessage = FacesContext.getCurrentInstance().getApplication().
-                getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("emailFails");
+                    getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("emailFails");
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                errorMessage, errorMessage);
+                    errorMessage, errorMessage);
             FacesContext.getCurrentInstance().addMessage("j_username", message);
         }
         return null;
     }
 
-    public String logout() {
-        SecurityContextHolder.clearContext();
-        return "loggedout";
-        /**
-         * FacesContext context = FacesContext.getCurrentInstance();
-         * Map<String, Object> sessionMap =
-         * context.getExternalContext().getSessionMap(); if
-         * (!sessionMap.containsKey("sessionBean")) return "";
-         *
-         * SessionBean sessionBean = (SessionBean)sessionMap.get("sessionBean");
-         * log.info("Logging out user: " +
-         * sessionBean.getLoggedInUser().getUsername());
-         *
-         * sessionMap.remove("sessionBean");
-         *
-         * //HttpSession session =
-         * (HttpSession)context.getExternalContext().getSession(false);
-         * //session.invalidate(); RequestDispatcher dispatcher =
-         * ((ServletRequest) context.getExternalContext().getRequest())
-         * .getRequestDispatcher("/j_spring_security_logout");
-         *
-         * try { dispatcher.forward((ServletRequest)
-         * context.getExternalContext().getRequest(), (ServletResponse)
-         * context.getExternalContext().getResponse()); } catch
-         * (ServletException e) { log.error("ServletException", e); } catch
-         * (IOException e) { log.error("IOException", e); }
-         *
-         * FacesContext.getCurrentInstance().responseComplete(); // It's OK to
-         * return null here because Faces is just going to exit.
-         *
-         * log.info("End LoginBean.logout"); return "";
-         */
+    public void logout() {
+        try {
+            if (this.userService.logout() == true) {
+//                FacesContext.getCurrentInstance().getExternalContext().getFlash().put("success", "logoutSuccessMessage");
+            }
+            else {
+//                FacesContext.getCurrentInstance().getExternalContext().getFlash().put("param1", "logoutErrorMessage");
+            }
+            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath());
+        } catch (IOException ex) {
+            Logger.getLogger(UserLoginBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    public boolean isLogged () {
+
+    public boolean isLogged() {
         return this.userService.isLogged();
     }
-    
+
     /**
-     * Method to access the entity UserEntity which collect the information about the logged user
-     * @return 
+     * Method to access the entity UserEntity which collect the information
+     * about the logged user
+     *
+     * @return
      */
-    public UserEntity getLoggedUser () {
+    public UserEntity getLoggedUser() {
         return this.userService.getLoggedUser();
     }
 }
