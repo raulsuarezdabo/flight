@@ -1,5 +1,6 @@
 package com.mycompany.flight.security;
 
+import com.mycompany.flight.entity.UserEntity;
 import com.mycompany.flight.service.UserService;
 import java.io.IOException;
 import java.io.Serializable;
@@ -142,5 +143,16 @@ public class UserLoginBean implements Serializable {
          *
          * log.info("End LoginBean.logout"); return "";
          */
+    }
+    public boolean isLogged () {
+        return this.userService.isLogged();
+    }
+    
+    /**
+     * Method to access the entity UserEntity which collect the information about the logged user
+     * @return 
+     */
+    public UserEntity getLoggedUser () {
+        return this.userService.getLoggedUser();
     }
 }

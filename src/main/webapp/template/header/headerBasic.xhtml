@@ -16,7 +16,7 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <c:if test="true">
+                        <c:if test="#{userLoginBean.isLogged() eq false}">
                             <li class="#{view.viewId eq '/register/new_user.xhtml' ? 'active' : ''}">
                                 <h:link value="#{msg.registerUser}" outcome="new_user" />
                             </li>
@@ -24,17 +24,13 @@
                                 <h:link value="#{msg.buttonLogin}" outcome="login" />
                             </li>
                         </c:if>
-                        <c:if test="false">
+                        <c:if test="#{userLoginBean.isLogged() eq true}">
                             <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{msg.hi} #{userLoginBean.getLoggedUser().getUsername()} <span class="caret"></span></a>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li class="divider"></li>
-                                    <li class="dropdown-header">Nav header</li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li><a href="#">One more separated link</a></li>
+                                    <li><a href="#"><span class="glyphicon glyphicon-user">&nbsp;#{msg.myProfile}</span></a></li>
+                                    <li><a href="#"><span class="glyphicon glyphicon-log-out">&nbsp;#{msg.exit}</span></a></li>
+                                    <!--<li><a href="#">Something else here</a></li>-->
                                 </ul>
                             </li>
                         </c:if>

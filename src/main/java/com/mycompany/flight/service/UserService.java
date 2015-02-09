@@ -77,4 +77,16 @@ public interface UserService {
      * @return 
      */
     public boolean checkCredentails(String email, String password);
+    
+    /**
+     * Method that check over spring security if is logged the user or not
+     * @return boolean
+     */
+    public boolean isLogged();
+    
+    /**
+     * Method that get the currently user logged
+     * @return UserEntity
+     */
+    public UserEntity getLoggedUser();
 }

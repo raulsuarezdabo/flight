@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -25,10 +26,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private UserDAOImpl userDAO;
-    
+
     @Autowired
     private RoleDAOImpl roleDAO;
-    
+
     @Autowired
     private EmailServiceImpl email;
 
@@ -74,20 +75,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     @Transactional
     public UserEntity newUser(
-            String email, 
-            String name, 
-            String surname, 
-            String address, 
-            String nif, 
-            String phone, 
-            Date birthday, 
-            CountryEntity country, 
+            String email,
+            String name,
+            String surname,
+            String address,
+            String nif,
+            String phone,
+            Date birthday,
+            CountryEntity country,
             CityEntity city,
             Locale locale
     ) {
         try {
             ArrayList to = new ArrayList();
-            
+
             user = new UserEntity();
             user.setEmail(email);
             user.setName(name);
@@ -103,9 +104,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             user.setCreatedAt(new java.sql.Date(now.getTime()));
             RoleEntity userRole = this.roleDAO.findById(RoleEntity.USER_ROLE);
             this.userDAO.addUser(user);
-            
+
             to.add(user);
-            
+
             this.email.sendMail(to, null, "wellcome", locale);
             return user;
         } catch (Exception e) {
@@ -116,11 +117,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     /**
      * Method to encrypt the password the user
+     *
      * @param original
-     * @return String codified to md5 
+     * @return String codified to md5
      */
-    private String get_md5(String original){
-        String md5="";
+    private String get_md5(String original) {
+        String md5 = "";
         try {
             if (!original.equalsIgnoreCase("")) {
                 MessageDigest md = MessageDigest.getInstance("MD5");
@@ -184,7 +186,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     /**
-     * method that check if the given email and password match with a created account or not
+     * method that check if the given email and password match with a created
+     * account or not
+     *
      * @param email
      * @param password
      * @return boolean
@@ -200,10 +204,39 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 throw new Exception("User password not match");
             }
             return true;
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
         }
     }
+
+    /**
+     * Method to know if currently is a user logged
+     * @return boolean
+     */
+    @Override
+    public boolean isLogged() {
+        try {
+            return (this.getLoggedUser()) instanceof UserEntity;
+        } catch ( Exception e ) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Method that obtains the currently logged user, if not returns null
+     * @return UserEntity
+     */
+    @Override
+    public UserEntity getLoggedUser () {
+        try {
+            return (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        } catch ( Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
 
 }
