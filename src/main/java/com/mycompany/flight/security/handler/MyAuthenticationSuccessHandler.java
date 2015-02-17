@@ -24,10 +24,10 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
             
             if (user.getRole().getId() == RoleEntity.USER_ROLE) {
                 //User Role match
-                response.sendRedirect(request.getContextPath() + "/faces/faces/index.xhtml");
+                response.sendRedirect(request.getContextPath() + "/index.xhtml");
             }
         } catch (Exception e) {
-            response.sendRedirect(request.getContextPath() + "/faces/faces/index.xhtml");
+            response.sendRedirect(request.getContextPath() + "/index.xhtml");
         }
     }
 }

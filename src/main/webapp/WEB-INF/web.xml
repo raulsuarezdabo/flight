@@ -3,27 +3,27 @@
     <!-- CUSTOM ERROR PAGE -->
     <error-page>
         <error-code>404</error-code>
-        <location>/faces/error.xhtml</location>
+        <location>/error.xhtml</location>
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/faces/error.xhtml</location>
+        <location>/error.xhtml</location>
     </error-page>
     <error-page>
         <exception-type>java.lang.Exception</exception-type>
-        <location>/faces/error.xhtml</location>
+        <location>/error.xhtml</location>
     </error-page>
     <error-page>
         <exception-type>java.io.FileNotFoundException</exception-type>
-        <location>/faces/error.xhtml</location>
+        <location>/error.xhtml</location>
     </error-page>
     <error-page>
         <exception-type>javax.servlet.ServletException</exception-type>
-        <location>/faces/error.xhtml</location>
+        <location>/error.xhtml</location>
     </error-page>
     <ererror-page>
         <exception-type>java.lang.ClassNotFoundException</exception-type>
-        <location>/faces/error.xhtml</location>
+        <location>/error.xhtml</location>
     </ererror-page>
     <context-param>
         <description>State saving method: 'client' or 'server'
@@ -91,7 +91,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
+        <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
@@ -99,6 +99,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
+        <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
 </web-app>

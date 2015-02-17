@@ -11,10 +11,10 @@
     <!-- Enable method level Spring Security by annotations  -->
     <sec:http use-expressions="true">
         <!-- Page level Spring Security : Permit access to resources in /pages/unsecure/** -->
-        <sec:intercept-url pattern="/faces/faces/profile/**" access="hasRole('USER_ROLE')"/>     
+        <sec:intercept-url pattern="/profile/**" access="hasRole('USER_ROLE')"/>     
         <sec:form-login 
-            login-page="/faces/register/login.xhtml" 
-            authentication-failure-url="/faces/register/login-fails.xhtml"
+            login-page="/register/login.xhtml" 
+            authentication-failure-url="/register/login-fails.xhtml"
             authentication-success-handler-ref="myAuthenticationSuccessHandler"
             authentication-failure-handler-ref="myAuthenticationFailureHandler"
         />
