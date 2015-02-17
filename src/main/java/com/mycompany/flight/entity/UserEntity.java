@@ -1,6 +1,7 @@
 package com.mycompany.flight.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -25,6 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Table(name = "User")
 public class UserEntity implements UserDetails {
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -55,15 +57,15 @@ public class UserEntity implements UserDetails {
 
     @Column(name = "Password")
     private String password;
-    
+
     @Column(name = "CreatedAt")
-    @Type(type="timestamp")
+    @Type(type = "timestamp")
     private Date createdAt;
 
     @OneToOne
     @JoinColumn(name = "CountryCode")
     private CountryEntity country;
-    
+
     @OneToOne
     @JoinColumn(name = "CityId")
     private CityEntity city;
@@ -75,32 +77,32 @@ public class UserEntity implements UserDetails {
             inverseJoinColumns = {
                 @JoinColumn(name = "RoleID", referencedColumnName = "ID")})
     private RoleEntity role;
-    
+
     /* Spring Security fields*/
     /**
      * Role List with the avaible Roles
      */
     @Transient
     private List<RoleEntity> authorities;
-    
+
     /**
      * Boolean for controlling if the account is expired
      */
     @Transient
     private boolean accountNonExpired = true;
-    
+
     /**
      * Boolean for controlling if the account is locked
      */
     @Transient
     private boolean accountNonLocked = true;
-    
+
     /**
      * Boolean for controlling if the credentials has been expired
      */
     @Transient
     private boolean credentialsNonExpired = true;
-    
+
     /**
      * Boolean for controlling if have been enabled or not
      */
@@ -323,10 +325,11 @@ public class UserEntity implements UserDetails {
     public void setCountry(CountryEntity country) {
         this.country = country;
     }
-    
+
     /**
      * Getter for city entity
-     * @return 
+     *
+     * @return
      */
     public CityEntity getCity() {
         return this.city;
@@ -334,7 +337,8 @@ public class UserEntity implements UserDetails {
 
     /**
      * Setter city entity
-     * @param city 
+     *
+     * @param city
      */
     public void setCity(CityEntity city) {
         this.city = city;
@@ -342,6 +346,7 @@ public class UserEntity implements UserDetails {
 
     /**
      * Getter createdAt
+     *
      * @return Date
      */
     public Date getCreatedAt() {
@@ -350,15 +355,16 @@ public class UserEntity implements UserDetails {
 
     /**
      * Setter createdAt
-     * @param createdAt 
+     *
+     * @param createdAt
      */
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
-    
     /**
      * Getter for name
+     *
      * @return String
      */
     @Override
@@ -368,15 +374,17 @@ public class UserEntity implements UserDetails {
 
     /**
      * Getter for accountNonExpired
+     *
      * @return booelan
      */
     @Override
     public boolean isAccountNonExpired() {
         return this.accountNonExpired;
     }
-    
+
     /**
      * Setter for accountNonExpired
+     *
      * @param accountNonExpired boolean
      */
     public void setAccountNonExpired(boolean accountNonExpired) {
@@ -385,15 +393,17 @@ public class UserEntity implements UserDetails {
 
     /**
      * Getter for the accountLocket
-     * @return 
+     *
+     * @return
      */
     @Override
     public boolean isAccountNonLocked() {
         return this.accountNonLocked;
     }
-    
+
     /**
      * Setter for locking the account
+     *
      * @param accountNonLocked boolean
      */
     public void setAccountNonLocked(boolean accountNonLocked) {
@@ -402,15 +412,17 @@ public class UserEntity implements UserDetails {
 
     /**
      * Getter for credentialsNonExpired
+     *
      * @return boolean
      */
     @Override
     public boolean isCredentialsNonExpired() {
         return this.credentialsNonExpired;
     }
-    
+
     /**
      * Setter for credentialsNonExpired
+     *
      * @param credentialsNonExpired boolean
      */
     public void setCredentialsNonExpired(boolean credentialsNonExpired) {
@@ -419,6 +431,7 @@ public class UserEntity implements UserDetails {
 
     /**
      * Getter for enabled
+     *
      * @return boolean
      */
     @Override
@@ -428,19 +441,20 @@ public class UserEntity implements UserDetails {
 
     /**
      * Getter of Authorities
-     * @return 
+     *
+     * @return
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
+        try {
+            this.authorities = new ArrayList<>();
+            this.authorities.add(this.role);
+
+            return this.authorities;
+        } catch( Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
-    
-    /**
-     * Setter of authorities from a List of Roles
-     * @param authorities 
-     */
-    public void setAuthorities(List<RoleEntity> authorities) {
-        this.authorities = authorities;
-    }
-    
+
 }

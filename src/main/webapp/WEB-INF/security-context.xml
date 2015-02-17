@@ -11,9 +11,7 @@
     <!-- Enable method level Spring Security by annotations  -->
     <sec:http use-expressions="true">
         <!-- Page level Spring Security : Permit access to resources in /pages/unsecure/** -->
-        <sec:intercept-url pattern="/faces/profile/**" access="hasRole('USER_ROLE')"/>
-  
-        <!-- Define login page for Spring Security -->      
+        <sec:intercept-url pattern="/faces/faces/profile/**" access="hasRole('USER_ROLE')"/>     
         <sec:form-login 
             login-page="/faces/register/login.xhtml" 
             authentication-failure-url="/faces/register/login-fails.xhtml"
