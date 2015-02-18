@@ -71,19 +71,17 @@ public class UserEntity implements UserDetails {
     @JoinColumn(name = "CityId")
     private CityEntity city;
 
+
+    /* Spring Security fields*/
+    /**
+     * Role List with the avaible Roles
+     */
     @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "UserRole",
             joinColumns = {
                 @JoinColumn(name = "UserID", referencedColumnName = "ID")},
             inverseJoinColumns = {
                 @JoinColumn(name = "RoleID", referencedColumnName = "ID")})
-    private List <RoleEntity> role;
-
-    /* Spring Security fields*/
-    /**
-     * Role List with the avaible Roles
-     */
-    @Transient
     private List<RoleEntity> authorities;
 
     /**
@@ -297,7 +295,7 @@ public class UserEntity implements UserDetails {
      * @return
      */
     public List <RoleEntity> getRole() {
-        return role;
+        return authorities;
     }
 
     /**
@@ -306,7 +304,7 @@ public class UserEntity implements UserDetails {
      * @param role
      */
     public void setRole(List<RoleEntity> role) {
-        this.role = role;
+        this.authorities = role;
     }
     
     /**
@@ -314,7 +312,7 @@ public class UserEntity implements UserDetails {
      * @param role 
      */
     public void addRole (RoleEntity role) {
-        this.role.add(role);
+        this.authorities.add(role);
     }
 
     /**
@@ -456,7 +454,6 @@ public class UserEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         try {
-            this.authorities = this.role;
             return this.authorities;
         } catch( Exception e) {
             System.out.println(e.getMessage());
