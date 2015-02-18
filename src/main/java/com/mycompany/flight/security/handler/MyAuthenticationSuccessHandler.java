@@ -21,11 +21,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication a) throws IOException, ServletException {
         try {
             UserEntity user = (UserEntity) a.getPrincipal();
-            
-            if (user.getRole().getId() == RoleEntity.USER_ROLE) {
-                //User Role match
-                response.sendRedirect(request.getContextPath() + "/index.xhtml");
-            }
+            response.sendRedirect(request.getContextPath() + "/index.xhtml");
         } catch (Exception e) {
             response.sendRedirect(request.getContextPath() + "/index.xhtml");
         }

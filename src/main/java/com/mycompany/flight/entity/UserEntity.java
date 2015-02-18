@@ -1,16 +1,17 @@
 package com.mycompany.flight.entity;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -70,13 +71,13 @@ public class UserEntity implements UserDetails {
     @JoinColumn(name = "CityId")
     private CityEntity city;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "UserRole",
             joinColumns = {
                 @JoinColumn(name = "UserID", referencedColumnName = "ID")},
             inverseJoinColumns = {
                 @JoinColumn(name = "RoleID", referencedColumnName = "ID")})
-    private RoleEntity role;
+    private List <RoleEntity> role;
 
     /* Spring Security fields*/
     /**
@@ -295,7 +296,7 @@ public class UserEntity implements UserDetails {
      *
      * @return
      */
-    public RoleEntity getRole() {
+    public List <RoleEntity> getRole() {
         return role;
     }
 
@@ -304,8 +305,16 @@ public class UserEntity implements UserDetails {
      *
      * @param role
      */
-    public void setRole(RoleEntity role) {
+    public void setRole(List<RoleEntity> role) {
         this.role = role;
+    }
+    
+    /**
+     * Method for adding a role on the List of roles
+     * @param role 
+     */
+    public void addRole (RoleEntity role) {
+        this.role.add(role);
     }
 
     /**
@@ -447,9 +456,7 @@ public class UserEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         try {
-            this.authorities = new ArrayList<>();
-            this.authorities.add(this.role);
-
+            this.authorities = this.role;
             return this.authorities;
         } catch( Exception e) {
             System.out.println(e.getMessage());
