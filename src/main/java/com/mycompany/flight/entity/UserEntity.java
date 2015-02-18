@@ -1,6 +1,7 @@
 package com.mycompany.flight.entity;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -312,6 +313,9 @@ public class UserEntity implements UserDetails {
      * @param role 
      */
     public void addRole (RoleEntity role) {
+        if (this.authorities == null) {
+            this.authorities = new ArrayList<>();
+        }
         this.authorities.add(role);
     }
 

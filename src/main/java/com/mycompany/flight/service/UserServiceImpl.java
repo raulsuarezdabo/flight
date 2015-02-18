@@ -103,6 +103,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             java.util.Date now = new Date();
             user.setCreatedAt(new java.sql.Date(now.getTime()));
             RoleEntity userRole = this.roleDAO.findById(RoleEntity.USER_ROLE);
+            user.addRole(userRole);
             this.userDAO.addUser(user);
 
             to.add(user);
