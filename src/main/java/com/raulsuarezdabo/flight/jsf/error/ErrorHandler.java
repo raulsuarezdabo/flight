@@ -3,16 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.flight.jsf.error;
+package com.raulsuarezdabo.flight.jsf.error;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 /**
  *
  * @author raulsuarez
  */
+@ManagedBean(eager=true)
+@RequestScoped
 public class ErrorHandler {
 
     public String getStatusCode() {

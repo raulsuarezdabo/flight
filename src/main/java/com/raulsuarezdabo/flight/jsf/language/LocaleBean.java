@@ -1,14 +1,18 @@
-package com.mycompany.flight.language;
+package com.raulsuarezdabo.flight.jsf.language;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Locale;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 /**
  *
  * @author raulsuarez
  */
+@ManagedBean(eager=true)
+@SessionScoped
 public class LocaleBean implements Serializable {
 
     /**
@@ -53,7 +57,4 @@ public class LocaleBean implements Serializable {
     public void setCurrent(Locale current) {
         this.current = current;
     }
-    
-    
-    
 }

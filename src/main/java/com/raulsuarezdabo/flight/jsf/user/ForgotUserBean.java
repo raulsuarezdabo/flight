@@ -1,13 +1,17 @@
-package com.mycompany.flight.register;
+package com.raulsuarezdabo.flight.jsf.user;
 
 import com.mycompany.flight.dao.UserDAO;
-import com.mycompany.flight.language.LocaleBean;
+import com.raulsuarezdabo.flight.jsf.language.LocaleBean;
 import com.mycompany.flight.service.UserService;
 import java.io.Serializable;
 import java.util.Map;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Bean to manage the forgotten user account password, it sends an e-mail with
@@ -15,6 +19,8 @@ import javax.faces.context.FacesContext;
  *
  * @author raulsuarez
  */
+@ManagedBean(eager=true)
+@ViewScoped
 public class ForgotUserBean implements Serializable {
 
     /**
@@ -23,13 +29,10 @@ public class ForgotUserBean implements Serializable {
     private String email;
     
     /**
-     * DAO of user
-     */
-    private UserDAO userDAO;
-    
-    /**
      * User service to use on the view
      */
+    @Autowired
+    @ManagedProperty(value="#{userService}")
     private UserService userService;
 
     /**
@@ -47,7 +50,7 @@ public class ForgotUserBean implements Serializable {
      * @param email email of the user
      */
     public void setEmail(String email) {
-        if (this.userDAO.findByEmail(email) == null) {
+        if (this.userService.getByEmail(email) == null) {
             // Bring the error message using the Faces Context
             String errorMessage = FacesContext.getCurrentInstance().getApplication().
                 getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("emailNoExist");
@@ -59,24 +62,6 @@ public class ForgotUserBean implements Serializable {
         } else {
             this.email = email;
         }
-    }
-    
-    /**
-     * Getter of user DAO
-     *
-     * @return UserDao
-     */
-    public UserDAO getUserDAO() {
-        return userDAO;
-    }
-
-    /**
-     * Setter of userDAO
-     *
-     * @param userDAO
-     */
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
     }
     
     /**

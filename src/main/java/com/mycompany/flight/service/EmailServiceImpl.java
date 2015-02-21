@@ -5,6 +5,7 @@
  */
 package com.mycompany.flight.service;
 
+import com.mycompany.flight.service.EmailService;
 import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
 import com.microtripit.mandrillapp.lutung.view.MandrillMessage;

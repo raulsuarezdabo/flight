@@ -18,10 +18,10 @@ public interface UserDAO {
 
     /**
      * Method for updating user Entity on DB
-     *
      * @param user
+     * @return boolean  success or error updating the user on DB
      */
-    public void updateUser(UserEntity user);
+    public boolean updateUser(UserEntity user);
 
     /**
      * List of all user on the DB

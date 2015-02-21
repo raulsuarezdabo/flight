@@ -1,5 +1,8 @@
 package com.mycompany.flight.service;
 
+import com.mycompany.flight.service.EmailServiceImpl;
+import com.mycompany.flight.dao.CityDAO;
+import com.mycompany.flight.dao.CountryDAO;
 import com.mycompany.flight.dao.RoleDAOImpl;
 import com.mycompany.flight.dao.UserDAOImpl;
 import com.mycompany.flight.entity.CityEntity;
@@ -10,18 +13,19 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author raulsuarez
  */
+@Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
@@ -32,7 +36,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private EmailServiceImpl email;
-
+    
     /**
      * property that contains the user to manage
      */
@@ -146,9 +150,56 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
     }
 
+    /**
+     * Method for updating the information of an specific user
+     * @param email
+     * @param editUser
+     * @param persist
+     * @return 
+     */
     @Override
-    public UserEntity updateUser(UserEntity user, HashMap values, boolean persist) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Transactional
+    public UserEntity updateUser(String email, UserEntity editUser, boolean persist) {
+        try {
+            UserEntity user = this.userDAO.findByEmail(email);
+            if (user != null && user instanceof UserEntity) {
+                // Handler block
+                if ( editUser.getName() != null ) {
+                    user.setName(editUser.getName());    
+                }
+                if ( editUser.getSurname() != null ) {
+                    user.setSurname(editUser.getSurname());
+                }
+                if ( editUser.getBirthDay() != null ) {
+                    user.setBirthDay(new java.sql.Date(editUser.getBirthDay().getTime()));
+                }
+                if ( editUser.getNif() != null ) {
+                    user.setNif(editUser.getNif());
+                }
+                if ( editUser.getPhone() != null ) {
+                    user.setPhone(editUser.getPhone());
+                }
+                if ( editUser.getAddress() != null ) {
+                    user.setAddress(editUser.getAddress());
+                }
+                if ( editUser.getCountry() != null ) {
+                    user.setCountry(editUser.getCountry());
+                }
+                if ( editUser.getCity() != null ) {
+                    user.setCity(editUser.getCity());
+                }
+                // Persist block
+                if (persist == true) {
+                    if ( this.userDAO.updateUser(user) == false) {
+                        throw new Exception("Error updating the user");
+                    }
+                }
+            }
+            return user;
+        } catch( Exception e ) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @Override
@@ -162,8 +213,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserEntity getByEmail(String email) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.userDAO.findByEmail(email);
     }
 
     /**
@@ -173,6 +225,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * @throws UsernameNotFoundException
      */
     @Override
+    @Transactional
     public UserEntity loadUserByUsername(String email) throws UsernameNotFoundException {
         UserEntity user = this.userDAO.findByEmail(email);
         if (user == null) {
@@ -195,6 +248,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
      * @return boolean
      */
     @Override
+    @Transactional
     public boolean checkCredentails(String email, String password) {
         try {
             UserEntity user = this.userDAO.findByEmail(email);

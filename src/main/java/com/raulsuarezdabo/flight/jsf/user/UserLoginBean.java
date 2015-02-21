@@ -1,28 +1,29 @@
-package com.mycompany.flight.security;
+package com.raulsuarezdabo.flight.jsf.user;
 
 import com.mycompany.flight.entity.UserEntity;
 import com.mycompany.flight.service.UserService;
-import static com.sun.j3d.utils.timer.J3DTimer.getValue;
 import java.io.IOException;
 import java.io.Serializable;
-import java.net.URL;
-import java.net.URLEncoder;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletResponse;
-import org.springframework.security.core.context.SecurityContextHolder;
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author raulsuarez
  */
+@ManagedBean(eager=true)
+@RequestScoped
 public class UserLoginBean implements Serializable {
 
     /**
@@ -35,6 +36,8 @@ public class UserLoginBean implements Serializable {
      */
     private String password;
 
+    @Autowired
+    @ManagedProperty(value="#{userService}")
     private UserService userService;
 
     /**

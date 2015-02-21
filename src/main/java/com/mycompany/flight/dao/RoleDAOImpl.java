@@ -6,11 +6,10 @@
 package com.mycompany.flight.dao;
 
 import com.mycompany.flight.entity.RoleEntity;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -48,10 +47,7 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public RoleEntity findById(Integer id) {
         try {
-            Session session = this.sessionFactory.getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            RoleEntity role = (RoleEntity) session.get(RoleEntity.class, id);
-            transaction.commit();
+            RoleEntity role = (RoleEntity) this.sessionFactory.getCurrentSession().get(RoleEntity.class, id);
             return role;
         } catch(Exception ex) {
             return null;

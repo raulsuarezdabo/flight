@@ -8,10 +8,7 @@ package com.mycompany.flight.dao;
 import com.mycompany.flight.entity.CountryEntity;
 import java.util.List;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -52,11 +49,8 @@ public class CountryDAOImpl implements CountryDAO {
     @Override
     public CountryEntity findById(String code) {
         try {
-            Session session = this.sessionFactory.getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            CountryEntity role = (CountryEntity) session.get(CountryEntity.class, code);
-            transaction.commit();
-            return role;
+            CountryEntity country = (CountryEntity) this.sessionFactory.getCurrentSession().get(CountryEntity.class, code);
+            return country;
         } catch (Exception ex) {
             return null;
         }
@@ -71,10 +65,7 @@ public class CountryDAOImpl implements CountryDAO {
         List <CountryEntity> countries;
         countries = null;
         try {
-            Session session = this.sessionFactory.getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            countries = session.createQuery("FROM CountryEntity").list(); 
-            transaction.commit();
+            countries = this.sessionFactory.getCurrentSession().createQuery("FROM CountryEntity").list(); 
         } catch (HibernateException e) {
             return null;
         } 

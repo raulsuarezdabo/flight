@@ -1,27 +1,33 @@
-package com.mycompany.flight.register;
+/*
+ * Bean For managing the user information at the profile 
+ * @autho Raul Suarez Dabo <raul@suarez.com.es>
+ */
+package com.raulsuarezdabo.flight.jsf.user;
 
 import com.mycompany.flight.dao.CityDAO;
 import com.mycompany.flight.dao.CountryDAO;
-import com.mycompany.flight.dao.UserDAO;
 import com.mycompany.flight.entity.CityEntity;
 import com.mycompany.flight.entity.CountryEntity;
 import com.mycompany.flight.entity.UserEntity;
-import com.mycompany.flight.language.LocaleBean;
 import com.mycompany.flight.service.UserService;
 import com.mycompany.flight.utils.Utils;
-import java.io.Serializable;
+import com.raulsuarezdabo.flight.service.CityService;
+import com.raulsuarezdabo.flight.service.CountryService;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
+import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.ViewScoped;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
  * @author raulsuarez
  */
-public class NewUserBean implements Serializable {
+@ManagedBean(eager=true)
+@ViewScoped
+public class EditUserBean {
 
     /**
      * Name of the user
@@ -68,18 +74,24 @@ public class NewUserBean implements Serializable {
     /**
      * User service to use on the view
      */
+    @Autowired
+    @ManagedProperty(value="#{userService}")
     private UserService userService;
 
     /**
-     * DAO of countries
+     * Service of countries
      */
-    private CountryDAO countryDAO;
-
+    @Autowired
+    @ManagedProperty(value="#{countryService}")
+    private CountryService countryService;
+    
     /**
-     * DAO of user
+     * City service
      */
-    private UserDAO userDAO;
-
+    @Autowired
+    @ManagedProperty(value="#{cityService}")
+    private CityService cityService;
+    
     /**
      * List of countries
      */
@@ -89,11 +101,6 @@ public class NewUserBean implements Serializable {
      * List of cities
      */
     private List<CityEntity> cities;
-
-    /**
-     * DAO of cities
-     */
-    private CityDAO cityDAO;
 
     /**
      * Getter of name
@@ -146,16 +153,7 @@ public class NewUserBean implements Serializable {
      * @param email email of the user
      */
     public void setEmail(String email) {
-        if (this.userDAO.findByEmail(email) == null) {
-            this.email = email;
-        } else {
-            // Bring the error message using the Faces Context
-            String errorMessage = FacesContext.getCurrentInstance().getApplication().
-                getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("emailExist");
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                errorMessage, errorMessage);
-            FacesContext.getCurrentInstance().addMessage("userForm:userEmail", message);
-        }
+        this.email = email;
     }
 
     /**
@@ -255,7 +253,7 @@ public class NewUserBean implements Serializable {
      */
     public List<CountryEntity> getCountries() {
         if (this.countries == null) {
-            this.countries = this.countryDAO.findAll();
+            this.countries = this.countryService.getAll();
         }
         return this.countries;
     }
@@ -276,7 +274,7 @@ public class NewUserBean implements Serializable {
      */
     public List<CityEntity> getCities() {
         if (this.country != null) {
-            this.cities = this.cityDAO.findByCountry(Utils.getCountryFromList(this.country, this.countries));
+            this.cities = this.cityService.getCitiesByCountry(Utils.getCountryFromList(this.country, this.countries));
         } else {
             this.cities = null;
         }
@@ -329,89 +327,74 @@ public class NewUserBean implements Serializable {
     }
 
     /**
-     * CountryDAO Getter
-     *
-     * @return
+     * Getter country service
+     * @return 
      */
-    public CountryDAO getCountryDAO() {
-        return countryDAO;
+    public CountryService getCountryService() {
+        return countryService;
     }
 
     /**
-     * Setter countryDAO
-     *
-     * @param countryDao
+     * Setter country service
+     * @param countryService 
      */
-    public void setCountryDAO(CountryDAO countryDao) {
-        this.countryDAO = countryDao;
+    public void setCountryService(CountryService countryService) {
+        this.countryService = countryService;
     }
 
     /**
-     * Getter citydao
-     *
-     * @return
+     * Getter city service
+     * @return 
      */
-    public CityDAO getCityDAO() {
-        return cityDAO;
+    public CityService getCityService() {
+        return cityService;
     }
 
     /**
-     * Setter of cityDao
-     *
-     * @param cityDAO
+     * Setter of city service
+     * @param cityService 
      */
-    public void setCityDAO(CityDAO cityDAO) {
-        this.cityDAO = cityDAO;
+    public void setCityService(CityService cityService) {
+        this.cityService = cityService;
     }
-
-    /**
-     * Getter of user DAO
-     *
-     * @return UserDao
-     */
-    public UserDAO getUserDAO() {
-        return userDAO;
-    }
-
-    /**
-     * Setter of userDAO
-     *
-     * @param userDAO
-     */
-    public void setUserDAO(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
-
-    /**
-     * Method that creates the new user
-     *
-     * @return
-     */
-    public Boolean singUpAction() {
-        try {
-            FacesContext ctx = FacesContext.getCurrentInstance();
-            ExternalContext extCtx = ctx.getExternalContext();
-            Map<String, Object> sessionMap = extCtx.getSessionMap();
-            LocaleBean locale = (LocaleBean) sessionMap.get("localeBean");
-
-            UserEntity user = this.userService.newUser(
-                    this.email,
-                    this.name,
-                    this.surname,
-                    this.address,
-                    this.nif,
-                    this.phone,
-                    this.birthday,
-                    Utils.getCountryFromList(this.country, this.countries),
-                    Utils.getCityFromList(this.city, this.cities),
-                    locale.getCurrent()
-            );
-            if (user == null) {
-                return false;
-            }
-            return true;
-        } catch (Exception e) {
-            return false;
+    
+    @PostConstruct
+    public void init() {
+        UserEntity user = this.userService.getLoggedUser();
+        if ( (user != null) && (user instanceof UserEntity == true) ) {
+            this.email = user.getEmail();
+            this.name = user.getName();
+            this.surname = user.getSurname();
+            this.birthday = user.getBirthDay();
+            this.nif = user.getNif();
+            this.phone = user.getPhone();
+            this.address = user.getAddress();
+            this.country = user.getCountry().getCode();
+            this.city = Integer.parseInt(user.getCity().getId());
         }
+    }
+    
+    /**
+     * Method for updating the information of the user
+     * @return boolean  update jsf page
+     */
+    public boolean updateAction () {
+        UserEntity editUser = new UserEntity();
+        editUser.setName(this.getName());
+        editUser.setSurname(this.getSurname());
+        editUser.setBirthDay(new java.sql.Date(this.getBirthday().getTime()));
+        editUser.setNif(this.getNif());
+        editUser.setPhone(this.getPhone());
+        editUser.setAddress(this.getAddress());
+        editUser.setCountry(this.countryService.getByCode(this.getCountry()));
+        editUser.setCity(this.cityService.getById(this.getCity()));
+        UserEntity userUpdated = this.userService.updateUser(this.email, editUser, true);
+        if (userUpdated == null ) {
+            //Error on persisting the user
+        }
+        else {
+            //If not error is updated
+        }
+        return true;
     }
 }

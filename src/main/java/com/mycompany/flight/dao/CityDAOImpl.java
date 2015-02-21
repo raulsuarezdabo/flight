@@ -10,11 +10,10 @@ import com.mycompany.flight.entity.CountryEntity;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -52,10 +51,7 @@ public class CityDAOImpl implements CityDAO {
     @Override
     public CityEntity findById(int id) {
         try {
-            Session session = this.sessionFactory.getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            CityEntity city = (CityEntity) session.get(CityEntity.class, id);
-            transaction.commit();
+            CityEntity city = (CityEntity) this.sessionFactory.getCurrentSession().get(CityEntity.class, id);
             return city;
         } catch (Exception ex) {
             return null;
@@ -71,10 +67,7 @@ public class CityDAOImpl implements CityDAO {
         List <CityEntity> cities;
         cities = null;
         try {
-            Session session = this.sessionFactory.getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            cities = session.createQuery("FROM CityEntity").list(); 
-            transaction.commit();
+            cities = this.sessionFactory.getCurrentSession().createQuery("FROM CityEntity").list();
         } catch (HibernateException e) {
             return null;
         } 
@@ -86,12 +79,9 @@ public class CityDAOImpl implements CityDAO {
         List <CityEntity> cities;
         cities = null;
         try {
-            Session session = this.sessionFactory.getCurrentSession();
-            Transaction transaction = session.beginTransaction();
-            Query query = session.createQuery("FROM CityEntity  WhERE countryCode = :country ");
+            Query query = this.sessionFactory.getCurrentSession().createQuery("FROM CityEntity  WhERE countryCode = :country ");
             query.setParameter("country", country.getCode());
             cities = query.list();
-            transaction.commit();
             return cities;
         } catch(HibernateException e) {
             return null;
