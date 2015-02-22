@@ -5,7 +5,7 @@
  */
 package com.mycompany.flight.service;
 
-import com.mycompany.flight.entity.UserEntity;
+import com.raulsuarezdabo.flight.entity.UserEntity;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;

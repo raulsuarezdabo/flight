@@ -1,6 +1,6 @@
 package com.raulsuarezdabo.flight.jsf.user;
 
-import com.mycompany.flight.entity.UserEntity;
+import com.raulsuarezdabo.flight.entity.UserEntity;
 import com.mycompany.flight.service.UserService;
 import java.io.IOException;
 import java.io.Serializable;

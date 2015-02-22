@@ -8,7 +8,7 @@ import com.mycompany.flight.dao.CityDAO;
 import com.mycompany.flight.dao.CountryDAO;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
-import com.mycompany.flight.entity.UserEntity;
+import com.raulsuarezdabo.flight.entity.UserEntity;
 import com.mycompany.flight.service.UserService;
 import com.mycompany.flight.utils.Utils;
 import com.raulsuarezdabo.flight.service.CityService;

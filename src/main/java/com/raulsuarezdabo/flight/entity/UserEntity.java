@@ -1,4 +1,4 @@
-package com.mycompany.flight.entity;
+package com.raulsuarezdabo.flight.entity;
 
 import com.raulsuarezdabo.flight.entity.RoleEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;

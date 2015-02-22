@@ -8,7 +8,7 @@ import com.mycompany.flight.dao.UserDAOImpl;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
 import com.raulsuarezdabo.flight.entity.RoleEntity;
-import com.mycompany.flight.entity.UserEntity;
+import com.raulsuarezdabo.flight.entity.UserEntity;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;

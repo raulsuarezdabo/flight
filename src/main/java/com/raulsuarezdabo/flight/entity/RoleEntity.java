@@ -1,6 +1,5 @@
 package com.raulsuarezdabo.flight.entity;
 
-import com.mycompany.flight.entity.UserEntity;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

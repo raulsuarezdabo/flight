@@ -1,6 +1,6 @@
 package com.mycompany.flight.dao;
 
-import com.mycompany.flight.entity.UserEntity;
+import com.raulsuarezdabo.flight.entity.UserEntity;
 import java.util.List;
 
 /**

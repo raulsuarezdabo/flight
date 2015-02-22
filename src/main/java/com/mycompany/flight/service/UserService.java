@@ -2,7 +2,7 @@ package com.mycompany.flight.service;
 
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
-import com.mycompany.flight.entity.UserEntity;
+import com.raulsuarezdabo.flight.entity.UserEntity;
 import java.util.Date;
 import java.util.Locale;
 
