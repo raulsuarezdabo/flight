@@ -6,7 +6,7 @@
 package com.raulsuarezdabo.flight.service;
 
 import com.raulsuarezdabo.flight.entity.CityEntity;
-import com.mycompany.flight.entity.CountryEntity;
+import com.raulsuarezdabo.flight.entity.CountryEntity;
 import java.util.List;
 
 /**

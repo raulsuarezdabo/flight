@@ -1,5 +1,6 @@
 package com.mycompany.flight.entity;
 
+import com.raulsuarezdabo.flight.entity.CountryEntity;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import java.sql.Date;
 import java.util.ArrayList;

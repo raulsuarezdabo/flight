@@ -6,7 +6,7 @@ import com.mycompany.flight.dao.CountryDAO;
 import com.mycompany.flight.dao.RoleDAOImpl;
 import com.mycompany.flight.dao.UserDAOImpl;
 import com.raulsuarezdabo.flight.entity.CityEntity;
-import com.mycompany.flight.entity.CountryEntity;
+import com.raulsuarezdabo.flight.entity.CountryEntity;
 import com.mycompany.flight.entity.RoleEntity;
 import com.mycompany.flight.entity.UserEntity;
 import java.security.MessageDigest;
