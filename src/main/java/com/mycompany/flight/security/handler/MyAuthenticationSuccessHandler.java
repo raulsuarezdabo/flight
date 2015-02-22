@@ -6,7 +6,7 @@
  */
 package com.mycompany.flight.security.handler;
 
-import com.mycompany.flight.entity.RoleEntity;
+import com.raulsuarezdabo.flight.entity.RoleEntity;
 import com.mycompany.flight.entity.UserEntity;
 import java.io.IOException;
 import javax.servlet.ServletException;

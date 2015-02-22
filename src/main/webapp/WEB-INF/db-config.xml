@@ -22,7 +22,7 @@
         <property name="annotatedClasses">
             <list>
                 <value>com.mycompany.flight.entity.UserEntity</value>
-                <value>com.mycompany.flight.entity.RoleEntity</value>
+                <value>com.raulsuarezdabo.flight.entity.RoleEntity</value>
                 <value>com.raulsuarezdabo.flight.entity.CountryEntity</value>
                 <value>com.raulsuarezdabo.flight.entity.CityEntity</value>
             </list>

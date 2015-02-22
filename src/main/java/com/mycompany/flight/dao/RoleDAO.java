@@ -1,6 +1,6 @@
 package com.mycompany.flight.dao;
 
-import com.mycompany.flight.entity.RoleEntity;
+import com.raulsuarezdabo.flight.entity.RoleEntity;
 
 /**
  *

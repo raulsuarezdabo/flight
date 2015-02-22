@@ -5,7 +5,7 @@
  */
 package com.mycompany.flight.dao;
 
-import com.mycompany.flight.entity.RoleEntity;
+import com.raulsuarezdabo.flight.entity.RoleEntity;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;

@@ -7,7 +7,7 @@ import com.mycompany.flight.dao.RoleDAOImpl;
 import com.mycompany.flight.dao.UserDAOImpl;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
-import com.mycompany.flight.entity.RoleEntity;
+import com.raulsuarezdabo.flight.entity.RoleEntity;
 import com.mycompany.flight.entity.UserEntity;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
