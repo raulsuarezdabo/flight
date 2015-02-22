@@ -1,4 +1,4 @@
-package com.mycompany.flight.entity;
+package com.raulsuarezdabo.flight.entity;
 
 import java.io.Serializable;
 import javax.persistence.Column;

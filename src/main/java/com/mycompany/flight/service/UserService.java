@@ -1,6 +1,6 @@
 package com.mycompany.flight.service;
 
-import com.mycompany.flight.entity.CityEntity;
+import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.mycompany.flight.entity.CountryEntity;
 import com.mycompany.flight.entity.UserEntity;
 import java.util.Date;

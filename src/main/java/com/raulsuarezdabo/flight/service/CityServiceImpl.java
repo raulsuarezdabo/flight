@@ -6,7 +6,7 @@
 package com.raulsuarezdabo.flight.service;
 
 import com.mycompany.flight.dao.CityDAO;
-import com.mycompany.flight.entity.CityEntity;
+import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.mycompany.flight.entity.CountryEntity;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

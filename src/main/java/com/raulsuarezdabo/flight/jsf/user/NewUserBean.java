@@ -1,6 +1,6 @@
 package com.raulsuarezdabo.flight.jsf.user;
 
-import com.mycompany.flight.entity.CityEntity;
+import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.mycompany.flight.entity.CountryEntity;
 import com.mycompany.flight.entity.UserEntity;
 import com.raulsuarezdabo.flight.jsf.language.LocaleBean;

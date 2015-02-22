@@ -24,7 +24,7 @@
                 <value>com.mycompany.flight.entity.UserEntity</value>
                 <value>com.mycompany.flight.entity.RoleEntity</value>
                 <value>com.mycompany.flight.entity.CountryEntity</value>
-                <value>com.mycompany.flight.entity.CityEntity</value>
+                <value>com.raulsuarezdabo.flight.entity.CityEntity</value>
             </list>
         </property>
         <property name="hibernateProperties">
