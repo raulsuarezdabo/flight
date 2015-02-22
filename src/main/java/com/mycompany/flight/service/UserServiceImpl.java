@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
  * @author raulsuarez
  */
 @Service
+@Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
@@ -161,7 +162,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public UserEntity updateUser(String email, UserEntity editUser, boolean persist) {
         try {
-            UserEntity user = this.userDAO.findByEmail(email);
+            UserEntity user = this.getByEmail(email);
             if (user != null && user instanceof UserEntity) {
                 // Handler block
                 if ( editUser.getName() != null ) {
@@ -213,7 +214,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    @Transactional
     public UserEntity getByEmail(String email) {
         return this.userDAO.findByEmail(email);
     }
@@ -251,7 +251,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Transactional
     public boolean checkCredentails(String email, String password) {
         try {
-            UserEntity user = this.userDAO.findByEmail(email);
+            UserEntity user = this.getByEmail(email);
             if (user == null) {
                 throw new Exception("User not found");
             }
@@ -286,7 +286,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public UserEntity getLoggedUser () {
         try {
-            return (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            UserEntity user = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return this.getByEmail(user.getEmail());
         } catch ( Exception e) {
             System.out.println(e.getMessage());
             return null;

@@ -362,15 +362,16 @@ public class EditUserBean {
     public void init() {
         UserEntity user = this.userService.getLoggedUser();
         if ( (user != null) && (user instanceof UserEntity == true) ) {
-            this.email = user.getEmail();
-            this.name = user.getName();
-            this.surname = user.getSurname();
-            this.birthday = user.getBirthDay();
-            this.nif = user.getNif();
-            this.phone = user.getPhone();
-            this.address = user.getAddress();
-            this.country = user.getCountry().getCode();
-            this.city = Integer.parseInt(user.getCity().getId());
+            UserEntity currentUser = this.userService.getByEmail(user.getEmail());
+            this.email = currentUser.getEmail();
+            this.name = currentUser.getName();
+            this.surname = currentUser.getSurname();
+            this.birthday = currentUser.getBirthDay();
+            this.nif = currentUser.getNif();
+            this.phone = currentUser.getPhone();
+            this.address = currentUser.getAddress();
+            this.country = currentUser.getCountry().getCode();
+            this.city = Integer.parseInt(currentUser.getCity().getId());
         }
     }
     
@@ -378,7 +379,7 @@ public class EditUserBean {
      * Method for updating the information of the user
      * @return boolean  update jsf page
      */
-    public boolean updateAction () {
+    public String updateAction () {
         UserEntity editUser = new UserEntity();
         editUser.setName(this.getName());
         editUser.setSurname(this.getSurname());
@@ -395,6 +396,6 @@ public class EditUserBean {
         else {
             //If not error is updated
         }
-        return true;
+        return "profile-edit";
     }
 }
