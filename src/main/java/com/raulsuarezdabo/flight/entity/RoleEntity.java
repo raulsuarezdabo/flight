@@ -24,7 +24,7 @@ public class RoleEntity implements GrantedAuthority {
     /**
      * Predefined roles to the users
      */
-    public static final int USER_ROLE = 1;
+    public static final String USER_ROLE = "USER_ROLE";
 
     @Id
     @GeneratedValue

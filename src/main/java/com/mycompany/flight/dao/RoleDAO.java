@@ -13,6 +13,6 @@ public interface RoleDAO {
      * @param id
      * @return UserEntity with the param asociated or null
      */
-    public RoleEntity findById(Integer id);
+    public RoleEntity findByName(String name);
 
 }

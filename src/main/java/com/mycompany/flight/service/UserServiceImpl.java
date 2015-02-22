@@ -1,14 +1,12 @@
 package com.mycompany.flight.service;
 
 import com.mycompany.flight.service.EmailServiceImpl;
-import com.mycompany.flight.dao.CityDAO;
-import com.mycompany.flight.dao.CountryDAO;
-import com.mycompany.flight.dao.RoleDAOImpl;
 import com.mycompany.flight.dao.UserDAOImpl;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
 import com.raulsuarezdabo.flight.entity.RoleEntity;
 import com.raulsuarezdabo.flight.entity.UserEntity;
+import com.raulsuarezdabo.flight.service.RoleService;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private UserDAOImpl userDAO;
 
     @Autowired
-    private RoleDAOImpl roleDAO;
+    private RoleService roleService;
 
     @Autowired
     private EmailServiceImpl email;
@@ -107,7 +105,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             // mark the Date on create an user
             java.util.Date now = new Date();
             user.setCreatedAt(new java.sql.Date(now.getTime()));
-            RoleEntity userRole = this.roleDAO.findById(RoleEntity.USER_ROLE);
+            RoleEntity userRole = this.roleService.getUserRole();
+            if (userRole == null) {
+                throw new Exception("Error creating the user role");
+            }
             user.addRole(userRole);
             this.userDAO.addUser(user);
 

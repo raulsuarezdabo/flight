@@ -6,10 +6,10 @@
 package com.mycompany.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.RoleEntity;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -41,13 +41,16 @@ public class RoleDAOImpl implements RoleDAO {
 
     /**
      * Method to find RoleEntity by id
-     * @param id
+     * @param name alias for this role's name
      * @return 
      */
     @Override
-    public RoleEntity findById(Integer id) {
+    public RoleEntity findByName(String name) {
         try {
-            RoleEntity role = (RoleEntity) this.sessionFactory.getCurrentSession().get(RoleEntity.class, id);
+            Query query = this.sessionFactory.getCurrentSession().createQuery("FROM RoleEntity  WhERE name = :name ");
+            query.setParameter("name", name);
+            query.setMaxResults(1);
+            RoleEntity role = (RoleEntity) query.uniqueResult();
             return role;
         } catch(Exception ex) {
             return null;
