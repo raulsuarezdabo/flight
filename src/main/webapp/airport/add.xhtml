@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body role="document">
+        <ui:composition template="/template/basicTemplate.xhtml">
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleAirportAdd}" /></ui:define>
+            <ui:define name="meta">
+                <meta name="description" content="Edita tus datos"></meta>
+            </ui:define>
+            <ui:define name="breadcrumbs">
+                <li><h:link value="#{msg.airport}" outcome="airport"/></li>
+                <li class="active"><h:outputText value="#{msg.airportAdd}"/></li>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <h1><h:outputText value="#{msg.titleAirportAdd}"/></h1>
+                        <h:form id="airportForm">
+                            <h2><span class="glyphicon glyphicon-map-marker">&nbsp;<h:outputText value="#{msg.titleAirportRegisterBlock1}"/></span></h2>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="airportName" value="#{msg.name}"/>
+                                <p:inputText  value="#{addAirportBean.name}" id="airportName" label="airportName" required="true" placeholder="#{msg.namePlaceholder}" requiredMessage="#{msg.nameRequired}" validatorMessage="#{msg.nameInvalid}" size="35" immediate="true" >
+                                    <f:validateLength minimum="5" maximum="35"/>
+                                    <f:ajax event="blur" render="airportNameMessage"/>
+                                </p:inputText>
+                                <h:message for="airportName" style="color: crimson" id="airportNameMessage"/>
+                                <h:outputLabel for="airportCode" value="#{msg.code}"/>
+                                <p:inputText  value="#{addAirportBean.code}" id="airportCode" label="airportCode" required="true" placeholder="#{msg.namePlaceholder}" requiredMessage="#{msg.codeRequired}" validatorMessage="#{msg.codeInvalid}" size="3" immediate="true" >
+                                    <f:validateRegex pattern="^([A-Z]{3})$"/>
+                                    <f:ajax event="blur" render="airportCodeMessage"/>
+                                </p:inputText>
+                                <h:message for="airportCode" style="color: crimson" id="airportCodeMessage"/>
+                                <h:outputLabel for="airportCountry" value="#{msg.country}"/>
+                                <h:selectOneMenu id="airportCountry" value="#{addAirportBean.country}" styleClass="form-control" style="width: 285px;" required="true" requiredMessage="#{msg.countryRequired}" immediate="true">
+                                    <f:selectItem itemLabel="#{msg.countryPlaceholder}" itemValue=""/>
+                                    <f:selectItems value="#{addAirportBean.countries}" var="item" itemLabel="#{item.name}" itemValue="#{item.code}" />
+                                    <f:ajax event="blur" execute="airportCountry" render="airportCity"/>
+                                </h:selectOneMenu>
+                                <h:message for="airportCountry" style="color: crimson"/>
+                                <h:outputLabel for="airportCity" value="#{msg.city}"/>
+                                <h:selectOneMenu id="airportCity" value="#{addAirportBean.city}" styleClass="form-control" style="width: 285px;" required="true" requiredMessage="#{msg.cityRequired}" immediate="true">   
+                                    <f:selectItem itemLabel="#{msg.cityPlaceholder}" itemValue=""/>
+                                    <f:selectItems value="#{addAirportBean.cities}" var="item" itemLabel="#{item.name}" itemValue="#{item.id}" />
+                                    <f:ajax event="blur" render="airportCityMessage"/>
+                                </h:selectOneMenu>
+                                <h:message for="airportCity" style="color: crimson" id="airportCityMessage" />
+                            </h:panelGrid>
+                            <p:spacer height="35" />
+                            <h:panelGrid columns="2">
+                                <p:commandButton value="#{msg.buttonAdd}" action="#{addAirportBean.addAirportAction()}" process="@form" partialSubmit="true">
+                                </p:commandButton>
+                                <p:button outcome="index" value="#{msg.buttonCancel}"/>
+                            </h:panelGrid>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+

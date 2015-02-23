@@ -1,6 +1,5 @@
 package com.mycompany.flight.service;
 
-import com.mycompany.flight.service.EmailServiceImpl;
 import com.mycompany.flight.dao.UserDAOImpl;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;

@@ -79,4 +79,18 @@
             <to-view-id>/profile/edit.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>airport</from-outcome>
+            <to-view-id>/airport/index.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>airport-add</from-outcome>
+            <to-view-id>/airport/add.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>
