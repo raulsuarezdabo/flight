@@ -50,8 +50,23 @@ public class AirportServiceImpl implements AirportService {
      * @return AirportEntity    airport updated or null if some problem
      */
     @Override
+    @Transactional
     public AirportEntity updateAirport(int id, AirportEntity airport, boolean update) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            AirportEntity airportToUpdate = this.airportDAO.findById(id);
+            airportToUpdate.setName(airport.getName());
+            airportToUpdate.setCode(airport.getCode());
+            airportToUpdate.setCountry(airport.getCountry());
+            airportToUpdate.setCity(airport.getCity());
+            if (this.airportDAO.updateAirport(airport) == false) {
+                throw new Exception("Error updating the airport");
+            }
+            return airportToUpdate;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
     }
 
     /**

@@ -97,8 +97,14 @@ public class AirportDAOImpl implements AirportDAO {
      * @return AirportEntity    returns the entity or null if error
      */
     @Override
-    public AirportEntity updateAirport(AirportEntity airport) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean updateAirport(AirportEntity airport) {
+        try {
+            this.sessionFactory.getCurrentSession().update(airport);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     /**

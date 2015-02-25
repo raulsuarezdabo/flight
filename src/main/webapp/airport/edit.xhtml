@@ -54,7 +54,7 @@
                             </h:panelGrid>
                             <p:spacer height="35" />
                             <h:panelGrid columns="2">
-                                <p:commandButton value="#{msg.buttonUpdate}" process="@form" partialSubmit="true">
+                                <p:commandButton value="#{msg.buttonUpdate}" action="#{editAirportBean.editAirportAction()}" process="@form" partialSubmit="true">
                                 </p:commandButton>
                                 <p:button outcome="index" value="#{msg.buttonCancel}"/>
                             </h:panelGrid>

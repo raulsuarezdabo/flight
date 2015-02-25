@@ -40,7 +40,7 @@ public interface AirportDAO {
      * @param airport   AirportEntity
      * @return AirportEntity    returns the entity or null if error
      */
-    public AirportEntity updateAirport(AirportEntity airport);
+    public boolean updateAirport(AirportEntity airport);
     
     /**
      * Delete an airport

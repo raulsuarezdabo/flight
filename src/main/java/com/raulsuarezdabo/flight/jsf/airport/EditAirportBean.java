@@ -32,6 +32,8 @@ public class EditAirportBean {
     public EditAirportBean() {
     }
     
+    private int id;
+    
     /**
      * airport name
      */
@@ -125,7 +127,6 @@ public class EditAirportBean {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
                 errorMessage, errorMessage);
             FacesContext.getCurrentInstance().addMessage("airportForm:airportCode", message);
-            this.code = null;
         }
     }
     
@@ -260,13 +261,33 @@ public class EditAirportBean {
     @PostConstruct
     public void init() {
         Map<String, String> parameterMap = (Map<String, String>) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        int param = parseInt(parameterMap.get("id"));
-        AirportEntity airport = this.airportService.getById(param);
+        this.id = parseInt(parameterMap.get("id"));
+        AirportEntity airport = this.airportService.getById(this.id);
         if (airport != null && (airport instanceof AirportEntity) == true) {
             this.name = airport.getName();
             this.code = airport.getCode();
             this.country = airport.getCountry().getCode();
             this.city = Integer.parseInt(airport.getCity().getId());
         }
+    }
+    
+    /**
+     * Method that updates the selected airport
+     * @return String   target url
+     */
+    public String editAirportAction () {
+        AirportEntity airportEdit = new AirportEntity();
+        airportEdit.setName(this.getName());
+        airportEdit.setCode(this.code);
+        airportEdit.setCountry(Utils.getCountryFromList(this.country, this.countries));
+        airportEdit.setCity(Utils.getCityFromList(this.city, this.cities));
+        AirportEntity airportUpdated = this.airportService.updateAirport(this.id, airportEdit, true);
+        if (airportUpdated == null ) {
+            //Error on persisting the user
+        }
+        else {
+            //If not error is updated
+        }
+        return "airport";
     }
 }

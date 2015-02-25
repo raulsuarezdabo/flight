@@ -31,7 +31,13 @@ public class CityServiceImpl implements CityService {
     @Override
     @Transactional
     public CityEntity getById(int id) {
-        return this.cityDAO.findById(id);
+        try {
+            CityEntity city = this.cityDAO.findById(id);
+            return city;
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     /**
