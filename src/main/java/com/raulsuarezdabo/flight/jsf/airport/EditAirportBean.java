@@ -101,7 +101,7 @@ public class EditAirportBean {
      * @param name name of the user
      */
     public void setName(String name) {
-        this.name = name.toUpperCase();
+        this.name = name;
     }
 
     /**
