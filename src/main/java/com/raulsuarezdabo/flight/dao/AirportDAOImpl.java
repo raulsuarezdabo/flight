@@ -114,7 +114,13 @@ public class AirportDAOImpl implements AirportDAO {
      */
     @Override
     public boolean deleteAirport(AirportEntity airport) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            this.sessionFactory.getCurrentSession().delete(airport);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
     
 }

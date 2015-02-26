@@ -11,7 +11,6 @@ import static java.lang.Integer.parseInt;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -31,6 +30,11 @@ public class DeleteAirportBean {
      */
     public DeleteAirportBean() {
     }
+    
+    /**
+     * id int
+     */
+    private int id;
     
     /**
      * airport name
@@ -249,13 +253,27 @@ public class DeleteAirportBean {
     @PostConstruct
     public void init() {
         Map<String, String> parameterMap = (Map<String, String>) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        int param = parseInt(parameterMap.get("id"));
-        AirportEntity airport = this.airportService.getById(param);
+        this.id = parseInt(parameterMap.get("id"));
+        AirportEntity airport = this.airportService.getById(this.id);
         if (airport != null && (airport instanceof AirportEntity) == true) {
             this.name = airport.getName();
             this.code = airport.getCode();
             this.country = airport.getCountry().getCode();
             this.city = Integer.parseInt(airport.getCity().getId());
         }
+    }
+    
+    /**
+     * Method that updates the selected airport
+     * @return String   target url
+     */
+    public String deleteAirportAction () {
+        if (this.airportService.deleteAirport(this.id) == true ) {
+            //Error on persisting the user
+        }
+        else {
+            //If not error is updated
+        }
+        return "airport";
     }
 }

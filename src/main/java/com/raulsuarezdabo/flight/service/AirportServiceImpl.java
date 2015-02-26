@@ -75,8 +75,19 @@ public class AirportServiceImpl implements AirportService {
      * @return boolean  if it's success or not
      */
     @Override
+    @Transactional
     public boolean deleteAirport(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            AirportEntity airport = this.airportDAO.findById(id);
+            if (airport == null) {
+                throw new Exception("Not found airport");
+            }
+            return this.airportDAO.deleteAirport(airport);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        
     }
 
     /**
