@@ -96,7 +96,13 @@ public class AirportServiceImpl implements AirportService {
      */
     @Override
     public List<AirportEntity> getAll() {
-        return this.airportDAO.findAll();
+        try {
+            List<AirportEntity> airports = this.airportDAO.findAll();
+            return airports;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     /**
