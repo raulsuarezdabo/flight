@@ -20,6 +20,15 @@
             <ui:define name="content">
                 <div class="container">
                     <div class="row">
+                        <h1><h:outputText value="#{msg.titleAirportList}"/></h1>
+                        <button type="button" class="btn btn-default">
+                            <h:link value="" outcome="airport-add">
+                                <span class="glyphicon glyphicon-plus">&nbsp;#{msg.airportAdd}</span>
+                            </h:link>
+                        </button>
+                    </div>
+                    <div class="row">
+                        <p:spacer height="35" />
                         <h:form>
                             <p:dataTable var="airport" value="#{airportListBean.airports}" rows="10"
                                          paginator="true"
