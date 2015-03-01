@@ -7,6 +7,7 @@ package com.raulsuarezdabo.flight.service;
 
 import com.mycompany.flight.dao.CountryDAO;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,6 +45,21 @@ public class CountryServiceImpl implements CountryService {
     @Transactional
     public CountryEntity getByCode(String code) {
         return this.countryDAO.findById(code);
+    }
+
+    /**
+     * Method to get a country list names
+     * @return List of countries names
+     */
+    @Override
+    @Transactional
+    public List<String> getAllNames() {
+        List <CountryEntity> countries = this.countryDAO.findAll();
+        List <String> names = new ArrayList();
+        for (CountryEntity countrie : countries) {
+            names.add(countrie.getName());
+        }
+        return names;
     }
     
 }

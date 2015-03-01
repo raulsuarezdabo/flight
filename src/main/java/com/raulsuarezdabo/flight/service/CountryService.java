@@ -21,6 +21,12 @@ public interface CountryService {
     List<CountryEntity> getAll();
     
     /**
+     * Method that obtains the completly list of countries available, only names
+     * @return List with the String names
+     */
+    List<String> getAllNames();
+    
+    /**
      * Method for obtaining the Country by code
      * @param code  String with the corresponding country code 
      * @return CountryEntity    

@@ -2,6 +2,7 @@ package com.raulsuarezdabo.flight.jsf.airport;
 
 import com.raulsuarezdabo.flight.entity.AirportEntity;
 import com.raulsuarezdabo.flight.service.AirportService;
+import com.raulsuarezdabo.flight.service.CountryService;
 import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -24,6 +25,18 @@ public class AirportListBean implements Serializable {
     @Autowired
     @ManagedProperty(value="#{airportService}")
     private AirportService airportService;
+    
+    /**
+     * Country service to use on the view
+     */
+    @Autowired
+    @ManagedProperty(value="#{countryService}")
+    private CountryService countryService;
+    
+    /**
+     * List of countries
+     */
+    private List<String> countries;
     
     /**
      * Airport list
@@ -81,11 +94,40 @@ public class AirportListBean implements Serializable {
     }
 
     /**
-     * Setter fo the filtered list of airports
-     * @param filteredAirport 
+     * Getter list of countries
+     *
+     * @return
      */
-    public void setFilteredAirport(List<AirportEntity> filteredAirport) {
-        this.filteredAirport = filteredAirport;
+    public List<String> getCountries() {
+        if (this.countries == null) {
+            this.countries = this.countryService.getAllNames();
+        }
+        return this.countries;
+    }
+
+    /**
+     * Setter countries
+     *
+     * @param countries
+     */
+    public void setCountries(List<String> countries) {
+        this.countries = countries;
+    }
+    
+    /**
+     * Getter countryService
+     * @return 
+     */
+    public CountryService getCountryService() {
+        return countryService;
+    }
+
+    /**
+     * Setter of the countryService
+     * @param countryService 
+     */
+    public void setCountryService(CountryService countryService) {
+        this.countryService = countryService;
     }
     
     @PostConstruct

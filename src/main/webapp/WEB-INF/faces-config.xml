@@ -93,4 +93,18 @@
             <to-view-id>/airport/add.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>airport-edit</from-outcome>
+            <to-view-id>/airport/edit.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>airport-delete</from-outcome>
+            <to-view-id>/airport/delete.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

@@ -261,7 +261,7 @@ public class EditAirportBean {
     @PostConstruct
     public void init() {
         Map<String, String> parameterMap = (Map<String, String>) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-        this.id = parseInt(parameterMap.get("id"));
+        this.id = parseInt(parameterMap.get("parameter"));
         AirportEntity airport = this.airportService.getById(this.id);
         if (airport != null && (airport instanceof AirportEntity) == true) {
             this.name = airport.getName();
