@@ -35,6 +35,7 @@
     <bean id="cityService"      class="com.raulsuarezdabo.flight.service.CityServiceImpl" ></bean>
     <bean id="roleService"      class="com.raulsuarezdabo.flight.service.RoleServiceImpl" ></bean>
     <bean id="airportService"   class="com.raulsuarezdabo.flight.service.AirportServiceImpl"></bean>
+    <bean id="airlineService"   class="com.raulsuarezdabo.flight.service.AirlineServiceImpl"></bean>
     <bean id="myAuthenticationSuccessHandler" class="com.mycompany.flight.security.handler.MyAuthenticationSuccessHandler"></bean>
     <bean id="myAuthenticationFailureHandler" class="com.mycompany.flight.security.handler.MyAuthenticationFailureHandler"></bean>
 </beans>
