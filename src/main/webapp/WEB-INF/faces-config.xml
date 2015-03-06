@@ -107,32 +107,4 @@
             <to-view-id>/airport/delete.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    <navigation-rule>
-        <from-view-id>*</from-view-id>
-        <navigation-case>
-            <from-outcome>airline</from-outcome>
-            <to-view-id>/airline/index.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>*</from-view-id>
-        <navigation-case>
-            <from-outcome>airline-add</from-outcome>
-            <to-view-id>/airline/add.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>*</from-view-id>
-        <navigation-case>
-            <from-outcome>airline-edit</from-outcome>
-            <to-view-id>/airline/edit.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>*</from-view-id>
-        <navigation-case>
-            <from-outcome>airline-delete</from-outcome>
-            <to-view-id>/airline/delete.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
 </faces-config>

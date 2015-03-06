@@ -15,7 +15,7 @@
                 <meta name="description" content="Deletea tus datos"></meta>
             </ui:define>
             <ui:define name="breadcrumbs">
-                <li><h:link value="#{msg.airline}" outcome="airline"/></li>
+                <li><h:link value="#{msg.airline}" outcome="index"/></li>
                 <li class="active"><h:outputText value="#{msg.airlineDelete}"/></li>
             </ui:define>
             <ui:define name="content">
@@ -41,7 +41,7 @@
                             <h:panelGrid columns="2">
                                 <p:commandButton value="#{msg.buttonDelete}" action="#{deleteAirlineBean.deleteAirlineAction()}" process="@form" partialSubmit="true">
                                 </p:commandButton>
-                                <p:button outcome="airline" value="#{msg.buttonCancel}"/>
+                                <p:button outcome="index" value="#{msg.buttonCancel}"/>
                             </h:panelGrid>
                         </h:form>
                     </div>

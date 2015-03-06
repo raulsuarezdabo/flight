@@ -210,6 +210,6 @@ public class EditAirlineBean {
         else {
             //If not error is updated
         }
-        return "airline";
+        return "/airline/index?faces-redirect=true";
     }
 }

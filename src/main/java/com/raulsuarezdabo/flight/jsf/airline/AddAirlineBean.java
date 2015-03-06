@@ -201,6 +201,6 @@ public class AddAirlineBean {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "airline";
+        return "/airline/index?faces-redirect=true";
     }
 }

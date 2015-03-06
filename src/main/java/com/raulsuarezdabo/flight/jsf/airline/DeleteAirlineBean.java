@@ -200,6 +200,6 @@ public class DeleteAirlineBean {
         else {
             //If not error is updated
         }
-        return "airline";
+        return "/airline/index?faces-redirect=true";
     }
 }
