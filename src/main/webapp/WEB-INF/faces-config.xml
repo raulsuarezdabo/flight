@@ -44,11 +44,6 @@
             <from-outcome>forgot-account</from-outcome>
             <to-view-id>/register/forgot-account.xhtml</to-view-id>
         </navigation-case>
-        <navigation-case>
-            <description>Navigation case that logout the user</description>
-            <from-outcome>logout</from-outcome>
-            <to-view-id>/register/logout.xhtml</to-view-id>
-        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>register/new_user.xhtml</from-view-id>
