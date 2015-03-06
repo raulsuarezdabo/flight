@@ -72,11 +72,4 @@
             <to-view-id>register/forgot-account-success.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    <navigation-rule>
-        <from-view-id>*</from-view-id>
-        <navigation-case>
-            <from-outcome>profile-edit</from-outcome>
-            <to-view-id>/profile/edit.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
 </faces-config>
