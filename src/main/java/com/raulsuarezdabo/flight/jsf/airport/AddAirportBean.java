@@ -277,6 +277,6 @@ public class AddAirportBean {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return "airport";
+        return "/airport/index?faces-redirect=true";
     }
 }

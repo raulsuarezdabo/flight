@@ -288,6 +288,6 @@ public class EditAirportBean {
         else {
             //If not error is updated
         }
-        return "airport";
+        return "/airport/index?faces-redirect=true";
     }
 }

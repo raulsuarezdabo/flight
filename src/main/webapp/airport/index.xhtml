@@ -22,7 +22,7 @@
                     <div class="row">
                         <h1><h:outputText value="#{msg.titleAirportList}"/></h1>
                         <button type="button" class="btn btn-default">
-                            <h:link value="" outcome="airport-add">
+                            <h:link value="" outcome="add">
                                 <span class="glyphicon glyphicon-plus">&nbsp;#{msg.airportAdd}</span>
                             </h:link>
                         </button>
@@ -54,13 +54,13 @@
                                 </p:column>
                                 <p:column headerText="#{msg.actions}">
                                     <button type="button" class="btn btn-default">
-                                        <h:link value="" outcome="airport-edit">
+                                        <h:link value="" outcome="edit">
                                             <f:param name="parameter" value="#{airport.id}"/>
                                             <span class="glyphicon glyphicon-edit"></span>
                                         </h:link>
                                     </button>
                                     <button type="button" class="btn btn-default">
-                                        <h:link value="" outcome="airport-delete">
+                                        <h:link value="" outcome="delete">
                                             <f:param name="parameter" value="#{airport.id}"/>
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </h:link>
