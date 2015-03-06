@@ -396,6 +396,6 @@ public class EditUserBean {
         else {
             //If not error is updated
         }
-        return "profile-edit";
+        return "/profile/edit?faces-redirect=true";
     }
 }
