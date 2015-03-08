@@ -8,6 +8,7 @@ package com.raulsuarezdabo.flight.jsf.airline;
 import com.mycompany.flight.utils.Utils;
 import com.raulsuarezdabo.flight.entity.AirlineEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
+import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.service.AirlineService;
 import com.raulsuarezdabo.flight.service.CountryService;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -192,11 +194,20 @@ public class AddAirlineBean {
                     this.code, 
                     Utils.getCountryFromList(this.country, this.countries)
             );
+            
             if (airline != null) {
                 //Success update
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.SUCCESS, 
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("addSuccessAirlineMessage")
+                );
             }
             else {
                 //Error creating
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER, 
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("addDangerAirlineMessage")
+                );
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());

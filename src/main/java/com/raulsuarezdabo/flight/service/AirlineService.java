@@ -1,7 +1,6 @@
 package com.raulsuarezdabo.flight.service;
 
 import com.raulsuarezdabo.flight.entity.AirlineEntity;
-import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
 import java.util.List;
 

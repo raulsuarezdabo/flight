@@ -3,6 +3,7 @@ package com.raulsuarezdabo.flight.jsf.airline;
 import com.mycompany.flight.utils.Utils;
 import com.raulsuarezdabo.flight.entity.AirlineEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
+import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.service.AirlineService;
 import com.raulsuarezdabo.flight.service.CountryService;
 import static java.lang.Integer.parseInt;
@@ -206,9 +207,17 @@ public class EditAirlineBean {
         AirlineEntity airlineUpdated = this.airlineService.updateAirline(this.id, airlineEdit, true);
         if (airlineUpdated == null ) {
             //Error on persisting the user
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER, 
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("updateDangerAirlineMessage")
+                );
         }
         else {
             //If not error is updated
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.SUCCESS, 
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("updateSuccessAirlineMessage")
+                );
         }
         return "/airline/index?faces-redirect=true";
     }

@@ -5,6 +5,7 @@ import com.mycompany.flight.utils.Utils;
 import com.raulsuarezdabo.flight.entity.AirlineEntity;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
+import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.service.AirlineService;
 import com.raulsuarezdabo.flight.service.CityService;
 import com.raulsuarezdabo.flight.service.CountryService;
@@ -196,9 +197,17 @@ public class DeleteAirlineBean {
     public String deleteAirlineAction () {
         if (this.airlineService.deleteAirline(this.id) == true ) {
             //Error on persisting the user
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.SUCCESS, 
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("deleteSuccessAirlineMessage")
+                );
         }
         else {
             //If not error is updated
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER, 
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("deleteDangerAirlineMessage")
+                );
         }
         return "/airline/index?faces-redirect=true";
     }
