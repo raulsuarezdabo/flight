@@ -58,7 +58,7 @@ public class AirlineServiceImpl implements AirlineService {
             airlineToUpdate.setName(airline.getName());
             airlineToUpdate.setCode(airline.getCode());
             airlineToUpdate.setCountry(airline.getCountry());
-            if (this.airlineDAO.updateAirline(airline) == false) {
+            if (this.airlineDAO.updateAirline(airlineToUpdate) == false) {
                 throw new Exception("Error updating the airline");
             }
             return airlineToUpdate;
