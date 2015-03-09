@@ -4,6 +4,7 @@ import com.mycompany.flight.utils.Utils;
 import com.raulsuarezdabo.flight.entity.AirportEntity;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
+import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.service.AirportService;
 import com.raulsuarezdabo.flight.service.CityService;
 import com.raulsuarezdabo.flight.service.CountryService;
@@ -284,9 +285,17 @@ public class EditAirportBean {
         AirportEntity airportUpdated = this.airportService.updateAirport(this.id, airportEdit, true);
         if (airportUpdated == null ) {
             //Error on persisting the user
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER, 
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("updateDangerAirportMessage")
+                );
         }
         else {
             //If not error is updated
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.SUCCESS, 
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("updateSuccessAirportMessage")
+                );
         }
         return "/airport/index?faces-redirect=true";
     }

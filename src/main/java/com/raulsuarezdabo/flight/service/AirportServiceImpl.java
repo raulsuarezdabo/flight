@@ -58,7 +58,7 @@ public class AirportServiceImpl implements AirportService {
             airportToUpdate.setCode(airport.getCode());
             airportToUpdate.setCountry(airport.getCountry());
             airportToUpdate.setCity(airport.getCity());
-            if (this.airportDAO.updateAirport(airport) == false) {
+            if (this.airportDAO.updateAirport(airportToUpdate) == false) {
                 throw new Exception("Error updating the airport");
             }
             return airportToUpdate;

@@ -9,6 +9,7 @@ import com.mycompany.flight.utils.Utils;
 import com.raulsuarezdabo.flight.entity.AirportEntity;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
+import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.service.AirportService;
 import com.raulsuarezdabo.flight.service.CityService;
 import com.raulsuarezdabo.flight.service.CountryService;
@@ -270,9 +271,17 @@ public class AddAirportBean {
             );
             if (airport != null) {
                 //Success update
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.SUCCESS, 
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("addSuccessAirportMessage")
+                );
             }
             else {
                 //Error creating
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER, 
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("addDangerAirportMessage")
+                );
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
