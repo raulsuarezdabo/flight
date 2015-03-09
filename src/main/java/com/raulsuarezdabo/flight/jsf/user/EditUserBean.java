@@ -11,6 +11,7 @@ import com.raulsuarezdabo.flight.entity.CountryEntity;
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import com.mycompany.flight.service.UserService;
 import com.mycompany.flight.utils.Utils;
+import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.service.CityService;
 import com.raulsuarezdabo.flight.service.CountryService;
 import java.util.Date;
@@ -19,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -392,9 +394,17 @@ public class EditUserBean {
         UserEntity userUpdated = this.userService.updateUser(this.email, editUser, true);
         if (userUpdated == null ) {
             //Error on persisting the user
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER, 
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("updateDangerUserMessage")
+                );
         }
         else {
             //If not error is updated
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.SUCCESS, 
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("updateSuccessUserMessage")
+                );
         }
         return "/profile/edit?faces-redirect=true";
     }

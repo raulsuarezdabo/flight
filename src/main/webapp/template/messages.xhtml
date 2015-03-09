@@ -8,39 +8,37 @@
     <h:head>
     </h:head>
     <h:body>
-        <c:if test="#{showBreadcrumbs == true}">
-            <div class="container">
-                <div class="row">
-                    <!-- Warning -->
-                    <c:if test="#{flash.warningMessage.lenght() >0}">
-                        <div class="alert alert-warning alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h:outputText escape="false" value="#{flash.warningMessage}"/>
-                        </div>
-                    </c:if>
-                    <!-- Success -->
-                    <c:if test="#{flash.successMessage.length() > 0}">
-                        <div class="alert alert-success alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <p><h:outputText escape="false" value="#{flash.successMessage}"/></p>
-                        </div>
-                    </c:if>
-                    <!-- Danger -->
-                    <c:if test="#{flash.dangerMessage.length() > 0}">
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h:outputText escape="false" value="#{flash.dangerMessage}"/>
-                        </div>
-                    </c:if>
-                </div>
+        <div class="container">
+            <div class="row">
+                <!-- Warning -->
+                <c:if test="#{flash.warningMessage.lenght() >0}">
+                    <div class="alert alert-warning alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h:outputText escape="false" value="#{flash.warningMessage}"/>
+                    </div>
+                </c:if>
+                <!-- Success -->
+                <c:if test="#{flash.successMessage.length() > 0}">
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <p><h:outputText escape="false" value="#{flash.successMessage}"/></p>
+                    </div>
+                </c:if>
+                <!-- Danger -->
+                <c:if test="#{flash.dangerMessage.length() > 0}">
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h:outputText escape="false" value="#{flash.dangerMessage}"/>
+                    </div>
+                </c:if>
             </div>
-        </c:if>    
+        </div>
     </h:body>
 </html>
 
