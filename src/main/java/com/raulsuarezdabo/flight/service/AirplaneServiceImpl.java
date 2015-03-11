@@ -5,12 +5,15 @@ import com.raulsuarezdabo.flight.dao.AirplaneDAOImpl;
 import com.raulsuarezdabo.flight.entity.AirplaneEntity;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service for accessing to airplane information
  * @author raulsuarez
  */
+@Service
+@Transactional
 public class AirplaneServiceImpl implements AirplaneService {
     
     @Autowired

@@ -5,11 +5,13 @@ import com.raulsuarezdabo.flight.entity.AirplaneEntity;
 import java.util.List;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  * Airplane DAO implements all interface methods
  * @author raulsuarez
  */
+@Repository
 public class AirplaneDAOImpl implements AirplaneDAO {
 
     @Autowired
