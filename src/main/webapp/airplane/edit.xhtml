@@ -10,60 +10,60 @@
     <h:body role="document">
         <ui:composition template="/template/basicTemplate.xhtml">
             <ui:param name="showBreadcrumbs" value="true"/>
-            <ui:define name="headerTitle"><h:outputText value="#{msg.titleAirplaneAdd}" /></ui:define>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleAirplaneEdit}" /></ui:define>
             <ui:define name="meta">
                 <meta name="description" content="Edita tus datos"></meta>
             </ui:define>
             <ui:define name="breadcrumbs">
                 <li><h:link value="#{msg.airplane}" outcome="index"/></li>
-                <li class="active"><h:outputText value="#{msg.airplaneAdd}"/></li>
+                <li class="active"><h:outputText value="#{msg.airplaneEdit}"/></li>
             </ui:define>
             <ui:define name="content">
                 <div class="container">
                     <div class="row">
-                        <h1><h:outputText value="#{msg.titleAirplaneAdd}"/></h1>
+                        <h1><h:outputText value="#{msg.titleAirplaneEdit}"/></h1>
                         <h:form id="airplaneForm">
                             <h2><span class="glyphicon glyphicon-plane">&nbsp;<h:outputText value="#{msg.titleAirplaneRegisterBlock1}"/></span></h2>
                             <h:panelGrid columns="1">
                                 <h:outputLabel for="airplaneModel" value="#{msg.model}"/>
-                                <p:inputText  value="#{addAirplaneBean.model}" id="airplaneModel" label="airplaneModel" required="true" placeholder="#{msg.modelPlaceholder}" requiredMessage="#{msg.modelRequired}" validatorMessage="#{msg.modelInvalid}" size="35" immediate="true" >
+                                <p:inputText  value="#{editAirplaneBean.model}" id="airplaneModel" label="airplaneModel" required="true" placeholder="#{msg.modelPlaceholder}" requiredMessage="#{msg.modelRequired}" validatorMessage="#{msg.modelInvalid}" size="35" immediate="true" >
                                     <f:validateLength minimum="5" maximum="35"/>
                                     <f:ajax event="blur" render="airplaneModelMessage"/>
                                 </p:inputText>
                                 <h:message for="airplaneModel" style="color: crimson" id="airplaneModelMessage"/>
                                 <h:outputLabel for="airplaneMaker" value="#{msg.maker}"/>
-                                <p:inputText  value="#{addAirplaneBean.maker}" id="airplaneMaker" label="airplaneMaker" required="true" placeholder="#{msg.makerPlaceholder}" requiredMessage="#{msg.makerRequired}" validatorMessage="#{msg.makerInvalid}" size="35" immediate="true" >
+                                <p:inputText  value="#{editAirplaneBean.maker}" id="airplaneMaker" label="airplaneMaker" required="true" placeholder="#{msg.makerPlaceholder}" requiredMessage="#{msg.makerRequired}" validatorMessage="#{msg.makerInvalid}" size="35" immediate="true" >
                                     <f:validateLength minimum="5" maximum="35"/>
                                     <f:ajax event="blur" render="airplaneMakerMessage"/>
                                 </p:inputText>
                                 <h:message for="airplaneMaker" style="color: crimson" id="airplaneMakerMessage"/>
                                 <h:outputLabel for="airplaneYear" value="#{msg.year}"/>
-                                <h:selectOneMenu id="airplaneYear" value="#{addAirplaneBean.year}" styleClass="form-control" style="width: 200px;" required="true" requiredMessage="#{msg.yearRequired}" immediate="true">   
+                                <h:selectOneMenu id="airplaneYear" value="#{editAirplaneBean.year}" styleClass="form-control" style="width: 200px;" required="true" requiredMessage="#{msg.yearRequired}" immediate="true">   
                                     <f:selectItem itemLabel="#{msg.yearPlaceholder}" itemValue=""/>
-                                    <f:selectItems value="#{addAirplaneBean.years}" var="item" itemLabel="#{item}" itemValue="#{item}" />
+                                    <f:selectItems value="#{editAirplaneBean.years}" var="item" itemLabel="#{item}" itemValue="#{item}" />
                                     <f:ajax event="blur" render="airplaneYearMessage"/>
                                 </h:selectOneMenu>
                                 <h:message for="airplaneYear" style="color: crimson" id="airplaneYearMessage"/>
                                 <h:outputLabel for="airplaneNumSeatsTotal" value="#{msg.numSeatsTotal}"/>
-                                <p:inputText  value="#{addAirplaneBean.numSeatsTotal}" id="airplaneNumSeatsTotal" label="airplaneNumSeatsTotal" required="true" placeholder="#{msg.numSeatsTotalPlaceholder}" requiredMessage="#{msg.numSeatsTotalRequired}" validatorMessage="#{msg.numSeatsTotalInvalid}" size="20" immediate="true" >
+                                <p:inputText  value="#{editAirplaneBean.numSeatsTotal}" id="airplaneNumSeatsTotal" label="airplaneNumSeatsTotal" required="true" placeholder="#{msg.numSeatsTotalPlaceholder}" requiredMessage="#{msg.numSeatsTotalRequired}" validatorMessage="#{msg.numSeatsTotalInvalid}" size="20" immediate="true" >
                                     <f:convertNumber type="number" integerOnly="true"/>
                                     <f:ajax event="blur" render="airplaneNumSeatsTotalMessage"/>
                                 </p:inputText>
                                 <h:message for="airplaneNumSeatsTotal" style="color: crimson" id="airplaneNumSeatsTotalMessage"/>
                                 <h:outputLabel for="airplaneNumSeatsOffer" value="#{msg.numSeatsOffer}"/>
-                                <p:inputText  value="#{addAirplaneBean.numSeatsOffer}" id="airplaneNumSeatsOffer" label="airplaneNumSeatsOffer" required="true" placeholder="#{msg.numSeatsOfferPlaceholder}" requiredMessage="#{msg.numSeatsOfferRequired}" validatorMessage="#{msg.numSeatsOfferInvalid}" size="20" immediate="true" >
+                                <p:inputText  value="#{editAirplaneBean.numSeatsOffer}" id="airplaneNumSeatsOffer" label="airplaneNumSeatsOffer" required="true" placeholder="#{msg.numSeatsOfferPlaceholder}" requiredMessage="#{msg.numSeatsOfferRequired}" validatorMessage="#{msg.numSeatsOfferInvalid}" size="20" immediate="true" >
                                     <f:convertNumber type="number" integerOnly="true"/>
                                     <f:ajax event="blur" render="airplaneNumSeatsOfferMessage"/>
                                 </p:inputText>
                                 <h:message for="airplaneNumSeatsOffer" style="color: crimson" id="airplaneNumSeatsOfferMessage"/>
                                 <h:outputLabel for="airplaneNumSeatsTourist" value="#{msg.numSeatsTourist}"/>
-                                <p:inputText  value="#{addAirplaneBean.numSeatsTourist}" id="airplaneNumSeatsTourist" label="airplaneNumSeatsTourist" required="true" placeholder="#{msg.numSeatsTouristPlaceholder}" requiredMessage="#{msg.numSeatsTouristRequired}" validatorMessage="#{msg.numSeatsTouristInvalid}" size="20" immediate="true" >
+                                <p:inputText  value="#{editAirplaneBean.numSeatsTourist}" id="airplaneNumSeatsTourist" label="airplaneNumSeatsTourist" required="true" placeholder="#{msg.numSeatsTouristPlaceholder}" requiredMessage="#{msg.numSeatsTouristRequired}" validatorMessage="#{msg.numSeatsTouristInvalid}" size="20" immediate="true" >
                                     <f:convertNumber type="number" integerOnly="true"/>
                                     <f:ajax event="blur" render="airplaneNumSeatsTouristMessage"/>
                                 </p:inputText>
                                 <h:message for="airplaneNumSeatsTourist" style="color: crimson" id="airplaneNumSeatsTouristMessage"/>
                                 <h:outputLabel for="airplaneNumSeatsBusiness" value="#{msg.numSeatsBusiness}"/>
-                                <p:inputText  value="#{addAirplaneBean.numSeatsBusiness}" id="airplaneNumSeatsBusiness" label="airplaneNumSeatsBusiness" required="true" placeholder="#{msg.numSeatsBusinessPlaceholder}" requiredMessage="#{msg.numSeatsBusinessRequired}" validatorMessage="#{msg.numSeatsBusinessInvalid}" size="20" immediate="true" >
+                                <p:inputText  value="#{editAirplaneBean.numSeatsBusiness}" id="airplaneNumSeatsBusiness" label="airplaneNumSeatsBusiness" required="true" placeholder="#{msg.numSeatsBusinessPlaceholder}" requiredMessage="#{msg.numSeatsBusinessRequired}" validatorMessage="#{msg.numSeatsBusinessInvalid}" size="20" immediate="true" >
                                     <f:convertNumber type="number" integerOnly="true"/>
                                     <f:ajax event="blur" render="airplaneNumSeatsBusinessMessage"/>
                                 </p:inputText>
@@ -71,7 +71,7 @@
                             </h:panelGrid>
                             <p:spacer height="35" />
                             <h:panelGrid columns="2">
-                                <p:commandButton value="#{msg.buttonAdd}" action="#{addAirplaneBean.addAirplaneAction()}" process="@form" partialSubmit="true">
+                                <p:commandButton value="#{msg.buttonUpdate}" action="#{editAirplaneBean.editAirplaneAction()}" process="@form" partialSubmit="true">
                                 </p:commandButton>
                                 <p:button outcome="/airplane/index" value="#{msg.buttonCancel}"/>
                             </h:panelGrid>

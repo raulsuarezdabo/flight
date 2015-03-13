@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body role="document">
+        <ui:composition template="/template/basicTemplate.xhtml">
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleAirplaneDelete}" /></ui:define>
+            <ui:define name="meta">
+                <meta name="description" content="Edita tus datos"></meta>
+            </ui:define>
+            <ui:define name="breadcrumbs">
+                <li><h:link value="#{msg.airplane}" outcome="index"/></li>
+                <li class="active"><h:outputText value="#{msg.airplaneDelete}"/></li>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <h1><h:outputText value="#{msg.titleAirplaneDelete}"/></h1>
+                        <h:form id="airplaneForm">
+                            <h2><span class="glyphicon glyphicon-plane">&nbsp;<h:outputText value="#{msg.titleAirplaneRegisterBlock1}"/></span></h2>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="airplaneModel" value="#{msg.model}"/>
+                                <p:inputText  value="#{deleteAirplaneBean.model}" id="airplaneModel" label="airplaneModel" required="true" placeholder="#{msg.modelPlaceholder}" requiredMessage="#{msg.modelRequired}" validatorMessage="#{msg.modelInvalid}" size="35" disabled="true" >
+                                </p:inputText>
+                                <h:message for="airplaneModel" style="color: crimson" id="airplaneModelMessage"/>
+                                <h:outputLabel for="airplaneMaker" value="#{msg.maker}"/>
+                                <p:inputText  value="#{deleteAirplaneBean.maker}" id="airplaneMaker" label="airplaneMaker" required="true" placeholder="#{msg.makerPlaceholder}" requiredMessage="#{msg.makerRequired}" validatorMessage="#{msg.makerInvalid}" size="35" disabled="true" >
+                                </p:inputText>
+                                <h:message for="airplaneMaker" style="color: crimson" id="airplaneMakerMessage"/>
+                                <h:outputLabel for="airplaneYear" value="#{msg.year}"/>
+                                <h:selectOneMenu id="airplaneYear" value="#{deleteAirplaneBean.year}" styleClass="form-control" style="width: 200px;" required="true" requiredMessage="#{msg.yearRequired}" disabled="true">   
+                                    <f:selectItem itemLabel="#{msg.yearPlaceholder}" itemValue=""/>
+                                    <f:selectItems value="#{deleteAirplaneBean.years}" var="item" itemLabel="#{item}" itemValue="#{item}" />
+                                </h:selectOneMenu>
+                                <h:message for="airplaneYear" style="color: crimson" id="airplaneYearMessage"/>
+                                <h:outputLabel for="airplaneNumSeatsTotal" value="#{msg.numSeatsTotal}"/>
+                                <p:inputText  value="#{deleteAirplaneBean.numSeatsTotal}" id="airplaneNumSeatsTotal" label="airplaneNumSeatsTotal" required="true" placeholder="#{msg.numSeatsTotalPlaceholder}" requiredMessage="#{msg.numSeatsTotalRequired}" validatorMessage="#{msg.numSeatsTotalInvalid}" size="20" disabled="true" >
+                                </p:inputText>
+                                <h:message for="airplaneNumSeatsTotal" style="color: crimson" id="airplaneNumSeatsTotalMessage"/>
+                                <h:outputLabel for="airplaneNumSeatsOffer" value="#{msg.numSeatsOffer}"/>
+                                <p:inputText  value="#{deleteAirplaneBean.numSeatsOffer}" id="airplaneNumSeatsOffer" label="airplaneNumSeatsOffer" required="true" placeholder="#{msg.numSeatsOfferPlaceholder}" requiredMessage="#{msg.numSeatsOfferRequired}" validatorMessage="#{msg.numSeatsOfferInvalid}" size="20" disabled="true" >
+                                </p:inputText>
+                                <h:message for="airplaneNumSeatsOffer" style="color: crimson" id="airplaneNumSeatsOfferMessage"/>
+                                <h:outputLabel for="airplaneNumSeatsTourist" value="#{msg.numSeatsTourist}"/>
+                                <p:inputText  value="#{deleteAirplaneBean.numSeatsTourist}" id="airplaneNumSeatsTourist" label="airplaneNumSeatsTourist" required="true" placeholder="#{msg.numSeatsTouristPlaceholder}" requiredMessage="#{msg.numSeatsTouristRequired}" validatorMessage="#{msg.numSeatsTouristInvalid}" size="20" disabled="true" >
+                                </p:inputText>
+                                <h:message for="airplaneNumSeatsTourist" style="color: crimson" id="airplaneNumSeatsTouristMessage"/>
+                                <h:outputLabel for="airplaneNumSeatsBusiness" value="#{msg.numSeatsBusiness}"/>
+                                <p:inputText  value="#{deleteAirplaneBean.numSeatsBusiness}" id="airplaneNumSeatsBusiness" label="airplaneNumSeatsBusiness" required="true" placeholder="#{msg.numSeatsBusinessPlaceholder}" requiredMessage="#{msg.numSeatsBusinessRequired}" validatorMessage="#{msg.numSeatsBusinessInvalid}" size="20" disabled="true" >
+                                </p:inputText>
+                                <h:message for="airplaneNumSeatsBusiness" style="color: crimson" id="airplaneNumSeatsBusinessMessage"/>
+                            </h:panelGrid>
+                            <p:spacer height="35" />
+                            <h:panelGrid columns="2">
+                                <p:commandButton value="#{msg.buttonDelete}" action="#{deleteAirplaneBean.deleteAirplaneAction()}" process="@form" partialSubmit="true">
+                                </p:commandButton>
+                                <p:button outcome="/airplane/index" value="#{msg.buttonCancel}"/>
+                            </h:panelGrid>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+
