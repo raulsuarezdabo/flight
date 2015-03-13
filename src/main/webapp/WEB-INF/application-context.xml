@@ -11,23 +11,12 @@
     <import resource="/security-context.xml"/>
     <context:annotation-config />
     <!-- TEMPLATE & MAILING ENGINE -->
-    <bean id="email" class="com.mycompany.flight.service.EmailServiceImpl" scope="singleton"></bean>
-    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
-        <property name="velocityProperties">
-            <props>
-                <prop key="resource.loader">file</prop>
-                <prop key="file.resource.loader.class">
-                    org.apache.velocity.runtime.resource.loader.FileResourceLoader
-                </prop>
-                <prop key="file.resource.loader.path">${webapp.root}/WEB-INF/velocity</prop>
-                <prop key="file.resource.loader.cache">false</prop>
-            </props>
-        </property>
+    <bean id="freemarkerConfiguration" class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactoryBean" >
+        <property name="preferFileSystemAccess" value="false" />
+        <property name="templateLoaderPath" value="classpath:/com/mycompany/flight/template" />
     </bean>
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
-        <property name="cache" value="true"/>
-        <property name="prefix" value=""/>
-        <property name="suffix" value=".vm"/>
+    <bean id="email" class="com.mycompany.flight.service.EmailServiceImpl" scope="singleton">
+        <property name="freemarkerConfiguration" ref="freemarkerConfiguration" />
     </bean>
     <!-- BEANS OF THE PROYECT -->
     <bean id="userService"      class="com.mycompany.flight.service.UserServiceImpl" ></bean>
