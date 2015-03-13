@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body role="document">
+        <ui:composition template="/template/basicTemplate.xhtml">
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleLoginUser}" /></ui:define>
+            <ui:define name="meta">
+                <meta name="description" content="Registrate como usuario"></meta>
+            </ui:define>
+            <ui:define name="breadcrumbs">
+                <li><h:link value="#{msg.titleLogin}" outcome="login" /></li>
+                <li class="active"><h:outputText value="#{msg.titleForgotAccount}"/></li>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <h1>#{msg.titleLoginUserFails1}</h1>
+                        <div class="alert alert-danger" role="alert">
+                            <h2><span class="glyphicon glyphicon-thumbs-down">&nbsp;#{msg.titleLoginUserFails1}</span></h2>
+                            <p><h:outputText escape="false" value="#{msg.messageLoginUserFails}"/></p>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+

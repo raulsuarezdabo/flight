@@ -29,11 +29,6 @@
             <from-outcome>index</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
-        <navigation-case>
-            <description>Navigation case that show the form to sing up a new user</description>
-            <from-outcome>new_user</from-outcome>
-            <to-view-id>/register/new_user.xhtml</to-view-id>
-        </navigation-case>
     </navigation-rule>
     <navigation-rule>
         <from-view-id>register/new_user.xhtml</from-view-id>
@@ -46,35 +41,15 @@
             <to-view-id>/register/success_new_user.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    <!--<managed-bean>
-        <managed-bean-name></managed-bean-name>
-        <managed-bean-class></managed-bean-class>
-        <managed-bean-scope></managed-bean-scope>
-    </managed-bean>-->
-    <!-- MANAGED BEANS -->
-    <managed-bean>
-        <managed-bean-name>localeBean</managed-bean-name>
-        <managed-bean-class>com.mycompany.flight.language.LocaleBean</managed-bean-class>
-        <managed-bean-scope>session</managed-bean-scope>
-    </managed-bean>
-    <managed-bean>
-        <managed-bean-name>newUserBean</managed-bean-name>
-        <managed-bean-class>com.mycompany.flight.register.NewUserBean</managed-bean-class>
-        <managed-bean-scope>view</managed-bean-scope>
-        <managed-property>
-            <property-name>userService</property-name>
-            <property-class>com.mycompany.flight.service.UserService</property-class>
-            <value>#{userService}</value>
-        </managed-property>
-        <managed-property>
-            <property-name>countryDAO</property-name>
-            <property-class>com.mycompany.flight.dao.CountryDAO</property-class>
-            <value>#{countryDAO}</value>
-        </managed-property>
-        <managed-property>
-            <property-name>cityDAO</property-name>
-            <property-class>com.mycompany.flight.dao.CityDAO</property-class>
-            <value>#{cityDAO}</value>
-        </managed-property>
-    </managed-bean>
+    <navigation-rule>
+        <from-view-id>register/forgot-account.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>false</from-outcome>
+            <to-view-id>register/forgot-account-fails.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>true</from-outcome>
+            <to-view-id>register/forgot-account-success.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

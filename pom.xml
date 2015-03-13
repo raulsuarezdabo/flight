@@ -13,6 +13,8 @@
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>4.1.0.RELEASE</spring.version>
+        <spring-security.version>3.2.5.RELEASE</spring-security.version>
+        <spring-faces.version>2.4.1.RELEASE</spring-faces.version>
         <hibernate.version>4.3.6.Final</hibernate.version>
     </properties>
     
@@ -33,11 +35,12 @@
             <artifactId>all-themes</artifactId>  
             <version>1.0.10</version>  
         </dependency>
+        <!--
         <dependency>
             <groupId>com.ocpsoft</groupId>
             <artifactId>prettyfaces-jsf2</artifactId>
             <version>3.3.3</version>
-        </dependency>
+        </dependency>-->
         <!-- HIBERNATE FRAMEWORK DEPENDENCIES -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -98,6 +101,11 @@
             <artifactId>spring-context-support</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
         <!-- DEPENDENCIES FOR SENDING MAILS -->
         <dependency>
             <groupId>com.mandrillapp.wrapper.lutung</groupId>
@@ -108,6 +116,37 @@
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
             <version>2.3.21</version>
+        </dependency>
+        <!-- DEPENDENCIES FOR SECURITY WITH SPRING -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring-security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.webflow</groupId>
+            <artifactId>spring-faces</artifactId>
+            <version>${spring-faces.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
     </dependencies>
 

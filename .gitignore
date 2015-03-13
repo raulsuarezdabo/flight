@@ -33,5 +33,17 @@ nb-configuration.xml
 target/flight-1.0-SNAPSHOT.war
 
 *.lst
-
+target/*
 target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+
+target/flight-1.0-SNAPSHOT/WEB-INF/faces-config.xml
+
+target/flight-1.0-SNAPSHOT/WEB-INF/faces-config.xml
+
+target/flight-1.0-SNAPSHOT/WEB-INF/web.xml
+
+faces-config.NavData
+
+target/flight-1.0-SNAPSHOT/template/header/headerBasic.xhtml
+
+target/flight-1.0-SNAPSHOT/template/basicTemplate.xhtml

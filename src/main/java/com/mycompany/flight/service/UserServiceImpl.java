@@ -1,36 +1,40 @@
 package com.mycompany.flight.service;
 
-import com.mycompany.flight.dao.RoleDAOImpl;
 import com.mycompany.flight.dao.UserDAOImpl;
-import com.mycompany.flight.entity.CityEntity;
-import com.mycompany.flight.entity.CountryEntity;
-import com.mycompany.flight.entity.RoleEntity;
-import com.mycompany.flight.entity.UserEntity;
+import com.raulsuarezdabo.flight.entity.CityEntity;
+import com.raulsuarezdabo.flight.entity.CountryEntity;
+import com.raulsuarezdabo.flight.entity.RoleEntity;
+import com.raulsuarezdabo.flight.entity.UserEntity;
+import com.raulsuarezdabo.flight.service.RoleService;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author raulsuarez
  */
-public class UserServiceImpl implements UserService {
+@Service
+@Transactional
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private UserDAOImpl userDAO;
-    
+
     @Autowired
-    private RoleDAOImpl roleDAO;
-    
+    private RoleService roleService;
+
     @Autowired
     private EmailServiceImpl email;
-
+    
     /**
      * property that contains the user to manage
      */
@@ -59,7 +63,6 @@ public class UserServiceImpl implements UserService {
     /**
      *
      * @param email
-     * @param password
      * @param name
      * @param surname
      * @param address
@@ -74,20 +77,20 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserEntity newUser(
-            String email, 
-            String name, 
-            String surname, 
-            String address, 
-            String nif, 
-            String phone, 
-            Date birthday, 
-            CountryEntity country, 
+            String email,
+            String name,
+            String surname,
+            String address,
+            String nif,
+            String phone,
+            Date birthday,
+            CountryEntity country,
             CityEntity city,
             Locale locale
     ) {
         try {
             ArrayList to = new ArrayList();
-            
+
             user = new UserEntity();
             user.setEmail(email);
             user.setName(name);
@@ -98,11 +101,18 @@ public class UserServiceImpl implements UserService {
             user.setBirthDay(new java.sql.Date(birthday.getTime()));
             user.setCountry(country);
             user.setCity(city);
-            RoleEntity userRole = this.roleDAO.findById(RoleEntity.USER_ROLE);
+            // mark the Date on create an user
+            java.util.Date now = new Date();
+            user.setCreatedAt(new java.sql.Date(now.getTime()));
+            RoleEntity userRole = this.roleService.getUserRole();
+            if (userRole == null) {
+                throw new Exception("Error creating the user role");
+            }
+            user.addRole(userRole);
             this.userDAO.addUser(user);
-            
+
             to.add(user);
-            
+
             this.email.sendMail(to, null, "wellcome", locale);
             return user;
         } catch (Exception e) {
@@ -113,11 +123,12 @@ public class UserServiceImpl implements UserService {
 
     /**
      * Method to encrypt the password the user
+     *
      * @param original
-     * @return String codified to md5 
+     * @return String codified to md5
      */
-    private String get_md5(String original){
-        String md5="";
+    private String get_md5(String original) {
+        String md5 = "";
         try {
             if (!original.equalsIgnoreCase("")) {
                 MessageDigest md = MessageDigest.getInstance("MD5");
@@ -140,9 +151,56 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * Method for updating the information of an specific user
+     * @param email
+     * @param editUser
+     * @param persist
+     * @return 
+     */
     @Override
-    public UserEntity updateUser(UserEntity user, HashMap values, boolean persist) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    @Transactional
+    public UserEntity updateUser(String email, UserEntity editUser, boolean persist) {
+        try {
+            UserEntity user = this.getByEmail(email);
+            if (user != null && user instanceof UserEntity) {
+                // Handler block
+                if ( editUser.getName() != null ) {
+                    user.setName(editUser.getName());    
+                }
+                if ( editUser.getSurname() != null ) {
+                    user.setSurname(editUser.getSurname());
+                }
+                if ( editUser.getBirthDay() != null ) {
+                    user.setBirthDay(new java.sql.Date(editUser.getBirthDay().getTime()));
+                }
+                if ( editUser.getNif() != null ) {
+                    user.setNif(editUser.getNif());
+                }
+                if ( editUser.getPhone() != null ) {
+                    user.setPhone(editUser.getPhone());
+                }
+                if ( editUser.getAddress() != null ) {
+                    user.setAddress(editUser.getAddress());
+                }
+                if ( editUser.getCountry() != null ) {
+                    user.setCountry(editUser.getCountry());
+                }
+                if ( editUser.getCity() != null ) {
+                    user.setCity(editUser.getCity());
+                }
+                // Persist block
+                if (persist == true) {
+                    if ( this.userDAO.updateUser(user) == false) {
+                        throw new Exception("Error updating the user");
+                    }
+                }
+            }
+            return user;
+        } catch( Exception e ) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     @Override
@@ -157,7 +215,96 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getByEmail(String email) {
+        return this.userDAO.findByEmail(email);
+    }
+
+    /**
+     *
+     * @param email
+     * @return
+     * @throws UsernameNotFoundException
+     */
+    @Override
+    @Transactional
+    public UserEntity loadUserByUsername(String email) throws UsernameNotFoundException {
+        UserEntity user = this.userDAO.findByEmail(email);
+        if (user == null) {
+            throw new UsernameNotFoundException("User " + email + " not found!");
+        }
+        return user;
+    }
+
+    @Override
+    public Boolean forgotAccount(String email, Locale current) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * method that check if the given email and password match with a created
+     * account or not
+     *
+     * @param email
+     * @param password
+     * @return boolean
+     */
+    @Override
+    @Transactional
+    public boolean checkCredentails(String email, String password) {
+        try {
+            UserEntity user = this.getByEmail(email);
+            if (user == null) {
+                throw new Exception("User not found");
+            }
+            if (user.getPassword().compareTo(password) != 0) {
+                throw new Exception("User password not match");
+            }
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Method to know if currently is a user logged
+     * @return boolean
+     */
+    @Override
+    public boolean isLogged() {
+        try {
+            return (this.getLoggedUser()) instanceof UserEntity;
+        } catch ( Exception e ) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+    
+    /**
+     * Method that obtains the currently logged user, if not returns null
+     * @return UserEntity
+     */
+    @Override
+    public UserEntity getLoggedUser () {
+        try {
+            UserEntity user = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return this.getByEmail(user.getEmail());
+        } catch ( Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    /**
+     * Method that clears the current user's session
+     * @return boolean
+     */
+    @Override
+    public boolean logout () {
+        try {
+            SecurityContextHolder.clearContext();
+            return true;
+        } catch ( Exception e ) {
+            return false;
+        }
+    }
 }

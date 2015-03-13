@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <div class="container">
+            <div class="row">
+                <!-- Warning -->
+                <c:if test="#{flash.warningMessage.lenght() >0}">
+                    <div class="alert alert-warning alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h:outputText escape="false" value="#{flash.warningMessage}"/>
+                    </div>
+                </c:if>
+                <!-- Success -->
+                <c:if test="#{flash.successMessage.length() > 0}">
+                    <div class="alert alert-success alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <p><h:outputText escape="false" value="#{flash.successMessage}"/></p>
+                    </div>
+                </c:if>
+                <!-- Danger -->
+                <c:if test="#{flash.dangerMessage.length() > 0}">
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h:outputText escape="false" value="#{flash.dangerMessage}"/>
+                    </div>
+                </c:if>
+            </div>
+        </div>
+    </h:body>
+</html>
+

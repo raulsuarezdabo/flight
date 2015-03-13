@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:beans="http://www.springframework.org/schema/beans"
+    xsi:schemaLocation="
+     http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+    <!-- Enable method level Spring Security by annotations  -->
+    <sec:http use-expressions="true">
+        <!-- Page level Spring Security : Permit access to resources in /pages/unsecure/** -->
+        <sec:intercept-url pattern="/profile/**" access="hasRole('USER_ROLE')"/>     
+        <sec:form-login 
+            login-page="/register/login.xhtml" 
+            authentication-failure-url="/register/login-fails.xhtml"
+            authentication-success-handler-ref="myAuthenticationSuccessHandler"
+            authentication-failure-handler-ref="myAuthenticationFailureHandler"
+        />
+    </sec:http>
+   
+    <!-- Set customUserDetailsService class as the authentication Manager for Spring Security-->
+    <sec:authentication-manager alias="authenticationManager">
+        <sec:authentication-provider user-service-ref="userService">
+            <!--<sec:password-encoder hash="plaintext"></sec:password-encoder>-->
+        </sec:authentication-provider>
+    </sec:authentication-manager>
+</beans:beans>

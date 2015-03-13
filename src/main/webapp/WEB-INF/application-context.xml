@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+          http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+">
+    <context:component-scan base-package="com" />
+    <import resource="/db-config.xml"/>
+    <import resource="/security-context.xml"/>
+    <context:annotation-config />
+    <!-- TEMPLATE & MAILING ENGINE -->
+    <bean id="email" class="com.mycompany.flight.service.EmailServiceImpl" scope="singleton"></bean>
+    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+        <property name="velocityProperties">
+            <props>
+                <prop key="resource.loader">file</prop>
+                <prop key="file.resource.loader.class">
+                    org.apache.velocity.runtime.resource.loader.FileResourceLoader
+                </prop>
+                <prop key="file.resource.loader.path">${webapp.root}/WEB-INF/velocity</prop>
+                <prop key="file.resource.loader.cache">false</prop>
+            </props>
+        </property>
+    </bean>
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+        <property name="cache" value="true"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".vm"/>
+    </bean>
+    <!-- BEANS OF THE PROYECT -->
+    <bean id="userService"      class="com.mycompany.flight.service.UserServiceImpl" ></bean>
+    <bean id="countryService"   class="com.raulsuarezdabo.flight.service.CountryServiceImpl" ></bean>
+    <bean id="cityService"      class="com.raulsuarezdabo.flight.service.CityServiceImpl" ></bean>
+    <bean id="roleService"      class="com.raulsuarezdabo.flight.service.RoleServiceImpl" ></bean>
+    <bean id="airportService"   class="com.raulsuarezdabo.flight.service.AirportServiceImpl"></bean>
+    <bean id="airlineService"   class="com.raulsuarezdabo.flight.service.AirlineServiceImpl"></bean>
+    <bean id="airplaneService"  class="com.raulsuarezdabo.flight.service.AirplaneServiceImpl"></bean>
+    <bean id="myAuthenticationSuccessHandler" class="com.mycompany.flight.security.handler.MyAuthenticationSuccessHandler"></bean>
+    <bean id="myAuthenticationFailureHandler" class="com.mycompany.flight.security.handler.MyAuthenticationFailureHandler"></bean>
+</beans>

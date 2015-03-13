@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body role="document">
+        <ui:composition template="/template/basicTemplate.xhtml">
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleLogin}" /></ui:define>
+            <ui:define name="meta">
+                <meta name="description" content="Descripción de mi página index"></meta>
+            </ui:define>
+            <ui:define name="breadcrumbs">
+                <li class="active"><h:outputText value="#{msg.titleLogin}"/></li>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <h:form id="userForm" prependId="false">
+                            <h1><h:outputText value="#{msg.titleLogin}"></h:outputText></h1>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="userEmail" value="#{msg.email}"/>
+                                <p:inputText value="#{userLoginBean.email}" id="j_username" label="userEmail" required="true" placeholder="#{msg.emailPlaceholder}" requiredMessage="#{msg.emailRequired}" validatorMessage="#{msg.emailInvalid}" size="35" immediate="true" >
+                                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                </p:inputText>
+                                <h:message for="j_username" style="color: crimson" />
+                                <h:outputLabel for="userPassword" value="#{msg.password}"/>
+                                <p:password id="j_password" value="#{userLoginBean.password}" label="userPassword" required="true" placeholder="#{msg.passwordPlaceholder}" requiredMessage="#{msg.passwordRequired}" validatorMessage="#{msg.passwordInvalid}" size="35" immediate="true" >
+                                </p:password>
+                                <h:message for="j_password" style="color: crimson" />
+                            </h:panelGrid>
+                            <p:spacer height="35" />
+                            <h:panelGrid columns="2">
+                                <p:commandButton value="#{msg.buttonLogin}" action="#{userLoginBean.login()}" update="@form" ajax="false"></p:commandButton>
+                                <p:button outcome="index" value="Cancelar"/>
+                            </h:panelGrid>
+                            <p:spacer height="35" />
+                            <h:panelGrid columns="1">
+                                <h:link value="#{msg.titleForgotAccount}" outcome="forgot-account" />
+                            </h:panelGrid>
+                        </h:form>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

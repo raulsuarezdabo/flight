@@ -5,11 +5,10 @@
  */
 package com.mycompany.flight.dao;
 
-import com.mycompany.flight.entity.UserEntity;
+import com.raulsuarezdabo.flight.entity.UserEntity;
 import java.util.List;
-import org.hibernate.Session;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -46,20 +45,23 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public void addUser(UserEntity user) {
-        Session session = this.sessionFactory.getCurrentSession();
-        Transaction transaction = session.beginTransaction();
         this.sessionFactory.getCurrentSession().save(user);
-        transaction.commit();
     }
 
     /**
      * Method for updating the user entity
-     *
      * @param user
+     * @return boolean  success or not flag
      */
     @Override
-    public void updateUser(UserEntity user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean updateUser(UserEntity user) {
+        try {
+            this.sessionFactory.getCurrentSession().update(user);
+            return true;
+        } catch ( Exception e ) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     /**
@@ -101,7 +103,12 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public UserEntity findByEmail(String email) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        UserEntity user;
+        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM UserEntity  WhERE email = :email ");
+        query.setParameter("email", email);
+        query.setMaxResults(1);
+        user = (UserEntity) query.uniqueResult();
+        return user;
     }
 
 }
