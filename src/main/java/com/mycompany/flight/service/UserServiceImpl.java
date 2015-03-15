@@ -8,9 +8,12 @@ import com.raulsuarezdabo.flight.entity.UserEntity;
 import com.raulsuarezdabo.flight.service.RoleService;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -34,7 +37,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private EmailServiceImpl email;
-    
+
     /**
      * property that contains the user to manage
      */
@@ -113,7 +116,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
             to.add(user);
 
-            this.email.sendMail(to, null, "wellcome", locale);
+            this.email.sendMail(to, this.prepareInfoForemail("wellcome", locale, user), "wellcome", locale);
             return user;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -153,10 +156,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     /**
      * Method for updating the information of an specific user
+     *
      * @param email
      * @param editUser
      * @param persist
-     * @return 
+     * @return
      */
     @Override
     @Transactional
@@ -165,39 +169,39 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             UserEntity user = this.getByEmail(email);
             if (user != null && user instanceof UserEntity) {
                 // Handler block
-                if ( editUser.getName() != null ) {
-                    user.setName(editUser.getName());    
+                if (editUser.getName() != null) {
+                    user.setName(editUser.getName());
                 }
-                if ( editUser.getSurname() != null ) {
+                if (editUser.getSurname() != null) {
                     user.setSurname(editUser.getSurname());
                 }
-                if ( editUser.getBirthDay() != null ) {
+                if (editUser.getBirthDay() != null) {
                     user.setBirthDay(new java.sql.Date(editUser.getBirthDay().getTime()));
                 }
-                if ( editUser.getNif() != null ) {
+                if (editUser.getNif() != null) {
                     user.setNif(editUser.getNif());
                 }
-                if ( editUser.getPhone() != null ) {
+                if (editUser.getPhone() != null) {
                     user.setPhone(editUser.getPhone());
                 }
-                if ( editUser.getAddress() != null ) {
+                if (editUser.getAddress() != null) {
                     user.setAddress(editUser.getAddress());
                 }
-                if ( editUser.getCountry() != null ) {
+                if (editUser.getCountry() != null) {
                     user.setCountry(editUser.getCountry());
                 }
-                if ( editUser.getCity() != null ) {
+                if (editUser.getCity() != null) {
                     user.setCity(editUser.getCity());
                 }
                 // Persist block
                 if (persist == true) {
-                    if ( this.userDAO.updateUser(user) == false) {
+                    if (this.userDAO.updateUser(user) == false) {
                         throw new Exception("Error updating the user");
                     }
                 }
             }
             return user;
-        } catch( Exception e ) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -267,44 +271,77 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     /**
      * Method to know if currently is a user logged
+     *
      * @return boolean
      */
     @Override
     public boolean isLogged() {
         try {
             return (this.getLoggedUser()) instanceof UserEntity;
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
         }
     }
-    
+
     /**
      * Method that obtains the currently logged user, if not returns null
+     *
      * @return UserEntity
      */
     @Override
-    public UserEntity getLoggedUser () {
+    public UserEntity getLoggedUser() {
         try {
             UserEntity user = (UserEntity) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             return this.getByEmail(user.getEmail());
-        } catch ( Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
     }
-    
+
     /**
      * Method that clears the current user's session
+     *
      * @return boolean
      */
     @Override
-    public boolean logout () {
+    public boolean logout() {
         try {
             SecurityContextHolder.clearContext();
             return true;
-        } catch ( Exception e ) {
+        } catch (Exception e) {
             return false;
+        }
+    }
+
+    /**
+     * Method that prepares the information for the email
+     *
+     * @param wellcome type of e-mail
+     * @param locale Location of the email (language)
+     * @param user User model where comes the information
+     * @return HasMap
+     */
+    private HashMap prepareInfoForemail(String type, Locale locale, UserEntity user) {
+        try {
+            String messages = null;
+            if (locale.getLanguage().equals("es")) {
+                messages = "com.mycompany.flight.messages";
+            } else {
+                messages = "com.mycompany.flight.messages_" + locale.getLanguage().toLowerCase();
+            }
+            ResourceBundle resource = ResourceBundle.getBundle(messages);
+            HashMap map = new HashMap();
+            map.put("title", resource.getString("wellcomeEmailTitle"));
+            map.put("wellcome", MessageFormat.format(resource.getString("wellcomeEmail"), user.getName()));
+            if (type.compareTo("wellcome") == 0) {
+                map.put("wellcomeText", resource.getString("wellcomeText"));
+                map.put("wellcomeExplanation", resource.getString("wellcomeExplanation"));
+            }
+            return map;
+        } catch (Exception e) {
+            return null;
         }
     }
 }

@@ -125,7 +125,7 @@ public class EmailServiceImpl implements EmailService {
             // create your message
             MandrillMessage message = new MandrillMessage();
             message.setSubject(this.getSubject(type, locale));
-            message.setHtml(this.renderTemplate(type));
+            message.setHtml(this.renderTemplate(type, content));
             message.setAutoText(true);
             message.setFromEmail(this.getFromEmail(type));
             message.setFromName(this.getFromName(type));
@@ -292,8 +292,8 @@ public class EmailServiceImpl implements EmailService {
      * @param type
      * @return
      */
-    private String renderTemplate(String type) throws IOException, TemplateException {
+    private String renderTemplate(String type, Object model) throws IOException, TemplateException {
         String template = this.getTemplate(type);
-        return FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerConfiguration.getTemplate(template, "UTF-8"), null);
+        return FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerConfiguration.getTemplate(template, "UTF-8"), model);
     }
 }
