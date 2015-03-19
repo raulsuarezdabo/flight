@@ -7,8 +7,17 @@ package com.mycompany.flight.utils;
 
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
+import static java.lang.Math.abs;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -54,5 +63,55 @@ public class Utils {
             }
         }
         return currentCity;
+    }
+
+    /**
+     * Method for generating the token
+     * @return String with the token
+     */
+    public static String generateToken() {
+        try {
+        SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
+        return String.valueOf(abs(secureRandom.nextLong()));
+        } catch(NoSuchAlgorithmException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    /**
+     * Method for obtaining the hole url string
+     * 
+     * @param target
+     * @param get   Map String map of the get parameters
+     * @return  String  url
+     */
+    public static String getUrl(String target, HashMap get) {
+        HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String url = "http://localhost" + origRequest.getContextPath() + "/";
+        if (target != null || get != null ) {
+            if (target != null) {
+                url = url.concat(target);
+            }
+            
+            boolean first = true;
+            
+            if (get.isEmpty() == false) {
+                Set<String> key = get.keySet();
+                Iterator iterator = key.iterator();
+                while (iterator.hasNext() == true) {
+                    String next = (String) iterator.next();
+                    String value = (String) get.get(next);
+                    if (first == true) {
+                        url = url.concat("?" + next + "=" + value);
+                        first = false;
+                    }
+                    else {
+                        url = url.concat("&" + next + "=" + value);
+                    }
+                }
+            }
+        }
+        return url;
     }
 }

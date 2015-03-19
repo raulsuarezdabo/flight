@@ -1,17 +1,20 @@
 package com.mycompany.flight.service;
 
 import com.mycompany.flight.dao.UserDAOImpl;
+import com.mycompany.flight.utils.Utils;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
 import com.raulsuarezdabo.flight.entity.RoleEntity;
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import com.raulsuarezdabo.flight.service.RoleService;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.transaction.Transactional;
@@ -193,6 +196,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 if (editUser.getCity() != null) {
                     user.setCity(editUser.getCity());
                 }
+                if (editUser.getToken() != null) {
+                    user.setToken(editUser.getToken());
+                }
+                if (editUser.getPassword() != null) {
+                    user.setPassword(editUser.getPassword());
+                }
                 // Persist block
                 if (persist == true) {
                     if (this.userDAO.updateUser(user) == false) {
@@ -238,9 +247,26 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return user;
     }
 
+    /**
+     * Method for sending email recovery password
+     * @param email String
+     * @param current   Locale  current location
+     * @return  Boolean Success sending e-mail or not
+     */
     @Override
     public Boolean forgotAccount(String email, Locale current) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        UserEntity user = this.userDAO.findByEmail(email);
+        if (user != null && user instanceof UserEntity) {
+            String token = Utils.generateToken();
+            user.setToken(token);
+            if (this.userDAO.updateUser(user)) {
+                ArrayList to = new ArrayList();
+                to.add(user);
+                this.email.sendMail(to, this.prepareInfoForemail("forgot_account", current, user), "forgot_account", current);
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -333,11 +359,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             }
             ResourceBundle resource = ResourceBundle.getBundle(messages);
             HashMap map = new HashMap();
-            map.put("title", resource.getString("wellcomeEmailTitle"));
             map.put("wellcome", MessageFormat.format(resource.getString("wellcomeEmail"), user.getName()));
             if (type.compareTo("wellcome") == 0) {
+                map.put("title", resource.getString("wellcomeEmailTitle"));
                 map.put("wellcomeText", resource.getString("wellcomeText"));
                 map.put("wellcomeExplanation", resource.getString("wellcomeExplanation"));
+            }
+            if (type.compareTo("forgot_account") == 0) {
+                map.put("title", resource.getString("forgotEmailTitle"));
+                map.put("forgotText", resource.getString("forgotText"));
+                HashMap content = new HashMap();
+                content.put("token", user.getToken());
+                content.put("email", URLEncoder.encode(user.getEmail(), "UTF-8"));
+                map.put("forgotLink", Utils.getUrl("register/recovery-password.xhtml", content));
+                map.put("access", resource.getString("access"));
             }
             return map;
         } catch (Exception e) {

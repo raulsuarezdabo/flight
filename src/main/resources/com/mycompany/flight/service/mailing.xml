@@ -12,4 +12,15 @@
             <tag>new-user</tag>
         </tags>
     </item>
+    <item id="forgot_account">
+        <template>forgot_account.ftl</template>
+        <from>
+            <email>no-reply@flight-now.com</email>
+            <name>Recovery account from Flight Now!</name>
+        </from>
+        <tags>
+            <tag>forgot</tag>
+            <tag>user</tag>
+        </tags>
+    </item>
 </collection>
