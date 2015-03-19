@@ -75,12 +75,15 @@ public class UserEntity implements UserDetails {
     @JoinColumn(name = "CityId")
     private CityEntity city;
 
+    @Column(name = "Token")
+    private String token;
+
 
     /* Spring Security fields*/
     /**
      * Role List with the avaible Roles
      */
-    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "UserRole",
             joinColumns = {
                 @JoinColumn(name = "UserID", referencedColumnName = "ID")},
@@ -298,7 +301,7 @@ public class UserEntity implements UserDetails {
      *
      * @return
      */
-    public List <RoleEntity> getRole() {
+    public List<RoleEntity> getRole() {
         return authorities;
     }
 
@@ -310,12 +313,13 @@ public class UserEntity implements UserDetails {
     public void setRole(List<RoleEntity> role) {
         this.authorities = role;
     }
-    
+
     /**
      * Method for adding a role on the List of roles
-     * @param role 
+     *
+     * @param role
      */
-    public void addRole (RoleEntity role) {
+    public void addRole(RoleEntity role) {
         if (this.authorities == null) {
             this.authorities = new ArrayList<>();
         }
@@ -376,6 +380,22 @@ public class UserEntity implements UserDetails {
         this.createdAt = createdAt;
     }
 
+    /**
+     * Getter token
+     * @return  String  current token
+     */
+    public String getToken() {
+        return token;
+    }
+
+    /**
+     * Setter token 
+     * @param token     String
+     */
+    public void setToken(String token) {
+        this.token = token;
+    }
+    
     /**
      * Getter for name
      *
@@ -462,7 +482,7 @@ public class UserEntity implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         try {
             return this.authorities;
-        } catch( Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }

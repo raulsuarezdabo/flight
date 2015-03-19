@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"></button>
+                    <p:link value="Flight now!" outcome="index" class="navbar-brand"/>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <c:if test="#{userLoginBean.isLogged() eq false}">
+                            <li class="#{view.viewId eq '/register/new_user.xhtml' ? 'active' : ''}">
+                                <h:link value="#{msg.registerUser}" outcome="/register/new_user" />
+                            </li>
+                            <li class="#{view.viewId eq '/register/login.xhtml' ? 'active' : ''}">
+                                <h:link value="#{msg.buttonLogin}" outcome="/register/login" />
+                            </li>
+                        </c:if>
+                        <c:if test="#{userLoginBean.isLogged() eq true}">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{msg.hi} #{userLoginBean.getLoggedUser().getName()} <span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><h:link outcome="/profile/edit"><span class="glyphicon glyphicon-user">&nbsp;#{msg.myProfile}</span></h:link></li>
+                                    <li><h:link outcome="/register/logout"><span class="glyphicon glyphicon-log-out">&nbsp;#{msg.exit}</span></h:link></li>
+                                    <!--<li><a href="#">Something else here</a></li>-->
+                                </ul>
+                            </li>
+                        </c:if>
+                    </ul>
+                    <h:form>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><h:outputText value="#{msg.language}"/><span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li class="dropdown-header"><h:outputText value="#{msg.avaliableLanguages}"/></li>
+                                    <li>
+                                        <h:commandLink value="#{msg.spanish}" action="#{localeBean.chooseLocaleFromLink('ES')}"></h:commandLink>
+                                    </li>
+                                    <li>
+                                        <h:commandLink value="#{msg.english}" action="#{localeBean.chooseLocaleFromLink('EN')}"></h:commandLink>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+    </h:body>
+</html>
+

@@ -1,6 +1,5 @@
 package com.raulsuarezdabo.flight.jsf.user;
 
-import com.mycompany.flight.dao.UserDAO;
 import com.raulsuarezdabo.flight.jsf.language.LocaleBean;
 import com.mycompany.flight.service.UserService;
 import java.io.Serializable;
@@ -94,7 +93,7 @@ public class ForgotUserBean implements Serializable {
             Map<String, Object> sessionMap = extCtx.getSessionMap();
             LocaleBean locale = (LocaleBean) sessionMap.get("localeBean");
 
-            if (this.userService.forgotAccount(this.email,locale.getCurrent())) {
+            if (this.userService.forgotAccount(this.email,locale.getCurrent()) == false) {
                 return false;
             }
             return true;
