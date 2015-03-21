@@ -107,14 +107,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             user.setBirthDay(new java.sql.Date(birthday.getTime()));
             user.setCountry(country);
             user.setCity(city);
-            // mark the Date on create an user
-            java.util.Date now = new Date();
-            user.setCreatedAt(new java.sql.Date(now.getTime()));
             RoleEntity userRole = this.roleService.getUserRole();
             if (userRole == null) {
                 throw new Exception("Error creating the user role");
             }
             user.addRole(userRole);
+            String token = Utils.generateToken();
+            user.setToken(token);
             this.userDAO.addUser(user);
 
             to.add(user);

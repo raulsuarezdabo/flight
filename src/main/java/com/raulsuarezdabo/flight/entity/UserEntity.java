@@ -63,10 +63,6 @@ public class UserEntity implements UserDetails {
     @Column(name = "Password")
     private String password;
 
-    @Column(name = "CreatedAt")
-    @Type(type = "timestamp")
-    private Date createdAt;
-
     @OneToOne
     @JoinColumn(name = "CountryCode")
     private CountryEntity country;
@@ -130,7 +126,6 @@ public class UserEntity implements UserDetails {
         this.password = password;
         this.country = country;
         this.city = city;
-        this.createdAt = createdAt;
     }
 
     /**
@@ -360,24 +355,6 @@ public class UserEntity implements UserDetails {
      */
     public void setCity(CityEntity city) {
         this.city = city;
-    }
-
-    /**
-     * Getter createdAt
-     *
-     * @return Date
-     */
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    /**
-     * Setter createdAt
-     *
-     * @param createdAt
-     */
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
     }
 
     /**

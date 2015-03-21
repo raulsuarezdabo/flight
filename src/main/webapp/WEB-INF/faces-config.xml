@@ -31,17 +31,6 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>register/new_user.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>false</from-outcome>
-            <to-view-id>/register/fails_new_user.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>true</from-outcome>
-            <to-view-id>/register/success_new_user.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
         <from-view-id>register/forgot-account.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>false</from-outcome>

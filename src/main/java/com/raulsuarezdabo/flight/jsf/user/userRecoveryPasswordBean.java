@@ -9,7 +9,6 @@ import com.mycompany.flight.service.UserService;
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import com.raulsuarezdabo.flight.jsf.message.Message;
 import java.io.UnsupportedEncodingException;
-import static java.lang.Integer.parseInt;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Map;

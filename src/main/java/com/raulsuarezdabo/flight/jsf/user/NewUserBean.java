@@ -6,9 +6,11 @@ import com.raulsuarezdabo.flight.entity.UserEntity;
 import com.raulsuarezdabo.flight.jsf.language.LocaleBean;
 import com.mycompany.flight.service.UserService;
 import com.mycompany.flight.utils.Utils;
+import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.service.CityService;
 import com.raulsuarezdabo.flight.service.CountryService;
 import java.io.Serializable;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author raulsuarez
  */
-@ManagedBean(eager=true)
+@ManagedBean(eager = true)
 @ViewScoped
 public class NewUserBean implements Serializable {
 
@@ -74,21 +76,21 @@ public class NewUserBean implements Serializable {
      * User service to use on the view
      */
     @Autowired
-    @ManagedProperty(value="#{userService}")
+    @ManagedProperty(value = "#{userService}")
     private UserService userService;
-    
+
     /**
      * Country service to use on the view
      */
     @Autowired
-    @ManagedProperty(value="#{countryService}")
+    @ManagedProperty(value = "#{countryService}")
     private CountryService countryService;
-    
+
     /**
      * City service to use on the view
      */
     @Autowired
-    @ManagedProperty(value="#{cityService}")
+    @ManagedProperty(value = "#{cityService}")
     private CityService cityService;
     /**
      * List of countries
@@ -156,9 +158,9 @@ public class NewUserBean implements Serializable {
         } else {
             // Bring the error message using the Faces Context
             String errorMessage = FacesContext.getCurrentInstance().getApplication().
-                getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("emailExist");
+                    getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("emailExist");
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                errorMessage, errorMessage);
+                    errorMessage, errorMessage);
             FacesContext.getCurrentInstance().addMessage("userForm:userEmail", message);
         }
     }
@@ -317,7 +319,8 @@ public class NewUserBean implements Serializable {
 
     /**
      * Getter of the userService
-     * @return 
+     *
+     * @return
      */
     public UserService getUserService() {
         return userService;
@@ -325,7 +328,8 @@ public class NewUserBean implements Serializable {
 
     /**
      * Setter of the userService
-     * @param userService 
+     *
+     * @param userService
      */
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -333,7 +337,8 @@ public class NewUserBean implements Serializable {
 
     /**
      * Getter countryService
-     * @return 
+     *
+     * @return
      */
     public CountryService getCountryService() {
         return countryService;
@@ -341,7 +346,8 @@ public class NewUserBean implements Serializable {
 
     /**
      * Setter of the countryService
-     * @param countryService 
+     *
+     * @param countryService
      */
     public void setCountryService(CountryService countryService) {
         this.countryService = countryService;
@@ -360,7 +366,7 @@ public class NewUserBean implements Serializable {
      *
      * @return
      */
-    public Boolean singUpAction() {
+    public String singUpAction() {
         try {
             FacesContext ctx = FacesContext.getCurrentInstance();
             ExternalContext extCtx = ctx.getExternalContext();
@@ -380,11 +386,19 @@ public class NewUserBean implements Serializable {
                     locale.getCurrent()
             );
             if (user == null) {
-                return false;
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER,
+                        FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                                FacesContext.getCurrentInstance(), "msg").getString("registerFailsUserMessage")
+                );
+                return "/register/new-user?faces-redirect=true";
             }
-            return true;
+            return "/register/login?faces-redirect=true&email=" + URLEncoder.encode(user.getEmail(), "UTF-8") + "&token=" + user.getToken();
         } catch (Exception e) {
-            return false;
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER,
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                            FacesContext.getCurrentInstance(), "msg").getString("registerFailsUserMessage")
+            );
+            return "/register/new-user?faces-redirect=true";
         }
     }
 }

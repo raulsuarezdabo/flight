@@ -2,10 +2,16 @@ package com.raulsuarezdabo.flight.jsf.user;
 
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import com.mycompany.flight.service.UserService;
+import com.raulsuarezdabo.flight.jsf.message.Message;
 import java.io.IOException;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -22,7 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author raulsuarez
  */
-@ManagedBean(eager=true)
+@ManagedBean(eager = true)
 @RequestScoped
 public class UserLoginBean implements Serializable {
 
@@ -36,8 +42,13 @@ public class UserLoginBean implements Serializable {
      */
     private String password;
 
+    /**
+     * token of the user, autologin in two steps
+     */
+    private String token;
+
     @Autowired
-    @ManagedProperty(value="#{userService}")
+    @ManagedProperty(value = "#{userService}")
     private UserService userService;
 
     /**
@@ -77,6 +88,22 @@ public class UserLoginBean implements Serializable {
     }
 
     /**
+     * Getter token
+     * @return  String
+     */
+    public String getToken() {
+        return token;
+    }
+
+    /**
+     * Setter token
+     * @param token String 
+     */
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    /**
      * Getter userService
      *
      * @return
@@ -102,6 +129,29 @@ public class UserLoginBean implements Serializable {
      * @throws java.io.IOException
      */
     public String login() throws ServletException, IOException {
+        Map<String, String> requestParameters = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        if (requestParameters.containsKey("token") == true) {
+            this.token = requestParameters.get("token");
+            //Hook for new user, second step and autologin
+            UserEntity user = this.userService.getByEmail(this.email);
+            if (user == null || user instanceof UserEntity == false || user.getToken().compareTo(this.token) != 0) {
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER,
+                        FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                                FacesContext.getCurrentInstance(), "msg").getString("passwordFailsUserMessage")
+                );
+                return "/register/forgot-account?faces-redirect=true";
+            }
+            UserEntity userEdit = new UserEntity();
+            userEdit.setPassword(this.password);
+            userEdit.setToken("");
+            if (this.userService.updateUser(this.email, userEdit, true) == null) {
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.WARNING,
+                        FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                                FacesContext.getCurrentInstance(), "msg").getString("passwordFailsUserMessage")
+                );
+                return "/register/forgot-account?faces-redirect=true";
+            }
+        }
         if (this.userService.checkCredentails(this.email, this.password) == true) {
             ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
             HttpServletRequest request = ((HttpServletRequest) context.getRequest());
@@ -124,8 +174,7 @@ public class UserLoginBean implements Serializable {
         try {
             if (this.userService.logout() == true) {
 //                FacesContext.getCurrentInstance().getExternalContext().getFlash().put("success", "logoutSuccessMessage");
-            }
-            else {
+            } else {
 //                FacesContext.getCurrentInstance().getExternalContext().getFlash().put("param1", "logoutErrorMessage");
             }
             FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath());
@@ -146,5 +195,21 @@ public class UserLoginBean implements Serializable {
      */
     public UserEntity getLoggedUser() {
         return this.userService.getLoggedUser();
+    }
+
+    @PostConstruct
+    public void init() {
+
+        Map<String, String> parameterMap = (Map<String, String>) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        if (parameterMap.containsKey("email") == true && parameterMap.containsKey("token") == true) {
+            try {
+                this.email = URLDecoder.decode(parameterMap.get("email"), "UTF-8");
+                this.token = parameterMap.get("token");
+            } catch (UnsupportedEncodingException e) {
+                System.out.println(e.getMessage());
+                this.token = null;
+            }
+        }
+
     }
 }

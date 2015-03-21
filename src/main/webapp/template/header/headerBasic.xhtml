@@ -17,8 +17,8 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <c:if test="#{userLoginBean.isLogged() eq false}">
-                            <li class="#{view.viewId eq '/register/new_user.xhtml' ? 'active' : ''}">
-                                <h:link value="#{msg.registerUser}" outcome="/register/new_user" />
+                            <li class="#{view.viewId eq '/register/new-user.xhtml' ? 'active' : ''}">
+                                <h:link value="#{msg.registerUser}" outcome="/register/new-user" />
                             </li>
                             <li class="#{view.viewId eq '/register/login.xhtml' ? 'active' : ''}">
                                 <h:link value="#{msg.buttonLogin}" outcome="/register/login" />
