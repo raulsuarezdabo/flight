@@ -1,6 +1,7 @@
 
 package com.raulsuarezdabo.flight.service;
 
+import com.raulsuarezdabo.flight.entity.AirplaneEntity;
 import com.raulsuarezdabo.flight.entity.AirportEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import java.util.Date;
@@ -20,9 +21,10 @@ public interface FlightService {
      * @param airportTo AirportTo   where it goes
      * @param Start Date    datetime takes off
      * @param ends  Date    dateTime landing 
+     * @param airplane  AirplaneEntity  airplane
      * @return  FlightEntity    flight created
      */
-    public FlightEntity addFlight(String code, int status, AirportEntity airportFrom, AirportEntity airportTo, Date Start, Date ends);
+    public FlightEntity addFlight(String code, int status, AirportEntity airportFrom, AirportEntity airportTo, Date Start, Date ends, AirplaneEntity airplane);
     
     /**
      * Method to update the flight

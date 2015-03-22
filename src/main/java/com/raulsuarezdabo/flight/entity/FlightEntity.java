@@ -43,7 +43,9 @@ public class FlightEntity {
     @Column(name = "Ends", nullable = false)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date ends;
-
+    
+    @Column(name = "AirplaneModel", nullable = false)
+    private AirplaneEntity airplane;
     
     /**
      * Getter id property
@@ -157,5 +159,21 @@ public class FlightEntity {
      */
     public void setEnds(Date ends) {
         this.ends = ends;
+    }
+
+    /**
+     * Getter airplaneEntity
+     * @return  AirplaneEntity
+     */
+    public AirplaneEntity getAirplane() {
+        return airplane;
+    }
+
+    /**
+     * Setter airplane
+     * @param airplane  AirplaneEntity 
+     */
+    public void setAirplane(AirplaneEntity airplane) {
+        this.airplane = airplane;
     }
 }

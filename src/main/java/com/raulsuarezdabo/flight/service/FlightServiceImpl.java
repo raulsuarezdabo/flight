@@ -5,6 +5,7 @@
  */
 package com.raulsuarezdabo.flight.service;
 
+import com.raulsuarezdabo.flight.entity.AirplaneEntity;
 import com.raulsuarezdabo.flight.entity.AirportEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import java.util.Date;
@@ -28,10 +29,12 @@ public class FlightServiceImpl implements FlightService {
      * @param airportTo AirportEntity   airport it goes
      * @param Start Date    when takes off
      * @param ends  Date    arrives
+     * @param airplane  AirplaneEntity  airplane that is going to use
      * @return  FlightEntity    New flight
      */
     @Override
-    public FlightEntity addFlight(String code, int status, AirportEntity airportFrom, AirportEntity airportTo, Date Start, Date ends) {
+    @Transactional
+    public FlightEntity addFlight(String code, int status, AirportEntity airportFrom, AirportEntity airportTo, Date Start, Date ends, AirplaneEntity airplane) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -43,6 +46,7 @@ public class FlightServiceImpl implements FlightService {
      * @return  FlightEntity    updated information
      */
     @Override
+    @Transactional
     public FlightEntity updateFlight(int id, FlightEntity flight, boolean update) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -53,6 +57,7 @@ public class FlightServiceImpl implements FlightService {
      * @return  boolean success/fails to delete
      */
     @Override
+    @Transactional
     public boolean deleteFlight(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
