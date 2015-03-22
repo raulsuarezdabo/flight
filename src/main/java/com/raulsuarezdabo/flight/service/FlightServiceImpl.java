@@ -5,12 +5,14 @@
  */
 package com.raulsuarezdabo.flight.service;
 
+import com.raulsuarezdabo.flight.dao.FlightDAO;
 import com.raulsuarezdabo.flight.entity.AirplaneEntity;
 import com.raulsuarezdabo.flight.entity.AirportEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import java.util.Date;
 import java.util.List;
 import javax.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -20,11 +22,13 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class FlightServiceImpl implements FlightService {
+    
+    @Autowired
+    private FlightDAO flightDAO;
 
     /**
      * Method for adding flights
      * @param code  String  code
-     * @param status    int status of the flight
      * @param airportFrom   AirportEntity   airport it comes
      * @param airportTo AirportEntity   airport it goes
      * @param Start Date    when takes off
@@ -34,8 +38,23 @@ public class FlightServiceImpl implements FlightService {
      */
     @Override
     @Transactional
-    public FlightEntity addFlight(String code, int status, AirportEntity airportFrom, AirportEntity airportTo, Date Start, Date ends, AirplaneEntity airplane) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public FlightEntity addFlight(String code, AirportEntity airportFrom, AirportEntity airportTo, Date Start, Date ends, AirplaneEntity airplane) {
+        try {
+        FlightEntity flight = new FlightEntity();
+        
+        flight.setCode(code);
+        flight.setAirportFrom(airportFrom);
+        flight.setAirportTo(airportTo);
+        flight.setStart(Start);
+        flight.setEnds(ends);
+        flight.setAirplane(airplane);
+        
+        this.flightDAO.addFlight(flight);
+        return flight;
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -48,7 +67,38 @@ public class FlightServiceImpl implements FlightService {
     @Override
     @Transactional
     public FlightEntity updateFlight(int id, FlightEntity flight, boolean update) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            FlightEntity flightToUpdate = this.flightDAO.findById(id);
+            if (flight == null) {
+                throw new Exception("Not found flight");
+            }
+            if (flight.getCode() != null) {
+                flightToUpdate.setCode(flight.getCode());
+            }
+            if (flight.getAirportFrom() != null) {
+                flightToUpdate.setAirportFrom(flight.getAirportFrom());
+            }
+            if (flight.getAirportTo() != null) {
+                flightToUpdate.setAirportTo(flight.getAirportTo());
+            }
+            if (flight.getStart() != null) {
+                flightToUpdate.setStart(flight.getStart());
+            }
+            if (flight.getEnds() != null) {
+                flightToUpdate.setEnds(flight.getEnds());
+            }
+            if (flight.getAirplane() != null) {
+                flightToUpdate.setAirplane(flight.getAirplane());
+            }
+            
+            if (this.flightDAO.updateFlight(flightToUpdate) == false) {
+                throw new Exception("Error updating the flight");
+            }
+            return flightToUpdate;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -59,7 +109,16 @@ public class FlightServiceImpl implements FlightService {
     @Override
     @Transactional
     public boolean deleteFlight(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            FlightEntity flight = this.flightDAO.findById(id);
+            if (flight == null) {
+                throw new Exception("Not found flight");
+            }
+            return this.flightDAO.deleteFlight(flight);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     /**
@@ -68,7 +127,13 @@ public class FlightServiceImpl implements FlightService {
      */
     @Override
     public List<FlightEntity> getAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            List<FlightEntity> flights = this.flightDAO.findAll();
+            return flights;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -78,7 +143,7 @@ public class FlightServiceImpl implements FlightService {
      */
     @Override
     public FlightEntity getByCode(String code) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.flightDAO.findByCode(code);
     }
 
     /**
@@ -88,7 +153,7 @@ public class FlightServiceImpl implements FlightService {
      */
     @Override
     public FlightEntity getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.flightDAO.findById(id);
     }
     
 }
