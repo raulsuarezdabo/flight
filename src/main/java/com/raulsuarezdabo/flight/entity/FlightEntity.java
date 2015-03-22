@@ -17,6 +17,9 @@ import javax.persistence.Temporal;
 @Entity
 @Table(name = "User")
 public class FlightEntity {
+    
+    public static final int STATUSNONE = 0;
+    
     @Id
     @GeneratedValue
     @Column(name = "ID", unique = true, nullable = false)

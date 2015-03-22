@@ -16,7 +16,6 @@ public interface FlightService {
     /**
      * Method for adding new flight
      * @param code  String  code for the flight
-     * @param status    int Status of the flight
      * @param airportFrom   Airportfrom where it comes from
      * @param airportTo AirportTo   where it goes
      * @param Start Date    datetime takes off
@@ -24,7 +23,7 @@ public interface FlightService {
      * @param airplane  AirplaneEntity  airplane
      * @return  FlightEntity    flight created
      */
-    public FlightEntity addFlight(String code, int status, AirportEntity airportFrom, AirportEntity airportTo, Date Start, Date ends, AirplaneEntity airplane);
+    public FlightEntity addFlight(String code, AirportEntity airportFrom, AirportEntity airportTo, Date Start, Date ends, AirplaneEntity airplane);
     
     /**
      * Method to update the flight

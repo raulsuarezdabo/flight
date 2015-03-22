@@ -91,6 +91,10 @@ public class FlightServiceImpl implements FlightService {
                 flightToUpdate.setAirplane(flight.getAirplane());
             }
             
+            if (flight.getStatus() != FlightEntity.STATUSNONE) {
+                flightToUpdate.setStatus(flight.getStatus());
+            }
+            
             if (this.flightDAO.updateFlight(flightToUpdate) == false) {
                 throw new Exception("Error updating the flight");
             }
