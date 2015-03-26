@@ -28,6 +28,7 @@
                 <value>com.raulsuarezdabo.flight.entity.AirportEntity</value>
                 <value>com.raulsuarezdabo.flight.entity.AirlineEntity</value>
                 <value>com.raulsuarezdabo.flight.entity.AirplaneEntity</value>
+                <value>com.raulsuarezdabo.flight.entity.FlightEntity</value>
             </list>
         </property>
         <property name="hibernateProperties">

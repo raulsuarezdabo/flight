@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body role="document">
+        <ui:composition template="/template/basicTemplate.xhtml">
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleFlightDelete}" /></ui:define>
+            <ui:define name="meta">
+                <meta name="description" content="Deletea tus datos"></meta>
+            </ui:define>
+            <ui:define name="breadcrumbs">
+                <li><h:link value="#{msg.flight}" outcome="index"/></li>
+                <li class="active"><h:outputText value="#{msg.flightDelete}"/></li>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <h1><h:outputText value="#{msg.titleFlightDelete}"/></h1>
+                        <h:form id="flightForm">
+                            <h2><span class="glyphicon glyphicon-th-list">&nbsp;<h:outputText value="#{msg.titleFlightRegisterBlock1}"/></span></h2>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="flightAirportFrom" value="#{msg.airportFrom}"/>
+                                <h:selectOneMenu id="flightAirportFrom" value="#{deleteFlightBean.airportFrom}" styleClass="form-control" style="width: 285px;" disabled="true">
+                                    <f:selectItem itemLabel="#{msg.AirportFromPlaceholder}" itemValue=""/>
+                                    <f:selectItems value="#{deleteFlightBean.airports}" var="item" itemLabel="[#{item.code}] #{item.name}" itemValue="#{item.id}" />
+                                </h:selectOneMenu>
+                                <h:outputLabel for="flightAirportTo" value="#{msg.airportTo}"/>
+                                <h:selectOneMenu id="flightAirportTo" value="#{deleteFlightBean.airportTo}" styleClass="form-control" style="width: 285px;" disabled="true">
+                                    <f:selectItem itemLabel="#{msg.AirportToPlaceholder}" itemValue=""/>
+                                    <f:selectItems value="#{deleteFlightBean.airports}" var="item" itemLabel="[#{item.code}] #{item.name}" itemValue="#{item.id}" />
+                                </h:selectOneMenu>
+                                <h:outputLabel for="flightAirplane" value="#{msg.airplane}"/>
+                                <h:selectOneMenu id="flightAirplane" value="#{deleteFlightBean.airplane}" styleClass="form-control" style="width: 285px;" disabled="true">
+                                    <f:selectItem itemLabel="#{msg.AirplanePlaceholder}" itemValue=""/>
+                                    <f:selectItems value="#{deleteFlightBean.airplanes}" var="item" itemLabel="#{item.model} / #{item.maker}" itemValue="#{item.id}" />
+                                </h:selectOneMenu>
+                                <h:outputLabel for="flightStart" value="#{msg.start}" />
+                                <p:calendar id="flightStart" value="#{deleteFlightBean.start}" pattern="MM/dd/yyyy HH:mm:ss" pages="2" disabled="true">
+                                </p:calendar>
+                                <p:outputLabel for="flightTime" value="#{msg.time}" />
+                                <p:calendar id="flightTime" value="#{deleteFlightBean.time}" pattern="HH:mm a" timeOnly="true" disabled="true">
+                                </p:calendar>
+                            </h:panelGrid>
+                            <p:spacer height="35" />
+                            <h:panelGrid columns="2">
+                                <p:commandButton value="#{msg.buttonDelete}" action="#{deleteFlightBean.deleteFlightAction()}" process="@form" partialSubmit="true">
+                                </p:commandButton>
+                                <p:button outcome="/flight/index" value="#{msg.buttonCancel}"/>
+                            </h:panelGrid>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+

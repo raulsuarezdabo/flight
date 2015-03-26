@@ -9,24 +9,23 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Date;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Class for managing flights
  * @author raulsuarez
  */
 @Entity
-@Table(name = "User")
+@Table(name = "Flight")
 public class FlightEntity {
     
     public static final int STATUSNONE = 0;
+    public static final int STATUSAVAILABLE = 1;
     
     @Id
     @GeneratedValue
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
-    
-    @Column(name = "Code", unique = true, nullable = false)
-    private String code;
     
     @Column(name = "Status", nullable = false)
     private int status;
@@ -39,15 +38,16 @@ public class FlightEntity {
     @JoinColumn(name = "AirportTo")
     private AirportEntity airportTo;
     
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "Start", nullable = false)
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date start;
     
-    @Column(name = "Ends", nullable = false)
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date ends;
+    @Temporal(TemporalType.TIME)
+    @Column(name = "Time", nullable = false)
+    private Date time;
     
-    @Column(name = "AirplaneModel", nullable = false)
+    @OneToOne
+    @JoinColumn(name = "Airplane")
     private AirplaneEntity airplane;
     
     /**
@@ -66,22 +66,6 @@ public class FlightEntity {
      */
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    /**
-     * Getter code
-     * @return  String
-     */
-    public String getCode() {
-        return code;
-    }
-
-    /**
-     * Setter code
-     * @param code String
-     */
-    public void setCode(String code) {
-        this.code = code;
     }
 
     /**
@@ -149,19 +133,19 @@ public class FlightEntity {
     }
 
     /**
-     * Getter Ends
-     * @return  Date
+     * Getter time
+     * @return  int
      */
-    public Date getEnds() {
-        return ends;
+    public Date getTime() {
+        return time;
     }
 
     /**
-     * Setter ends
-     * @param ends  Date 
+     * Setter time
+     * @param time  int 
      */
-    public void setEnds(Date ends) {
-        this.ends = ends;
+    public void setTime(Date time) {
+        this.time = time;
     }
 
     /**

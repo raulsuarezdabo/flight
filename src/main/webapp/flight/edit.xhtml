@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body role="document">
+        <ui:composition template="/template/basicTemplate.xhtml">
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleFlightEdit}" /></ui:define>
+            <ui:define name="meta">
+                <meta name="description" content="Edita tus datos"></meta>
+            </ui:define>
+            <ui:define name="breadcrumbs">
+                <li><h:link value="#{msg.flight}" outcome="index"/></li>
+                <li class="active"><h:outputText value="#{msg.flightEdit}"/></li>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <h1><h:outputText value="#{msg.titleFlightEdit}"/></h1>
+                        <h:form id="flightForm">
+                            <h2><span class="glyphicon glyphicon-th-list">&nbsp;<h:outputText value="#{msg.titleFlightRegisterBlock1}"/></span></h2>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="flightAirportFrom" value="#{msg.airportFrom}"/>
+                                <h:selectOneMenu id="flightAirportFrom" value="#{editFlightBean.airportFrom}" styleClass="form-control" style="width: 285px;" required="true" requiredMessage="#{msg.airportFromRequired}" immediate="true">
+                                    <f:selectItem itemLabel="#{msg.AirportFromPlaceholder}" itemValue=""/>
+                                    <f:selectItems value="#{editFlightBean.airports}" var="item" itemLabel="[#{item.code}] #{item.name}" itemValue="#{item.id}" />
+                                    <f:ajax event="blur" render="flightAirportFromMessage"/>
+                                </h:selectOneMenu>
+                                <h:message for="flightAirportFrom" id="flightAirportFromMessage" style="color: crimson"/>
+                                <h:outputLabel for="flightAirportTo" value="#{msg.airportTo}"/>
+                                <h:selectOneMenu id="flightAirportTo" value="#{editFlightBean.airportTo}" styleClass="form-control" style="width: 285px;" required="true" requiredMessage="#{msg.airportToRequired}" immediate="true">
+                                    <f:selectItem itemLabel="#{msg.AirportToPlaceholder}" itemValue=""/>
+                                    <f:selectItems value="#{editFlightBean.airports}" var="item" itemLabel="[#{item.code}] #{item.name}" itemValue="#{item.id}" />
+                                    <f:ajax event="blur" render="flightAirportToMessage"/>
+                                </h:selectOneMenu>
+                                <h:message for="flightAirportTo" id="flightAirportToMessage" style="color: crimson"/>
+                                <h:outputLabel for="flightAirplane" value="#{msg.airplane}"/>
+                                <h:selectOneMenu id="flightAirplane" value="#{editFlightBean.airplane}" styleClass="form-control" style="width: 285px;" required="true" requiredMessage="#{msg.airplaneRequired}" immediate="true">
+                                    <f:selectItem itemLabel="#{msg.AirplanePlaceholder}" itemValue=""/>
+                                    <f:selectItems value="#{editFlightBean.airplanes}" var="item" itemLabel="#{item.model} / #{item.maker}" itemValue="#{item.id}" />
+                                    <f:ajax event="blur" render="flightAirplaneMessage"/>
+                                </h:selectOneMenu>
+                                <h:message for="flightAirplane" id="flightAirplaneMessage" style="color: crimson"/>
+                                <h:outputLabel for="flightStart" value="#{msg.start}" />
+                                <p:calendar id="flightStart" value="#{editFlightBean.start}" pattern="MM/dd/yyyy HH:mm:ss" pages="2" mindate="#{editFlightBean.now}" required="true" requiredMessage="#{msg.flightStartRequired}">
+                                    <f:ajax event="blur" render="flightStartMessage"/>
+                                </p:calendar>
+                                <h:message for="flightStart" id="flightStartMessage" style="color: crimson"/>
+                                <p:outputLabel for="flightTime" value="#{msg.time}" />
+                                <p:calendar id="flightTime" value="#{editFlightBean.time}" pattern="HH:mm a" timeOnly="true" required="true" requiredMessage="#{msg.flightTimeRequired}">
+                                    <f:ajax event="blur" render="flightTimeMessage"/>
+                                </p:calendar>
+                                <h:message for="flightTime" id="flightTimeMessage" style="color: crimson"/>
+                            </h:panelGrid>
+                            <p:spacer height="35" />
+                            <h:panelGrid columns="2">
+                                <p:commandButton value="#{msg.buttonUpdate}" action="#{editFlightBean.editFlightAction()}" process="@form" partialSubmit="true">
+                                </p:commandButton>
+                                <p:button outcome="/flight/index" value="#{msg.buttonCancel}"/>
+                            </h:panelGrid>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+

@@ -6,8 +6,6 @@
  */
 package com.mycompany.flight.security.handler;
 
-import com.raulsuarezdabo.flight.entity.RoleEntity;
-import com.raulsuarezdabo.flight.entity.UserEntity;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +17,11 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication a) throws IOException, ServletException {
-        try {
-            UserEntity user = (UserEntity) a.getPrincipal();
-            response.sendRedirect(request.getContextPath() + "/index.xhtml");
-        } catch (Exception e) {
-            response.sendRedirect(request.getContextPath() + "/index.xhtml");
-        }
+//        try {
+//            UserEntity user = (UserEntity) a.getPrincipal();
+//            response.sendRedirect(request.getContextPath() + "/index.xhtml");
+//        } catch (Exception e) {
+//            response.sendRedirect(request.getContextPath() + "/index.xhtml");
+//        }
     }
 }

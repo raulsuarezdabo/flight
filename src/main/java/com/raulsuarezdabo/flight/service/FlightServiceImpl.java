@@ -28,26 +28,25 @@ public class FlightServiceImpl implements FlightService {
 
     /**
      * Method for adding flights
-     * @param code  String  code
      * @param airportFrom   AirportEntity   airport it comes
      * @param airportTo AirportEntity   airport it goes
      * @param Start Date    when takes off
-     * @param ends  Date    arrives
+     * @param time  int    time spending on it
      * @param airplane  AirplaneEntity  airplane that is going to use
      * @return  FlightEntity    New flight
      */
     @Override
     @Transactional
-    public FlightEntity addFlight(String code, AirportEntity airportFrom, AirportEntity airportTo, Date Start, Date ends, AirplaneEntity airplane) {
+    public FlightEntity addFlight(AirportEntity airportFrom, AirportEntity airportTo, Date Start, Date time, AirplaneEntity airplane) {
         try {
         FlightEntity flight = new FlightEntity();
         
-        flight.setCode(code);
         flight.setAirportFrom(airportFrom);
         flight.setAirportTo(airportTo);
         flight.setStart(Start);
-        flight.setEnds(ends);
+        flight.setTime(time);
         flight.setAirplane(airplane);
+        flight.setStatus(FlightEntity.STATUSAVAILABLE);
         
         this.flightDAO.addFlight(flight);
         return flight;
@@ -72,9 +71,6 @@ public class FlightServiceImpl implements FlightService {
             if (flight == null) {
                 throw new Exception("Not found flight");
             }
-            if (flight.getCode() != null) {
-                flightToUpdate.setCode(flight.getCode());
-            }
             if (flight.getAirportFrom() != null) {
                 flightToUpdate.setAirportFrom(flight.getAirportFrom());
             }
@@ -84,8 +80,8 @@ public class FlightServiceImpl implements FlightService {
             if (flight.getStart() != null) {
                 flightToUpdate.setStart(flight.getStart());
             }
-            if (flight.getEnds() != null) {
-                flightToUpdate.setEnds(flight.getEnds());
+            if (flight.getTime()!= null) {
+                flightToUpdate.setTime(flight.getTime());
             }
             if (flight.getAirplane() != null) {
                 flightToUpdate.setAirplane(flight.getAirplane());
