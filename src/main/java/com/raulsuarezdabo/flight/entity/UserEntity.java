@@ -1,8 +1,5 @@
 package com.raulsuarezdabo.flight.entity;
 
-import com.raulsuarezdabo.flight.entity.RoleEntity;
-import com.raulsuarezdabo.flight.entity.CountryEntity;
-import com.raulsuarezdabo.flight.entity.CityEntity;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;

@@ -8,6 +8,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -49,6 +54,12 @@ public class FlightEntity {
     @OneToOne
     @JoinColumn(name = "Airplane")
     private AirplaneEntity airplane;
+    
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "Seat", 
+        joinColumns = {
+            @JoinColumn(name = "Flight", referencedColumnName = "ID")})
+    private List<SeatEntity> seats;
     
     /**
      * Getter id property
@@ -162,5 +173,21 @@ public class FlightEntity {
      */
     public void setAirplane(AirplaneEntity airplane) {
         this.airplane = airplane;
+    }
+
+    /**
+     * Getter seats
+     * @return  List of the seats
+     */
+    public List<SeatEntity> getSeats() {
+        return seats;
+    }
+
+    /**
+     * Setter list of seats
+     * @param seats     List
+     */
+    public void setSeats(List<SeatEntity> seats) {
+        this.seats = seats;
     }
 }
