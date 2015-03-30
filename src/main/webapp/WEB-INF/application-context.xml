@@ -27,6 +27,7 @@
     <bean id="airlineService"   class="com.raulsuarezdabo.flight.service.AirlineServiceImpl"></bean>
     <bean id="airplaneService"  class="com.raulsuarezdabo.flight.service.AirplaneServiceImpl"></bean>
     <bean id="flightService"    class="com.raulsuarezdabo.flight.service.FlightServiceImpl"></bean>
+    <bean id="seatService"    class="com.raulsuarezdabo.flight.service.SeatServiceImpl"></bean>
     <bean id="myAuthenticationSuccessHandler" class="com.mycompany.flight.security.handler.MyAuthenticationSuccessHandler"></bean>
     <bean id="myAuthenticationFailureHandler" class="com.mycompany.flight.security.handler.MyAuthenticationFailureHandler"></bean>
 </beans>
