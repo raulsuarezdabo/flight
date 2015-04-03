@@ -2,7 +2,6 @@
 package com.raulsuarezdabo.flight.entity;
 
 import java.sql.SQLException;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,11 +22,11 @@ public class SeatEntity {
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
     
-    @Column(name = "type", nullable = false)
+    @Column(name = "Type", nullable = false)
     private int type;
     
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "Flight")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FlightID")
     private FlightEntity flight;
 
     /**
@@ -68,7 +67,7 @@ public class SeatEntity {
     }
 
     /**
-     * Getter flight
+     * Getter fligth
      * @return  FlightEntity
      */
     public FlightEntity getFlight() {
@@ -77,9 +76,10 @@ public class SeatEntity {
 
     /**
      * Setter flight
-     * @param flight    FlightEntity 
+     * @param flight    FlightEntity
      */
     public void setFlight(FlightEntity flight) {
         this.flight = flight;
     }
+
 }
