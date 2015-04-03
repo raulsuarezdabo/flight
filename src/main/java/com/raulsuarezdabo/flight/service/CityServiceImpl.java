@@ -4,6 +4,7 @@ package com.raulsuarezdabo.flight.service;
 import com.mycompany.flight.dao.CityDAO;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,6 +56,21 @@ public class CityServiceImpl implements CityService {
     @Transactional
     public List<CityEntity> getCitiesByCountry(CountryEntity country) {
         return this.cityDAO.findByCountry(country);
+    }
+    
+    /**
+     * Method to get a country list names
+     * @return List of countries names
+     */
+    @Override
+    @Transactional
+    public List<String> getAllNames() {
+        List <CityEntity> cities = this.cityDAO.findAll();
+        List <String> names = new ArrayList();
+        for (CityEntity city : cities) {
+            names.add(city.getName());
+        }
+        return names;
     }
     
 }

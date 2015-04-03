@@ -2,8 +2,10 @@ package com.mycompany.flight.service;
 
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
+import com.raulsuarezdabo.flight.entity.RoleEntity;
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -45,7 +47,7 @@ public interface UserService {
      * @param user
      * @return
      */
-    public boolean deleteUser(UserEntity user);
+    public boolean deleteUser(int user);
 
     /**
      * Getter by id
@@ -54,6 +56,12 @@ public interface UserService {
      * @return
      */
     public UserEntity getById(int id);
+    
+    /**
+     * Get all users
+     * @return  List of users
+     */
+    public List<UserEntity> getAll();
 
     /**
      * Getter by email (unique on the DB)
@@ -96,4 +104,20 @@ public interface UserService {
      * @return boolean
      */
     public boolean logout();
+    
+    /**
+     * Method for adding new user with a specific roles
+     * @param email String   
+     * @param name  String
+     * @param surname   String
+     * @param address   String
+     * @param nif   String
+     * @param phone String
+     * @param birthday  Date
+     * @param country   CountryEntity
+     * @param city  CityEntity
+     * @param roles List of roles
+     * @return  UserEntity
+     */
+    public UserEntity addUser(String email, String name, String surname, String address, String nif, String phone, Date birthday, CountryEntity country, CityEntity city, List<RoleEntity> roles);
 }

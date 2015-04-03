@@ -75,7 +75,7 @@ public class UserEntity implements UserDetails {
     /**
      * Role List with the avaible Roles
      */
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "UserRole",
             joinColumns = {
                 @JoinColumn(name = "UserID", referencedColumnName = "ID")},

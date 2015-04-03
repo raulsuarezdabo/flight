@@ -80,8 +80,14 @@ public class UserDAOImpl implements UserDAO {
      * @param user
      */
     @Override
-    public void deleteUser(UserEntity user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean deleteUser(UserEntity user) {
+        try {
+            this.sessionFactory.getCurrentSession().delete(user);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     /**
@@ -92,7 +98,12 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public UserEntity findById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return (UserEntity) this.sessionFactory.getCurrentSession().get(UserEntity.class, id);
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
     /**

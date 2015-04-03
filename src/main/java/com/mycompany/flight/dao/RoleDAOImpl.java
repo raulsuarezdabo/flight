@@ -6,6 +6,7 @@
 package com.mycompany.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.RoleEntity;
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,11 @@ public class RoleDAOImpl implements RoleDAO {
         } catch(Exception ex) {
             return null;
         }
+    }
+    
+    @Override
+    public List<RoleEntity> findAll() {
+        return this.sessionFactory.getCurrentSession().createQuery("FROM RoleEntity").list();
     }
 
 }

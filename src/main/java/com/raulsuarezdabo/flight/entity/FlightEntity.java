@@ -55,11 +55,11 @@ public class FlightEntity {
     @JoinColumn(name = "Airplane")
     private AirplaneEntity airplane;
     
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "Seat", 
-        joinColumns = {
-            @JoinColumn(name = "Flight", referencedColumnName = "ID")})
-    private List<SeatEntity> seats;
+//    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    @JoinTable(name = "Seat", 
+//        joinColumns = {
+//            @JoinColumn(name = "Flight", referencedColumnName = "ID")})
+//    private List<SeatEntity> seats;
     
     /**
      * Getter id property
@@ -175,19 +175,19 @@ public class FlightEntity {
         this.airplane = airplane;
     }
 
-    /**
-     * Getter seats
-     * @return  List of the seats
-     */
-    public List<SeatEntity> getSeats() {
-        return seats;
-    }
-
-    /**
-     * Setter list of seats
-     * @param seats     List
-     */
-    public void setSeats(List<SeatEntity> seats) {
-        this.seats = seats;
-    }
+//    /**
+//     * Getter seats
+//     * @return  List of the seats
+//     */
+//    public List<SeatEntity> getSeats() {
+//        return seats;
+//    }
+//
+//    /**
+//     * Setter list of seats
+//     * @param seats     List
+//     */
+//    public void setSeats(List<SeatEntity> seats) {
+//        this.seats = seats;
+//    }
 }

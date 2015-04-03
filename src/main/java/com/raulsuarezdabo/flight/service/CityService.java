@@ -30,4 +30,10 @@ public interface CityService {
      * @return List     Of CityEntity from one country
      */
     List<CityEntity> getCitiesByCountry(CountryEntity country);
+    
+    /**
+     * Method that obtains the completly list of countries available, only names
+     * @return List with the String names
+     */
+    List<String> getAllNames();
 }

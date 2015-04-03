@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body role="document">
+        <ui:composition template="/template/basicTemplate.xhtml">
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleAirportAdd}" /></ui:define>
+            <ui:define name="meta">
+                <meta name="description" content="Edita tus datos"></meta>
+            </ui:define>
+            <ui:define name="breadcrumbs">
+                <li><h:link value="#{msg.user}" outcome="/user/index"/></li>
+                <li class="active"><h:outputText value="#{msg.userDelete}"/></li>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <h1><h:outputText value="#{msg.titleUserDelete}"/></h1>
+                        <h:form id="userForm">
+                            <h2><span class="glyphicon glyphicon-user">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock1}"/></span></h2>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="userName" value="#{msg.name}"/>
+                                <p:inputText  value="#{deleteUserBean.name}" id="userName" label="userName" size="35" disabled="true" >
+                                </p:inputText>
+                                <h:outputLabel for="userSurName" value="#{msg.surname}"/>
+                                <p:inputText value="#{deleteUserBean.surname}" id="userSurName" label="userSurName" size="35" disabled="true" >
+                                </p:inputText>
+                                <h:outputLabel for="userBithDay" value="#{msg.birthday}"/>
+                                <p:inputMask value="#{deleteUserBean.birthday}" id="userBirthDay" label="userBirthDay" mask="99/99/9999" size="10" disabled="true" >
+                                </p:inputMask>
+                                <h:outputLabel for="userNif" value="#{msg.nif}"/>
+                                <p:inputText value="#{deleteUserBean.nif}" id="userNif" label="userNif"  size="10" disabled="true">
+                                </p:inputText>
+                            </h:panelGrid>
+                            <p:spacer height="35" />
+                            <h2><span class="glyphicon glyphicon-home">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock2}"/></span></h2>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="userPhone" value="#{msg.phone}" />
+                                <p:inputMask value="#{deleteUserBean.phone}" id="userPhone" mask="99 9999999" size="10" disabled="true" >
+                                </p:inputMask>
+                                <h:outputLabel for="userAddress" value="#{msg.address}"/>
+                                <p:inputText value="#{deleteUserBean.address}" id="userAddress" label="userAddress" size="35" disabled="true">
+                                </p:inputText>
+                                <h:outputLabel for="userCountry" value="#{msg.country}"/>
+                                <h:selectOneMenu id="userCountry" value="#{deleteUserBean.country}" styleClass="form-control" style="width: 285px;" disabled="true">   
+                                    <f:selectItem itemLabel="#{msg.countryPlaceholder}" itemValue=""/>
+                                    <f:selectItems value="#{deleteUserBean.countries}" var="item" itemLabel="#{item.name}" itemValue="#{item.code}" />
+                                </h:selectOneMenu>
+                                <h:outputLabel for="userCity" value="#{msg.city}"/>
+                                <h:selectOneMenu id="userCity" value="#{deleteUserBean.city}" styleClass="form-control" style="width: 285px;" disabled="true">   
+                                    <f:selectItem itemLabel="#{msg.cityPlaceholder}" itemValue=""/>
+                                    <f:selectItems value="#{deleteUserBean.cities}" var="item" itemLabel="#{item.name}" itemValue="#{item.id}" />
+                                </h:selectOneMenu>
+                            </h:panelGrid>
+                            <p:spacer height="35" />
+                            <h2><span class="glyphicon glyphicon-registration-mark">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock3}"/></span></h2>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="userEmail" value="#{msg.email}"/>
+                                <p:inputText value="#{deleteUserBean.email}" id="userEmail" label="userEmail" size="35" disabled="true" >
+                                </p:inputText>
+                            </h:panelGrid>
+                            <p:spacer height="35"/>
+                            <h2><span class="glyphicon glyphicon-wrench">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock4}"/></span></h2>
+                            <h:panelGrid columns="1">
+                                <h:outputLabel for="userRoles" value="#{msg.userRole}"/>
+                                <h:selectManyCheckbox value="#{deleteUserBean.role}" disabled="true">
+                                    <f:selectItems value="#{deleteUserBean.roles}" var="item" itemLabel="#{item.name}" itemValue="#{item.id}"/>
+                                </h:selectManyCheckbox>
+                            </h:panelGrid>
+                            <p:spacer height="35" />
+                            <h:panelGrid columns="2">
+                                <p:commandButton value="#{msg.buttonDelete}" action="#{deleteUserBean.deleteUserAction()}" process="@form" partialSubmit="true">
+                                </p:commandButton>
+                                <p:button outcome="/user/index" value="#{msg.buttonCancel}"/>
+                            </h:panelGrid>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+

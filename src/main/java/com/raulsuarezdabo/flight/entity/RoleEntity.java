@@ -25,11 +25,12 @@ public class RoleEntity implements GrantedAuthority {
      * Predefined roles to the users
      */
     public static final String USER_ROLE = "USER_ROLE";
+    public static final String ADMIN_ROLE = "ADMIN_ROLE";
 
     @Id
     @GeneratedValue
     @Column(name = "ID", unique = true, nullable = false)
-    private Integer id;
+    private int id;
 
     @Column(name = "Name", nullable = false)
     private String name;
@@ -50,11 +51,11 @@ public class RoleEntity implements GrantedAuthority {
         this.name = name;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

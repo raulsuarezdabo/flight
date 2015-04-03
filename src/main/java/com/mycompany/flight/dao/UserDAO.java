@@ -34,8 +34,9 @@ public interface UserDAO {
      * Delete the specific user
      *
      * @param user
+     * @return  boolean success deleting or not
      */
-    public void deleteUser(UserEntity user);
+    public boolean deleteUser(UserEntity user);
 
     /**
      * Find by id on the user table

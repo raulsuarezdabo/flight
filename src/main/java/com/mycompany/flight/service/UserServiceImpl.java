@@ -201,6 +201,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 if (editUser.getPassword() != null) {
                     user.setPassword(editUser.getPassword());
                 }
+                if (editUser.getRole().isEmpty() == false) {
+                    user.setRole(editUser.getRole());
+                }
                 // Persist block
                 if (persist == true) {
                     if (this.userDAO.updateUser(user) == false) {
@@ -215,16 +218,49 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         }
     }
 
+    /**
+     * method for deleting a user by id
+     * @param id    int
+     * @return  UserEntity
+     */
     @Override
-    public boolean deleteUser(UserEntity user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean deleteUser(int id) {
+        try {
+            UserEntity user = this.userDAO.findById(id);
+            if (user == null) {
+                throw new Exception("Not found user");
+            }
+            return this.userDAO.deleteUser(user);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
+    /**
+     * Getter user id
+     * @param id    int
+     * @return  UserEntity
+     */
     @Override
     public UserEntity getById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.userDAO.findById(id);
+    }
+    
+    /**
+     * Get all users on a list
+     * @return  List of users
+     */
+    @Override
+    public List <UserEntity> getAll() {
+        return this.userDAO.getAllUsers();
     }
 
+    /**
+     * get by email a user
+     * @param email String
+     * @return  UserEntity
+     */
     @Override
     public UserEntity getByEmail(String email) {
         return this.userDAO.findByEmail(email);
@@ -375,6 +411,46 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             }
             return map;
         } catch (Exception e) {
+            return null;
+        }
+    }
+
+    /**
+     * Method for adding new user with a specific roles
+     * @param email String
+     * @param name  String
+     * @param surname   String
+     * @param address   String
+     * @param nif   String
+     * @param phone String
+     * @param birthday  Date
+     * @param country   CountryEntity
+     * @param city  CityEntity
+     * @param roles List of roles
+     * @return  UserEntity
+     */
+    @Override
+    @Transactional
+    public UserEntity addUser(String email, String name, String surname, String address, String nif, String phone, Date birthday, CountryEntity country, CityEntity city, List<RoleEntity> roles) {
+        try {
+            user = new UserEntity();
+            user.setEmail(email);
+            user.setName(name);
+            user.setSurname(surname);
+            user.setAddress(address);
+            user.setNif(nif);
+            user.setPhone(phone.trim());
+            user.setBirthDay(new java.sql.Date(birthday.getTime()));
+            user.setCountry(country);
+            user.setCity(city);
+
+            user.setRole(roles);
+            String token = Utils.generateToken();
+            user.setToken(token);
+            this.userDAO.addUser(user);
+            return user;
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
             return null;
         }
     }

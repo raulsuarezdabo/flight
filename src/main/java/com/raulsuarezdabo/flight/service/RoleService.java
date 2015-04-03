@@ -1,6 +1,7 @@
 package com.raulsuarezdabo.flight.service;
 
 import com.raulsuarezdabo.flight.entity.RoleEntity;
+import java.util.List;
 
 /**
  * Interface that defines the methods and functinality for the implementation
@@ -24,4 +25,10 @@ public interface RoleService {
      * @return 
      */
     RoleEntity getFlightRole();
+    
+    /**
+     * Method for getting all roles available
+     * @return List of Roles
+     */
+    public List<RoleEntity> getAll();
 }

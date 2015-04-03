@@ -7,14 +7,17 @@ package com.mycompany.flight.utils;
 
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
+import com.raulsuarezdabo.flight.entity.RoleEntity;
 import static java.lang.Math.abs;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -113,5 +116,26 @@ public class Utils {
             }
         }
         return url;
+    }
+    
+    /**
+     * Method for getting the list of roles from the list of ids
+     * @param role
+     * @param roles
+     * @return  List of roles
+     */
+    public static List<RoleEntity> getRolesFromList(List<Integer> role, List<RoleEntity> roles) {
+        Iterator iteratorI = role.iterator();
+        ArrayList result = new ArrayList();
+        
+        while (iteratorI.hasNext() == true) {
+            String currentI = (String) iteratorI.next();
+            for(RoleEntity thisRole: roles) {
+                if (thisRole.getId() == Integer.parseInt(currentI)) {
+                    result.add(thisRole);
+                }
+            }
+        }
+        return result;
     }
 }
