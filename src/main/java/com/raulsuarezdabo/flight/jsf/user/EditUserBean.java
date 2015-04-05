@@ -4,8 +4,6 @@
  */
 package com.raulsuarezdabo.flight.jsf.user;
 
-import com.mycompany.flight.dao.CityDAO;
-import com.mycompany.flight.dao.CountryDAO;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
 import com.raulsuarezdabo.flight.entity.UserEntity;
@@ -373,7 +371,7 @@ public class EditUserBean {
             this.phone = currentUser.getPhone();
             this.address = currentUser.getAddress();
             this.country = currentUser.getCountry().getCode();
-            this.city = Integer.parseInt(currentUser.getCity().getId());
+            this.city = currentUser.getCity().getId();
         }
     }
     

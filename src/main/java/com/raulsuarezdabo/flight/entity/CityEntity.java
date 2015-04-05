@@ -4,24 +4,34 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 
 /**
  *
  * @author raulsuarez
  */
 @Entity
+@Indexed
 @Table(name = "City")
 public class CityEntity implements Serializable {
     @Id
     @Column(name = "Id", unique = true, nullable = false)
-    private String id;
+    private int id;
 
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
     @Column(name = "Name", nullable = false)
     private String name;
     
-    @Column(name = "CountryCode", nullable = false)
-    private String countryCode;
+    @ManyToOne
+    @JoinColumn(name = "CountryCode", nullable = false)
+    private CountryEntity country;
 
     /**
      * Default constructor
@@ -33,7 +43,7 @@ public class CityEntity implements Serializable {
      * Getter id
      * @return 
      */
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -41,7 +51,7 @@ public class CityEntity implements Serializable {
      * Setter id
      * @param id 
      */
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -65,15 +75,15 @@ public class CityEntity implements Serializable {
      * Getter countryCode
      * @return 
      */
-    public String getCountryCode() {
-        return countryCode;
+    public CountryEntity getCountryCode() {
+        return country;
     }
 
     /**
      * Setter countryCode
      * @param countryCode 
      */
-    public void setCountryCode(String countryCode) {
-        this.countryCode = countryCode;
+    public void setCountryCode(CountryEntity countryCode) {
+        this.country = countryCode;
     }
 }

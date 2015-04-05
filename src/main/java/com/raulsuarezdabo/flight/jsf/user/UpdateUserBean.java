@@ -509,7 +509,7 @@ public class UpdateUserBean {
             this.phone = currentUser.getPhone();
             this.address = currentUser.getAddress();
             this.country = currentUser.getCountry().getCode();
-            this.city = Integer.parseInt(currentUser.getCity().getId());
+            this.city = currentUser.getCity().getId();
             Iterator iter = currentUser.getRole().iterator();
             this.role = new ArrayList();
             while (iter.hasNext() == true) {

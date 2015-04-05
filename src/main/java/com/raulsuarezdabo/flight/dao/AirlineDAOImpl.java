@@ -7,10 +7,10 @@ package com.raulsuarezdabo.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.AirlineEntity;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,25 +20,25 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AirlineDAOImpl implements AirlineDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     /**
      * Getter of the SessionFactory
      *
      * @return SessionFactory
      */
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
     /**
      * Setter sessionFactory
      *
-     * @param sessionFactory
+     * @param entityManager
      */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
     
     /**
@@ -47,7 +47,7 @@ public class AirlineDAOImpl implements AirlineDAO {
      */
     @Override
     public List<AirlineEntity> findAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("from AirlineEntity").list();
+        return this.entityManager.createQuery("from AirlineEntity").getResultList();
     }
 
     /**
@@ -58,10 +58,9 @@ public class AirlineDAOImpl implements AirlineDAO {
     @Override
     public AirlineEntity findByCode(String code) {
         try {
-            Query query = this.sessionFactory.getCurrentSession().createQuery("FROM AirlineEntity  WhERE code = :code ");
+            Query query = this.entityManager.createQuery("FROM AirlineEntity  WhERE code = :code ");
             query.setParameter("code", code);
-            query.setMaxResults(1);
-            return (AirlineEntity) query.uniqueResult();
+            return (AirlineEntity) query.getSingleResult();
         } catch(HibernateException e) {
             return null;
         }
@@ -75,7 +74,7 @@ public class AirlineDAOImpl implements AirlineDAO {
     @Override
     public AirlineEntity findById(int id) {
         try {
-            return (AirlineEntity) this.sessionFactory.getCurrentSession().get(AirlineEntity.class, id);
+            return (AirlineEntity) this.entityManager.find(AirlineEntity.class, id);
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -88,7 +87,7 @@ public class AirlineDAOImpl implements AirlineDAO {
      */
     @Override
     public void addAirline(AirlineEntity airline) {
-        this.sessionFactory.getCurrentSession().save(airline);
+        this.entityManager.persist(airline);
     }
 
     /**
@@ -99,7 +98,7 @@ public class AirlineDAOImpl implements AirlineDAO {
     @Override
     public boolean updateAirline(AirlineEntity airline) {
         try {
-            this.sessionFactory.getCurrentSession().update(airline);
+            this.entityManager.merge(airline);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -115,7 +114,7 @@ public class AirlineDAOImpl implements AirlineDAO {
     @Override
     public boolean deleteAirline(AirlineEntity airline) {
         try {
-            this.sessionFactory.getCurrentSession().delete(airline);
+            this.entityManager.remove(airline);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

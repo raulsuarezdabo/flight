@@ -16,6 +16,7 @@
         <spring-security.version>3.2.5.RELEASE</spring-security.version>
         <spring-faces.version>2.4.1.RELEASE</spring-faces.version>
         <hibernate.version>4.3.8.Final</hibernate.version>
+        <hibernate-search.version>5.1.1.Final</hibernate-search.version>
     </properties>
     
     <dependencies>
@@ -51,6 +52,17 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
+        </dependency>
+        <!-- HIBERNATE SEARCH -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-orm</artifactId>
+            <version>${hibernate-search.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-search-infinispan</artifactId>
+            <version>${hibernate-search.version}</version>
         </dependency>
         <!-- MYSQL DEPDENCIES -->
         <dependency>

@@ -8,10 +8,10 @@ package com.mycompany.flight.dao;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -21,25 +21,25 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class CityDAOImpl implements CityDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     /**
      * Getter of the SessionFactory
      *
      * @return SessionFactory
      */
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
     /**
      * Setter sessionFactory
      *
-     * @param sessionFactory
+     * @param entityManager
      */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     /**
@@ -50,7 +50,7 @@ public class CityDAOImpl implements CityDAO {
     @Override
     public CityEntity findById(int id) {
         try {
-            CityEntity city = (CityEntity) this.sessionFactory.getCurrentSession().get(CityEntity.class, id);
+            CityEntity city = this.entityManager.find(CityEntity.class, id);
             return city;
         } catch (Exception ex) {
             return null;
@@ -66,7 +66,7 @@ public class CityDAOImpl implements CityDAO {
         List <CityEntity> cities;
         cities = null;
         try {
-            cities = this.sessionFactory.getCurrentSession().createQuery("FROM CityEntity").list();
+            cities = this.entityManager.createQuery("FROM CityEntity").getResultList();
         } catch (HibernateException e) {
             return null;
         } 
@@ -78,9 +78,9 @@ public class CityDAOImpl implements CityDAO {
         List <CityEntity> cities;
         cities = null;
         try {
-            Query query = this.sessionFactory.getCurrentSession().createQuery("FROM CityEntity  WhERE countryCode = :country ");
-            query.setParameter("country", country.getCode());
-            cities = query.list();
+            Query query = this.entityManager.createQuery("FROM CityEntity  WhERE country = :country ");
+            query.setParameter("country", country);
+            cities = query.getResultList();
             return cities;
         } catch(HibernateException e) {
             return null;
