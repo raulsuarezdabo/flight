@@ -17,32 +17,19 @@
         <property name="password" value="password" />
     </bean>
     <!-- HIBERNATE SESSION FACTORY BEAN DEFINITION -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean" >
+    <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" >
+        <!--<property name="database">HSQL</property>-->
+        <property name="databasePlatform" value="org.hibernate.dialect.HSQLDialect" />
+    </bean>
+    <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+    <bean id="sessionFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" >
         <property name="dataSource" ref="dataSource" />
-        <property name="annotatedClasses">
-            <list>
-                <value>com.raulsuarezdabo.flight.entity.UserEntity</value>
-                <value>com.raulsuarezdabo.flight.entity.RoleEntity</value>
-                <value>com.raulsuarezdabo.flight.entity.CountryEntity</value>
-                <value>com.raulsuarezdabo.flight.entity.CityEntity</value>
-                <value>com.raulsuarezdabo.flight.entity.AirportEntity</value>
-                <value>com.raulsuarezdabo.flight.entity.AirlineEntity</value>
-                <value>com.raulsuarezdabo.flight.entity.AirplaneEntity</value>
-                <value>com.raulsuarezdabo.flight.entity.FlightEntity</value>
-                <value>com.raulsuarezdabo.flight.entity.SeatEntity</value>
-            </list>
-        </property>
-        <property name="hibernateProperties">
-            <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-                <prop key="hibernate.connection.pool_size">0</prop>
-                <prop key="hibernate.show_sql">true</prop>
-            </props>
-        </property>
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+        <property name="jpaDialect" ref="jpaDialect" />
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager" />
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="dataSource" ref="dataSource"></property>
-        <property name="sessionFactory" ref="sessionFactory"></property>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <!--<property name="dataSource" ref="dataSource"></property>
+        <property name="sessionFactory" ref="sessionFactory"></property>-->
     </bean>
 </beans>

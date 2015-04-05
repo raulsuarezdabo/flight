@@ -7,9 +7,9 @@ package com.mycompany.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import java.util.List;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -19,23 +19,25 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserDAOImpl implements UserDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     /**
      * Getter of the SessionFactory
+     *
      * @return SessionFactory
      */
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
     /**
      * Setter sessionFactory
-     * @param sessionFactory 
+     *
+     * @param entityManager
      */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     /**
@@ -45,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public void addUser(UserEntity user) {
-        this.sessionFactory.getCurrentSession().save(user);
+        this.entityManager.persist(user);
     }
 
     /**
@@ -56,7 +58,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public boolean updateUser(UserEntity user) {
         try {
-            this.sessionFactory.getCurrentSession().update(user);
+            this.entityManager.merge(user);
             return true;
         } catch ( Exception e ) {
             System.out.println(e.getMessage());
@@ -71,7 +73,7 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public List<UserEntity> getAllUsers() {
-        return this.sessionFactory.getCurrentSession().createQuery("from UserEntity").list();
+        return this.entityManager.createQuery("from UserEntity").getResultList();
     }
 
     /**
@@ -82,7 +84,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public boolean deleteUser(UserEntity user) {
         try {
-            this.sessionFactory.getCurrentSession().delete(user);
+            this.entityManager.remove(user);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -99,7 +101,7 @@ public class UserDAOImpl implements UserDAO {
     @Override
     public UserEntity findById(Integer id) {
         try {
-            return (UserEntity) this.sessionFactory.getCurrentSession().get(UserEntity.class, id);
+            return (UserEntity) this.entityManager.find(UserEntity.class, id);
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -114,12 +116,15 @@ public class UserDAOImpl implements UserDAO {
      */
     @Override
     public UserEntity findByEmail(String email) {
-        UserEntity user;
-        Query query = this.sessionFactory.getCurrentSession().createQuery("FROM UserEntity  WhERE email = :email ");
-        query.setParameter("email", email);
-        query.setMaxResults(1);
-        user = (UserEntity) query.uniqueResult();
-        return user;
+        try {
+            UserEntity user;
+            Query query = this.entityManager.createQuery("FROM UserEntity  WhERE email = :email ");
+            query.setParameter("email", email);
+            user = (UserEntity) query.getSingleResult();
+            return user;
+        } catch(Exception e) {
+            return null;
+        }
     }
 
 }

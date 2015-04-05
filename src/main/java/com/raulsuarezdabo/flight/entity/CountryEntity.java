@@ -1,16 +1,26 @@
 package com.raulsuarezdabo.flight.entity;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Store;
 
 /**
  *
  * @author raulsuarez
  */
 @Entity
+@Indexed
 @Table(name = "Country")
 public class CountryEntity implements Serializable {
     
@@ -18,6 +28,7 @@ public class CountryEntity implements Serializable {
     @Column(name = "Code", unique = true, nullable = false)
     private String code;
 
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
     @Column(name = "Name", nullable = false)
     private String name;
 
@@ -56,6 +67,10 @@ public class CountryEntity implements Serializable {
 
     @Column(name = "Code2", nullable = false)
     private String code2;
+    
+    @IndexedEmbedded
+    @OneToMany(mappedBy = "country")
+    private Set<CityEntity> cities = new HashSet<>();
 
     /**
      * Default constructor
@@ -295,5 +310,21 @@ public class CountryEntity implements Serializable {
     public String toString() {
         System.out.println("CountryEntity toString:" + this.name);
         return this.code;
+    }
+
+    /**
+     * Getter cities
+     * @return  List
+     */
+    public Set<CityEntity> getCities() {
+        return cities;
+    }
+
+    /**
+     * Setter cities
+     * @param cities    List 
+     */
+    public void setCities(Set<CityEntity> cities) {
+        this.cities = cities;
     }
 }

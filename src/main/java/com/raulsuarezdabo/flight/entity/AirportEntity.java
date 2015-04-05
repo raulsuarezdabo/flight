@@ -6,7 +6,6 @@
 package com.raulsuarezdabo.flight.entity;
 
 import java.io.Serializable;
-import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,13 +13,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Type;
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Store;
 
 /**
  *
  * @author raulsuarez
  */
 @Entity
+@Indexed
 @Table(name = "Airport")
 public class AirportEntity implements Serializable {
     @Id
@@ -28,16 +33,20 @@ public class AirportEntity implements Serializable {
     @Column(name = "ID", unique = true, nullable = false)
     private Integer id;
     
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
     @Column(name = "Name", nullable = false)
     private String name;
     
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
     @Column(name = "Code", unique = true, nullable = false)
     private String code;
     
+    @IndexedEmbedded
     @OneToOne
     @JoinColumn(name = "CountryCode")
     private CountryEntity country;
 
+    @IndexedEmbedded
     @OneToOne
     @JoinColumn(name = "CityId")
     private CityEntity city;

@@ -7,10 +7,10 @@ package com.raulsuarezdabo.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.AirportEntity;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,25 +20,25 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AirportDAOImpl implements AirportDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     /**
      * Getter of the SessionFactory
      *
      * @return SessionFactory
      */
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
     /**
      * Setter sessionFactory
      *
-     * @param sessionFactory
+     * @param entityManager
      */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
     
     /**
@@ -47,7 +47,7 @@ public class AirportDAOImpl implements AirportDAO {
      */
     @Override
     public List<AirportEntity> findAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("from AirportEntity").list();
+        return this.entityManager.createQuery("from AirportEntity").getResultList();
     }
 
     /**
@@ -58,10 +58,9 @@ public class AirportDAOImpl implements AirportDAO {
     @Override
     public AirportEntity findByCode(String code) {
         try {
-            Query query = this.sessionFactory.getCurrentSession().createQuery("FROM AirportEntity  WhERE code = :code ");
+            Query query = this.entityManager.createQuery("FROM AirportEntity  WhERE code = :code ");
             query.setParameter("code", code);
-            query.setMaxResults(1);
-            return (AirportEntity) query.uniqueResult();
+            return (AirportEntity) query.getSingleResult();
         } catch(HibernateException e) {
             return null;
         }
@@ -75,7 +74,7 @@ public class AirportDAOImpl implements AirportDAO {
     @Override
     public AirportEntity findById(int id) {
         try {
-            return (AirportEntity) this.sessionFactory.getCurrentSession().get(AirportEntity.class, id);
+            return (AirportEntity) this.entityManager.find(AirportEntity.class, id);
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -88,7 +87,7 @@ public class AirportDAOImpl implements AirportDAO {
      */
     @Override
     public void addAirport(AirportEntity airport) {
-        this.sessionFactory.getCurrentSession().save(airport);
+        this.entityManager.persist(airport);
     }
 
     /**
@@ -99,7 +98,7 @@ public class AirportDAOImpl implements AirportDAO {
     @Override
     public boolean updateAirport(AirportEntity airport) {
         try {
-            this.sessionFactory.getCurrentSession().update(airport);
+            this.entityManager.merge(airport);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -115,7 +114,7 @@ public class AirportDAOImpl implements AirportDAO {
     @Override
     public boolean deleteAirport(AirportEntity airport) {
         try {
-            this.sessionFactory.getCurrentSession().delete(airport);
+            this.entityManager.remove(airport);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

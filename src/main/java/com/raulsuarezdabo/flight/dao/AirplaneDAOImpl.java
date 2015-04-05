@@ -3,6 +3,8 @@ package com.raulsuarezdabo.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.AirplaneEntity;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,25 +16,25 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AirplaneDAOImpl implements AirplaneDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     /**
      * Getter of the SessionFactory
      *
      * @return SessionFactory
      */
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
     /**
      * Setter sessionFactory
      *
-     * @param sessionFactory
+     * @param entityManager
      */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
     
     /**
@@ -41,7 +43,7 @@ public class AirplaneDAOImpl implements AirplaneDAO {
      */
     @Override
     public List<AirplaneEntity> findAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("from AirplaneEntity").list();
+        return this.entityManager.createQuery("from AirplaneEntity").getResultList();
     }
 
     /**
@@ -52,7 +54,7 @@ public class AirplaneDAOImpl implements AirplaneDAO {
     @Override
     public AirplaneEntity findById(int id) {
         try {
-            return (AirplaneEntity) this.sessionFactory.getCurrentSession().get(AirplaneEntity.class, id);
+            return (AirplaneEntity) this.entityManager.find(AirplaneEntity.class, id);
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -65,7 +67,7 @@ public class AirplaneDAOImpl implements AirplaneDAO {
      */
     @Override
     public void addAirplane(AirplaneEntity airplane) {
-        this.sessionFactory.getCurrentSession().save(airplane);
+        this.entityManager.persist(airplane);
     }
 
     /**
@@ -76,7 +78,7 @@ public class AirplaneDAOImpl implements AirplaneDAO {
     @Override
     public boolean updateAirplane(AirplaneEntity airplane) {
         try {
-            this.sessionFactory.getCurrentSession().update(airplane);
+            this.entityManager.merge(airplane);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -92,7 +94,7 @@ public class AirplaneDAOImpl implements AirplaneDAO {
     @Override
     public boolean deleteAirplane(AirplaneEntity airplane) {
         try {
-            this.sessionFactory.getCurrentSession().delete(airplane);
+            this.entityManager.remove(airplane);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -1,13 +1,12 @@
 
 package com.raulsuarezdabo.flight.dao;
 
-import com.raulsuarezdabo.flight.entity.AirportEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,25 +16,25 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class FlightDAOImpl implements FlightDAO {
     
-    @Autowired
-    private SessionFactory sessionFactory;
-    
+    @PersistenceContext
+    private EntityManager entityManager;
+
     /**
      * Getter of the SessionFactory
      *
      * @return SessionFactory
      */
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
     /**
      * Setter sessionFactory
      *
-     * @param sessionFactory
+     * @param entityManager
      */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     /**
@@ -44,7 +43,7 @@ public class FlightDAOImpl implements FlightDAO {
      */
     @Override
     public List<FlightEntity> findAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("from FlightEntity").list();
+        return this.entityManager.createQuery("from FlightEntity").getResultList();
     }
 
     /**
@@ -55,7 +54,7 @@ public class FlightDAOImpl implements FlightDAO {
     @Override
     public FlightEntity findById(int id) {
         try {
-            return (FlightEntity) this.sessionFactory.getCurrentSession().get(FlightEntity.class, id);
+            return (FlightEntity) this.entityManager.find(FlightEntity.class, id);
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -70,10 +69,9 @@ public class FlightDAOImpl implements FlightDAO {
     @Override
     public FlightEntity findByCode(String code) {
         try {
-            Query query = this.sessionFactory.getCurrentSession().createQuery("FROM FlightEntity  WhERE code = :code ");
+            Query query = this.entityManager.createQuery("FROM FlightEntity  WhERE code = :code ");
             query.setParameter("code", code);
-            query.setMaxResults(1);
-            return (FlightEntity) query.uniqueResult();
+            return (FlightEntity) query.getSingleResult();
         } catch(HibernateException e) {
             return null;
         }
@@ -85,7 +83,7 @@ public class FlightDAOImpl implements FlightDAO {
      */
     @Override
     public void addFlight(FlightEntity flight) {
-        this.sessionFactory.getCurrentSession().save(flight);
+        this.entityManager.persist(flight);
     }
 
     /**
@@ -96,7 +94,7 @@ public class FlightDAOImpl implements FlightDAO {
     @Override
     public boolean updateFlight(FlightEntity flight) {
         try {
-            this.sessionFactory.getCurrentSession().update(flight);
+            this.entityManager.merge(flight);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -112,7 +110,7 @@ public class FlightDAOImpl implements FlightDAO {
     @Override
     public boolean deleteFlight(FlightEntity flight) {
         try {
-            this.sessionFactory.getCurrentSession().delete(flight);
+            this.entityManager.remove(flight);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

@@ -2,6 +2,8 @@ package com.raulsuarezdabo.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.SeatEntity;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,26 +14,26 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class SeatDAOImpl implements SeatDAO {
-    
-    @Autowired
-    private SessionFactory sessionFactory;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     /**
      * Getter of the SessionFactory
      *
      * @return SessionFactory
      */
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
     /**
      * Setter sessionFactory
      *
-     * @param sessionFactory
+     * @param entityManager
      */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     /**
@@ -40,7 +42,7 @@ public class SeatDAOImpl implements SeatDAO {
      */
     @Override
     public List<SeatEntity> findAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("from SeatEntity").list();
+        return this.entityManager.createQuery("from SeatEntity").getResultList();
     }
 
     /**
@@ -51,7 +53,7 @@ public class SeatDAOImpl implements SeatDAO {
     @Override
     public SeatEntity findById(int id) {
         try {
-            return (SeatEntity) this.sessionFactory.getCurrentSession().get(SeatEntity.class, id);
+            return (SeatEntity) this.entityManager.find(SeatEntity.class, id);
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return null;
@@ -64,7 +66,7 @@ public class SeatDAOImpl implements SeatDAO {
      */
     @Override
     public void addSeat(SeatEntity seat) {
-        this.sessionFactory.getCurrentSession().save(seat);
+        this.entityManager.persist(seat);
     }
 
     /**
@@ -75,7 +77,7 @@ public class SeatDAOImpl implements SeatDAO {
     @Override
     public boolean updateSeat(SeatEntity seat) {
         try {
-            this.sessionFactory.getCurrentSession().update(seat);
+            this.entityManager.merge(seat);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -91,7 +93,7 @@ public class SeatDAOImpl implements SeatDAO {
     @Override
     public boolean deleteSeat(SeatEntity seat) {
         try {
-            this.sessionFactory.getCurrentSession().delete(seat);
+            this.entityManager.remove(seat);
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());

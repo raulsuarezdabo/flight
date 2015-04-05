@@ -268,7 +268,7 @@ public class EditAirportBean {
             this.name = airport.getName();
             this.code = airport.getCode();
             this.country = airport.getCountry().getCode();
-            this.city = Integer.parseInt(airport.getCity().getId());
+            this.city = airport.getCity().getId();
         }
     }
     

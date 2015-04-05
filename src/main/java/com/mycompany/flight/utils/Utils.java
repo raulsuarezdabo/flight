@@ -9,15 +9,12 @@ import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
 import com.raulsuarezdabo.flight.entity.RoleEntity;
 import static java.lang.Math.abs;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -61,7 +58,7 @@ public class Utils {
         CityEntity currentCity = null;
         while (iteratorCities.hasNext() == true && found == false) {
             currentCity = (CityEntity) iteratorCities.next();
-            if (currentCity.getId().equals(cityId) == true) {
+            if (currentCity.getId() == cityId) {
                 found = true;
             }
         }

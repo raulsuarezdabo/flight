@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+ http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd" version="1.0">
+ 
+    <persistence-unit name="raulsuarezdabo-peristence">
+        <description>raulsuarezdabo Persistence Unit</description>
+        <provider>org.hibernate.ejb.HibernatePersistence</provider> 
+        <class>com.raulsuarezdabo.flight.entity.UserEntity</class>
+        <class>com.raulsuarezdabo.flight.entity.RoleEntity</class>
+        <class>com.raulsuarezdabo.flight.entity.CountryEntity</class>
+        <class>com.raulsuarezdabo.flight.entity.CityEntity</class>
+        <class>com.raulsuarezdabo.flight.entity.AirportEntity</class>
+        <class>com.raulsuarezdabo.flight.entity.AirlineEntity</class>
+        <class>com.raulsuarezdabo.flight.entity.AirplaneEntity</class>
+        <class>com.raulsuarezdabo.flight.entity.FlightEntity</class>
+        <class>com.raulsuarezdabo.flight.entity.SeatEntity</class>
+        <properties>
+            <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+            <property name="hibernate.connection.pool_size">0</property>
+            <property name="hibernate.show_sql">true</property>
+            <!-- HIBERNATE SEARCH EXTENSION -->
+            <!--<property name="hibernate.search.default.indexBase">${hibernateIndexDir}</property>
+            <property name="hibernate.search.default.directory_provider">${hibernateDirectoryProvider}></property>-->
+        </properties>
+    </persistence-unit>
+ 
+</persistence>

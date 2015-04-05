@@ -201,7 +201,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 if (editUser.getPassword() != null) {
                     user.setPassword(editUser.getPassword());
                 }
-                if (editUser.getRole().isEmpty() == false) {
+                if (editUser.getRole() != null && editUser.getRole().isEmpty() == false) {
                     user.setRole(editUser.getRole());
                 }
                 // Persist block

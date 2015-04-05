@@ -7,9 +7,9 @@ package com.mycompany.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.RoleEntity;
 import java.util.List;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -19,25 +19,25 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class RoleDAOImpl implements RoleDAO {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     /**
      * Getter of the SessionFactory
      *
      * @return SessionFactory
      */
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
+    public EntityManager getEntityManager() {
+        return entityManager;
     }
 
     /**
      * Setter sessionFactory
      *
-     * @param sessionFactory
+     * @param entityManager
      */
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     /**
@@ -48,10 +48,9 @@ public class RoleDAOImpl implements RoleDAO {
     @Override
     public RoleEntity findByName(String name) {
         try {
-            Query query = this.sessionFactory.getCurrentSession().createQuery("FROM RoleEntity  WhERE name = :name ");
+            Query query = this.entityManager.createQuery("FROM RoleEntity  WhERE name = :name ");
             query.setParameter("name", name);
-            query.setMaxResults(1);
-            RoleEntity role = (RoleEntity) query.uniqueResult();
+            RoleEntity role = (RoleEntity) query.getSingleResult();
             return role;
         } catch(Exception ex) {
             return null;
@@ -60,7 +59,7 @@ public class RoleDAOImpl implements RoleDAO {
     
     @Override
     public List<RoleEntity> findAll() {
-        return this.sessionFactory.getCurrentSession().createQuery("FROM RoleEntity").list();
+        return this.entityManager.createQuery("FROM RoleEntity").getResultList();
     }
 
 }
