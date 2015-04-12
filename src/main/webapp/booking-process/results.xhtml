@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+    </h:head>
+    <h:body role="document">
+        <ui:composition template="/template/basicTemplate.xhtml">
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleAirportAdd}" /></ui:define>
+            <ui:define name="meta">
+                <meta name="description" content="Edita tus datos"></meta>
+            </ui:define>
+            <ui:define name="breadcrumbs">
+                <li class="active"><h:outputText value="#{msg.selectYourFlight}"/></li>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <h:panelGrid class="thumbnail">
+                            <h3 class="glyphicon glyphicon-send">&nbsp;#{msg.titleBookingCriteriaResult}</h3>
+                            <h:form id="wellcomeForm" class="form-inline">
+                                <div class="form-group">
+                                    <h:outputLabel for="flightFrom" value="#{msg.from}&nbsp;"/>
+                                    <p:inputText value="#{bookingResultBean.flightFrom}" id="flightFrom" label="flightFrom" required="true" placeholder="#{msg.fromPlaceholder}" requiredMessage="#{msg.fromRequired}" validatorMessage="#{msg.fromInvalid}" size="20" immediate="true">
+                                        <f:ajax event="blur" render="flightFromMessage"/>
+                                    </p:inputText>
+                                    <h:message for="flightFrom" style="color: crimson" id="flightFromMessage"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="flightTo" value="#{msg.to}&nbsp;"/>
+                                    <p:inputText value="#{bookingResultBean.flightTo}" id="flightTo" label="flightTo" required="true" placeholder="#{msg.toPlaceholder}" requiredMessage="#{msg.toRequired}" validatorMessage="#{msg.ToInvalid}" size="20" immediate="true">
+                                        <f:ajax event="blur" render="flightToMessage"/>
+                                    </p:inputText>
+                                    <h:message for="flightTo" style="color: crimson" id="flightToMessage"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="flightStart" value="#{msg.flightStart}&nbsp;" />
+                                    <p:calendar value="#{bookingResultBean.flightStart}" id="flightStart" pattern="MM/dd/yyyy" pages="2" mindate="#{bookingResultBean.now}" required="true" requiredMessage="#{msg.flightStartRequired}" immediate="true">
+                                        <f:ajax event="blur" execute="flightStart" render="flightFinish"/>
+                                    </p:calendar>
+                                    <h:message for="flightStart" id="flightStartMessage" style="color: crimson"/>
+                                </div>
+                                <h:panelGroup id="flightFinishBlock" class="form-group">
+                                    <h:outputLabel for="flightFinish" value="#{msg.flightFinish}&nbsp;" rendered="#{bookingResultBean.isFlightOneWay() eq false}" />
+                                    <p:calendar value="#{bookingResultBean.flightFinish}" id="flightFinish" pattern="MM/dd/yyyy" pages="2" mindate="#{bookingResultBean.flightStartToString()}" required="#{bookingResultBean.isFlightOneWay() eq false}" requiredMessage="#{msg.flightFinishRequired}" rendered="#{bookingResultBean.isFlightOneWay() eq false}" immediate="true">
+                                        <f:ajax event="blur" render="flightFinishMessage"/>
+                                    </p:calendar>
+                                    <h:message for="flightFinish" id="flightFinishMessage" style="color: crimson"/>
+                                </h:panelGroup>
+                                <div class="form-group">
+                                    <h:outputLabel for="flightPassengers" value="#{msg.numPassengers}&nbsp;"/>
+                                    <h:selectOneMenu id="flightPassengers" value="}" styleClass="form-control" style="width: 100px;" required="true" requiredMessage="#{msg.numPassengersRequired}" immediate="true">
+                                        <f:selectItem itemLabel="#{msg.numPassengersPlaceholder}" itemValue=""/>
+                                        <f:selectItems value="#{bookingResultBean.passengers}" var="item" itemLabel="#{item}" itemValue="#{item}" />
+                                        <f:ajax event="blur" render="flightPassengersMessage"/>
+                                    </h:selectOneMenu>
+                                    <h:message for="flightPassengers" style="color: crimson" id="flightPassengersMessage"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:outputLabel for="flightOneWay" value="#{msg.oneway}&nbsp;"/>
+                                    <h:selectBooleanCheckbox value="#{bookingResultBean.flightOneWay}" id="flightOneWay" immediate="true">
+                                        <f:ajax event="change" execute="@this" render="flightFinishBlock" />
+                                    </h:selectBooleanCheckbox>
+                                    <h:message for="flightOneWay" style="color: crimson" id="flightOneWayMessage"/>
+                                </div>
+                                <br/>
+                                <p:commandButton value="#{msg.buttonSearchFlight}" action="/booking-process/result.xhtml" process="@form" partialSubmit="true">
+                                    <f:ajax execute="@form" render="wellcomeForm" />
+                                </p:commandButton>
+                                <h:outputText escape="false" value="#{msg.acceptTermsConditions}" />
+                                <h:selectBooleanCheckbox value="#{bookingResultBean.flightTermsConditions}" id="flightTermsConditions" requiredMessage="#{msg.acceptTermsConditionsRequired}" required="true" immediate="true">
+                                    <f:validator validatorId="requiredCheckboxValidator" />
+                                    <f:ajax event="change" render="flightTermsConditionsMessage" />
+                                </h:selectBooleanCheckbox>
+                                <h:message for="flightTermsConditions" style="color: crimson" id="flightTermsConditionsMessage"/>
+                            </h:form>
+                        </h:panelGrid>
+                    </div>
+                    <div class="row">
+                        <h1><h:outputText value="#{msg.titleBookingListResult}"/></h1>
+                        <c:if test="#{bookingResultBean.flights.size() eq 0}">
+                            <div class="alert alert-warning alert-dismissible" role="alert">
+                                <p><h:outputText escape="false" value="#{msg.titleBookingListNoResult}"/></p>
+                            </div>
+                        </c:if>
+                        <ui:repeat var="item" value="#{bookingResultBean.flights}">
+                            <h:panelGrid class="thumbnail">
+                                
+                            </h:panelGrid>
+                        </ui:repeat>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+

@@ -135,4 +135,19 @@ public class Utils {
         }
         return result;
     }
+    
+    /**
+     * List integer generator
+     * @param from
+     * @param to
+     * @param pass
+     * @return  List of integers
+     */
+    public static List<Integer> getIntegerList(int from, int to, int pass) {
+        List<Integer> list = new ArrayList();
+        for (int i = from;i <= to; i=i+pass ) {
+            list.add(new Integer(i));
+        }
+        return list;
+    }
 }

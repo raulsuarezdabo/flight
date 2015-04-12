@@ -20,6 +20,10 @@
         <validator-id>ageValidator</validator-id>
         <validator-class>com.mycompany.flight.jsf.validator.AgeValidator</validator-class>
     </validator>
+    <validator>
+        <validator-id>requiredCheckboxValidator</validator-id>
+        <validator-class>com.mycompany.flight.jsf.validator.RequiredCheckboxValidator</validator-class>
+    </validator>
     <!-- CONVERTER DECLARATIONS -->
     <!-- NAVIGATIONS RULES -->
     <navigation-rule>
