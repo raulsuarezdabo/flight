@@ -6,15 +6,20 @@
 package com.raulsuarezdabo.flight.jsf.booking;
 
 import com.mycompany.flight.utils.Utils;
+import com.raulsuarezdabo.flight.jsf.language.LocaleBean;
 import com.raulsuarezdabo.flight.service.CityService;
 import com.raulsuarezdabo.flight.service.CountryService;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -24,66 +29,66 @@ import org.springframework.beans.factory.annotation.Autowired;
 @ManagedBean
 @ViewScoped
 public class BookingWellcomeBean {
-    
+
     public static int MIN_PASSENGERS = 1;
     public static int MAX_PASSENGERS = 5;
-    
+
     private String now;
-    
+
     /**
      * city service to use on the view
      */
     @Autowired
-    @ManagedProperty(value="#{cityService}")
+    @ManagedProperty(value = "#{cityService}")
     private CityService cityService;
-    
+
     /**
      * country service to use on the view
      */
     @Autowired
-    @ManagedProperty(value="#{countryService}")
+    @ManagedProperty(value = "#{countryService}")
     private CountryService countryService;
-    
+
     /**
      * comes from
      */
     private String flightFrom;
-    
+
     /**
      * goes to
      */
     private String flightTo;
-    
+
     /**
      * Date where goes
      */
     private Date flightStart;
-    
+
     /**
      * Date where comes back
      */
     private Date flightFinish;
-    
+
     /**
      * number of passengers
      */
     private int flightPassengers;
-    
+
     /**
      * Select passengers
      */
     private List<Integer> passengers;
-    
+
     /**
      * one way or not
      */
     private boolean flightOneWay;
-    
+
     /**
      * Terms and conditions of the flight
      */
     private boolean flightTermsConditions;
-    
+
     /**
      * Creates a new instance of BookingWellcomeBean
      */
@@ -92,7 +97,8 @@ public class BookingWellcomeBean {
 
     /**
      * Getter of the service city
-     * @return  CityService
+     *
+     * @return CityService
      */
     public CityService getCityService() {
         return cityService;
@@ -100,7 +106,8 @@ public class BookingWellcomeBean {
 
     /**
      * Setter of the service city
-     * @param cityService 
+     *
+     * @param cityService
      */
     public void setCityService(CityService cityService) {
         this.cityService = cityService;
@@ -108,6 +115,7 @@ public class BookingWellcomeBean {
 
     /**
      * Getter country service
+     *
      * @return CountryService
      */
     public CountryService getCountryService() {
@@ -116,7 +124,8 @@ public class BookingWellcomeBean {
 
     /**
      * Setter countryService
-     * @param countryService 
+     *
+     * @param countryService
      */
     public void setCountryService(CountryService countryService) {
         this.countryService = countryService;
@@ -124,7 +133,8 @@ public class BookingWellcomeBean {
 
     /**
      * Getter flightFrom
-     * @return  String
+     *
+     * @return String
      */
     public String getFlightFrom() {
         return flightFrom;
@@ -132,7 +142,8 @@ public class BookingWellcomeBean {
 
     /**
      * Setter flightFrom
-     * @param flightFrom    String 
+     *
+     * @param flightFrom String
      */
     public void setFlightFrom(String flightFrom) {
         this.flightFrom = flightFrom;
@@ -140,7 +151,8 @@ public class BookingWellcomeBean {
 
     /**
      * Getter flightTo
-     * @return  String
+     *
+     * @return String
      */
     public String getFlightTo() {
         return flightTo;
@@ -148,7 +160,8 @@ public class BookingWellcomeBean {
 
     /**
      * Setter flightTo
-     * @param flightTo  String 
+     *
+     * @param flightTo String
      */
     public void setFlightTo(String flightTo) {
         this.flightTo = flightTo;
@@ -156,29 +169,31 @@ public class BookingWellcomeBean {
 
     /**
      * Getter flightStart
-     * @return  Date
+     *
+     * @return Date
      */
     public Date getFlightStart() {
         return flightStart;
     }
-    
+
     /**
      * Convert to string the flightStart for the view
-     * @return 
+     *
+     * @return
      */
     public String flightStartToString() {
         SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
         if (this.flightStart == null) {
             return sdf.format(new Date());
-        }
-        else {
+        } else {
             return sdf.format(this.flightStart);
         }
     }
 
     /**
      * Setter flightStart
-     * @param flightStart 
+     *
+     * @param flightStart
      */
     public void setFlightStart(Date flightStart) {
         this.flightStart = flightStart;
@@ -186,7 +201,8 @@ public class BookingWellcomeBean {
 
     /**
      * Getter flightFinish
-     * @return  Date
+     *
+     * @return Date
      */
     public Date getFlightFinish() {
         return flightFinish;
@@ -194,15 +210,30 @@ public class BookingWellcomeBean {
 
     /**
      * Setter fligthFinish
-     * @param flightFinish 
+     *
+     * @param flightFinish
      */
     public void setFlightFinish(Date flightFinish) {
-        this.flightFinish = flightFinish;
+        if (this.flightOneWay == false && this.flightStart != null) {
+            if (this.flightStart.before(flightFinish) == true) {
+                this.flightFinish = flightFinish;
+            } else {
+                String errorMessage = FacesContext.getCurrentInstance().getApplication().
+                        getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("flightStartFinishError");
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        errorMessage, errorMessage);
+                FacesContext.getCurrentInstance().addMessage("wellcomeForm:flightFinish", message);
+                this.flightFinish = null;
+            }
+        } else {
+            this.flightFinish = flightFinish;
+        }
     }
 
     /**
      * Getter flightPassengers
-     * @return  int
+     *
+     * @return int
      */
     public int getFlightPassengers() {
         return flightPassengers;
@@ -210,7 +241,8 @@ public class BookingWellcomeBean {
 
     /**
      * Setter flightPassengers
-     * @param flightPassengers  int 
+     *
+     * @param flightPassengers int
      */
     public void setFlightPassengers(int flightPassengers) {
         this.flightPassengers = flightPassengers;
@@ -218,7 +250,8 @@ public class BookingWellcomeBean {
 
     /**
      * is one way
-     * @return  boleean
+     *
+     * @return boleean
      */
     public boolean isFlightOneWay() {
         return flightOneWay;
@@ -226,20 +259,22 @@ public class BookingWellcomeBean {
 
     /**
      * Setter one way
-     * @param flightOneWay  boolean 
+     *
+     * @param flightOneWay boolean
      */
     public void setFlightOneWay(boolean flightOneWay) {
         this.flightOneWay = flightOneWay;
     }
-    
+
     /**
      * Getter one way
-     * @return  boolean
+     *
+     * @return boolean
      */
     public boolean getFlightOneWay() {
         return this.flightOneWay;
     }
-    
+
     /**
      * Getter of the string of the current day
      *
@@ -260,7 +295,8 @@ public class BookingWellcomeBean {
 
     /**
      * Getter passengers
-     * @return  List of integers
+     *
+     * @return List of integers
      */
     public List<Integer> getPassengers() {
         return passengers;
@@ -268,15 +304,17 @@ public class BookingWellcomeBean {
 
     /**
      * Setter list of passengers
-     * @param passengers    List
+     *
+     * @param passengers List
      */
     public void setPassengers(List<Integer> passengers) {
         this.passengers = passengers;
     }
-    
+
     /**
      * Getter terms and conditions
-     * @return 
+     *
+     * @return
      */
     public boolean getFlightTermsConditions() {
         return flightTermsConditions;
@@ -284,17 +322,40 @@ public class BookingWellcomeBean {
 
     /**
      * Setter terms and conditions
-     * @param flightTermsConditions 
+     *
+     * @param flightTermsConditions
      */
     public void setFlightTermsConditions(boolean flightTermsConditions) {
         this.flightTermsConditions = flightTermsConditions;
     }
-    
+
+    /**
+     * Method for submiting the forms
+     *
+     * @return direction to apply
+     */
+    public String submitAction() {
+        //Check dates coherence
+        if (this.flightOneWay == false) {
+            if (this.flightFinish != null && this.flightStart.before(this.flightFinish) == true) {
+                return "/booking-process/results";
+            }
+            String errorMessage = FacesContext.getCurrentInstance().getApplication().
+                    getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("flightStartFinishError");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    errorMessage, errorMessage);
+            FacesContext.getCurrentInstance().addMessage("wellcomeForm:flightStart", message);
+            return "";
+        } else {
+            return "/booking-process/results";
+        }
+    }
+
     @PostConstruct
     public void init() {
         SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
         this.now = sdf.format(new Date());
         this.passengers = Utils.getIntegerList(BookingWellcomeBean.MIN_PASSENGERS, BookingWellcomeBean.MAX_PASSENGERS, 1);
     }
-    
+
 }

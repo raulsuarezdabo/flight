@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
     <h:head>
@@ -69,23 +68,21 @@
                                         <br/>
                                         <h:outputLabel for="flightTo" value="#{msg.to}"/>
                                         <br/>
-                                        <p:inputText value="#{bookingWellcomeBean.flightTo}" id="flightTo" label="flightTo" required="true" placeholder="#{msg.toPlaceholder}" requiredMessage="#{msg.toRequired}" validatorMessage="#{msg.ToInvalid}" size="30" immediate="true">
+                                        <p:inputText value="#{bookingWellcomeBean.flightTo}" id="flightTo" label="flightTo" required="true" placeholder="#{msg.toPlaceholder}" requiredMessage="#{msg.toRequired}" validatorMessage="#{msg.ToInvalid}" size="30">
                                             <f:ajax event="blur" render="flightToMessage"/>
                                         </p:inputText>
                                         <h:message for="flightTo" style="color: crimson" id="flightToMessage"/>
                                         <br/>
                                         <h:outputLabel for="flightStart" value="#{msg.flightStart}" />
                                         <br/>
-                                        <p:calendar value="#{bookingWellcomeBean.flightStart}" id="flightStart" pattern="MM/dd/yyyy" pages="2" mindate="#{bookingWellcomeBean.now}" required="true" requiredMessage="#{msg.flightStartRequired}" immediate="true">
-                                            <f:ajax event="blur" execute="flightStart" render="flightFinish"/>
+                                        <p:calendar value="#{bookingWellcomeBean.flightStart}" id="flightStart" pattern="MM/dd/yyyy" pages="2" mindate="#{bookingWellcomeBean.now}" required="true" requiredMessage="#{msg.flightStartRequired}">
                                         </p:calendar>
                                         <h:message for="flightStart" id="flightStartMessage" style="color: crimson"/>
                                         <br/>
                                         <h:panelGroup id="flightFinishBlock">
                                             <h:outputLabel for="flightFinish" value="#{msg.flightFinish}" rendered="#{bookingWellcomeBean.isFlightOneWay() eq false}" />
                                             <br/>
-                                            <p:calendar value="#{bookingWellcomeBean.flightFinish}" id="flightFinish" pattern="MM/dd/yyyy" pages="2" mindate="#{bookingWellcomeBean.flightStartToString()}" required="#{bookingWellcomeBean.isFlightOneWay() eq false}" requiredMessage="#{msg.flightFinishRequired}" rendered="#{bookingWellcomeBean.isFlightOneWay() eq false}" immediate="true">
-                                                <f:ajax event="blur" render="flightFinishMessage"/>
+                                            <p:calendar value="#{bookingWellcomeBean.flightFinish}" id="flightFinish" pattern="MM/dd/yyyy" pages="2" mindate="#{bookingWellcomeBean.now}" required="#{bookingWellcomeBean.isFlightOneWay() eq false}" requiredMessage="#{msg.flightFinishRequired}" rendered="#{bookingWellcomeBean.isFlightOneWay() eq false}">
                                             </p:calendar>
                                             <h:message for="flightFinish" id="flightFinishMessage" style="color: crimson"/>
                                             <br/>
@@ -104,7 +101,7 @@
                                         </h:selectBooleanCheckbox>
                                         <h:message for="flightOneWay" style="color: crimson" id="flightOneWayMessage"/>
                                         <br/>
-                                        <p:commandButton value="#{msg.buttonSearchFlight}" action="/booking-process/results.xhtml" process="@form" partialSubmit="true">
+                                        <p:commandButton value="#{msg.buttonSearchFlight}" action="#{bookingWellcomeBean.submitAction()}" process="@form" partialSubmit="true">
                                             <f:ajax execute="@form" render="wellcomeForm" />
                                         </p:commandButton>
                                         <br/>

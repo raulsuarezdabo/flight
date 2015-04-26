@@ -54,7 +54,7 @@
                                 </h:panelGroup>
                                 <div class="form-group">
                                     <h:outputLabel for="flightPassengers" value="#{msg.numPassengers}&nbsp;"/>
-                                    <h:selectOneMenu id="flightPassengers" value="}" styleClass="form-control" style="width: 100px;" required="true" requiredMessage="#{msg.numPassengersRequired}" immediate="true">
+                                    <h:selectOneMenu id="flightPassengers" value="#{bookingResultBean.flightPassengers}" styleClass="form-control" style="width: 100px;" required="true" requiredMessage="#{msg.numPassengersRequired}" immediate="true">
                                         <f:selectItem itemLabel="#{msg.numPassengersPlaceholder}" itemValue=""/>
                                         <f:selectItems value="#{bookingResultBean.passengers}" var="item" itemLabel="#{item}" itemValue="#{item}" />
                                         <f:ajax event="blur" render="flightPassengersMessage"/>
