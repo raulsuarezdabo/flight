@@ -23,7 +23,7 @@ import org.hibernate.search.annotations.Store;
 public class CityEntity implements Serializable {
     @Id
     @Column(name = "Id", unique = true, nullable = false)
-    private int id;
+    private Integer id;
 
     @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
     @Column(name = "Name", nullable = false)
@@ -43,7 +43,7 @@ public class CityEntity implements Serializable {
      * Getter id
      * @return 
      */
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -51,7 +51,7 @@ public class CityEntity implements Serializable {
      * Setter id
      * @param id 
      */
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -85,5 +85,25 @@ public class CityEntity implements Serializable {
      */
     public void setCountryCode(CountryEntity countryCode) {
         this.country = countryCode;
+    }
+    
+    @Override
+    public String toString() {
+        return name;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof CityEntity == false) {
+            return false;
+        }
+        CityEntity cityObject = (CityEntity) obj;
+        if (this.id.equals(cityObject.getId())) {
+            return true;
+        }
+        return false;
     }
 }

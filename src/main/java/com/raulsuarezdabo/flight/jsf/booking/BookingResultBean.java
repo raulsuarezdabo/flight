@@ -6,6 +6,7 @@
 package com.raulsuarezdabo.flight.jsf.booking;
 
 import com.mycompany.flight.utils.Utils;
+import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.service.CityService;
 import com.raulsuarezdabo.flight.service.CountryService;
@@ -16,9 +17,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -50,21 +50,14 @@ public class BookingResultBean {
     private CityService cityService;
 
     /**
-     * country service to use on the view
-     */
-    @Autowired
-    @ManagedProperty(value = "#{countryService}")
-    private CountryService countryService;
-
-    /**
      * comes from
      */
-    private String flightFrom;
+    private CityEntity flightFrom;
 
     /**
      * goes to
      */
-    private String flightTo;
+    private CityEntity flightTo;
 
     /**
      * Date where goes
@@ -156,29 +149,11 @@ public class BookingResultBean {
     }
 
     /**
-     * Getter country service
-     *
-     * @return CountryService
-     */
-    public CountryService getCountryService() {
-        return countryService;
-    }
-
-    /**
-     * Setter countryService
-     *
-     * @param countryService
-     */
-    public void setCountryService(CountryService countryService) {
-        this.countryService = countryService;
-    }
-
-    /**
      * Getter flightFrom
      *
      * @return String
      */
-    public String getFlightFrom() {
+    public CityEntity getFlightFrom() {
         return flightFrom;
     }
 
@@ -187,25 +162,25 @@ public class BookingResultBean {
      *
      * @param flightFrom String
      */
-    public void setFlightFrom(String flightFrom) {
+    public void setFlightFrom(CityEntity flightFrom) {
         this.flightFrom = flightFrom;
     }
 
     /**
      * Getter flightTo
      *
-     * @return String
+     * @return CityEntity
      */
-    public String getFlightTo() {
+    public CityEntity getFlightTo() {
         return flightTo;
     }
 
     /**
      * Setter flightTo
      *
-     * @param flightTo String
+     * @param flightTo CityEntity
      */
-    public void setFlightTo(String flightTo) {
+    public void setFlightTo(CityEntity flightTo) {
         this.flightTo = flightTo;
     }
 
@@ -216,20 +191,6 @@ public class BookingResultBean {
      */
     public Date getFlightStart() {
         return flightStart;
-    }
-
-    /**
-     * Convert to string the flightStart for the view
-     *
-     * @return
-     */
-    public String flightStartToString() {
-        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
-        if (this.flightStart == null) {
-            return sdf.format(new Date());
-        } else {
-            return sdf.format(this.flightStart);
-        }
     }
 
     /**
@@ -256,7 +217,20 @@ public class BookingResultBean {
      * @param flightFinish
      */
     public void setFlightFinish(Date flightFinish) {
-        this.flightFinish = flightFinish;
+        if (this.flightOneWay == false && this.flightStart != null) {
+            if (this.flightStart.before(flightFinish) == true) {
+                this.flightFinish = flightFinish;
+            } else {
+                String errorMessage = FacesContext.getCurrentInstance().getApplication().
+                        getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("flightStartFinishError");
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        errorMessage, errorMessage);
+                FacesContext.getCurrentInstance().addMessage("wellcomeForm:flightFinish", message);
+                this.flightFinish = null;
+            }
+        } else {
+            this.flightFinish = flightFinish;
+        }
     }
 
     /**
@@ -363,6 +337,23 @@ public class BookingResultBean {
      */
     public BookingResultBean() {
     }
+    
+    /**
+     * Method for filtering the result for searching city where start or finish
+     * @param query String
+     * @return List with suggested cities
+     */
+    public List<CityEntity> completeCity(String query) {
+        List<CityEntity> allCities = this.cityService.getAll();
+        List<CityEntity> filteredCities = new ArrayList<>();
+        
+        for (CityEntity city : allCities) {
+            if (city.getName().toLowerCase().startsWith(query)) {
+                filteredCities.add(city);
+            }
+        }
+        return filteredCities;
+    }
 
     @PostConstruct
     public void init() {
@@ -372,13 +363,13 @@ public class BookingResultBean {
 
         Map<String, String> parameterMap = (Map<String, String>) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         try {
-            if (parameterMap.containsKey("wellcomeForm:flightFrom") == true
-                    && parameterMap.containsKey("wellcomeForm:flightTo") == true
+            if (parameterMap.containsKey("wellcomeForm:flightFrom_hinput") == true
+                    && parameterMap.containsKey("wellcomeForm:flightTo_hinput") == true
                     && parameterMap.containsKey("wellcomeForm:flightStart_input") == true
                     && parameterMap.containsKey("wellcomeForm:flightPassengers") == true
                     ) {
-                this.flightFrom = parameterMap.get("wellcomeForm:flightFrom");
-                this.flightTo = parameterMap.get("wellcomeForm:flightTo");
+                this.flightFrom = this.cityService.getById(Integer.parseInt(parameterMap.get("wellcomeForm:flightFrom_hinput")));
+                this.flightTo = this.cityService.getById(Integer.parseInt(parameterMap.get("wellcomeForm:flightTo_hinput")));
                 this.flightStart = sdf.parse(parameterMap.get("wellcomeForm:flightStart_input"));
                 
                 this.flightPassengers = Integer.parseInt(parameterMap.get("wellcomeForm:flightPassengers"));

@@ -6,19 +6,18 @@
 package com.raulsuarezdabo.flight.jsf.booking;
 
 import com.mycompany.flight.utils.Utils;
-import com.raulsuarezdabo.flight.jsf.language.LocaleBean;
+import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.service.CityService;
 import com.raulsuarezdabo.flight.service.CountryService;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -52,12 +51,12 @@ public class BookingWellcomeBean {
     /**
      * comes from
      */
-    private String flightFrom;
+    private CityEntity flightFrom;
 
     /**
      * goes to
      */
-    private String flightTo;
+    private CityEntity flightTo;
 
     /**
      * Date where goes
@@ -134,37 +133,64 @@ public class BookingWellcomeBean {
     /**
      * Getter flightFrom
      *
-     * @return String
+     * @return CityEntity
      */
-    public String getFlightFrom() {
+    public CityEntity getFlightFrom() {
         return flightFrom;
     }
 
     /**
      * Setter flightFrom
      *
-     * @param flightFrom String
+     * @param flightFrom CityEntity
      */
-    public void setFlightFrom(String flightFrom) {
-        this.flightFrom = flightFrom;
+    public void setFlightFrom(CityEntity flightFrom) {
+        if (this.flightTo != null) {
+            if (this.sameOriginDestiny() == true) {
+                String errorMessage = FacesContext.getCurrentInstance().getApplication().
+                        getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("toequalsFrom");
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        errorMessage, errorMessage);
+                FacesContext.getCurrentInstance().addMessage("wellcomeForm:flightFrom", message);
+            }
+            else {
+                this.flightFrom = flightFrom;
+            }
+        } else {
+            this.flightFrom = flightFrom;
+        }
     }
 
     /**
      * Getter flightTo
      *
-     * @return String
+     * @return CityEntity
      */
-    public String getFlightTo() {
+    public CityEntity getFlightTo() {
         return flightTo;
     }
 
     /**
      * Setter flightTo
      *
-     * @param flightTo String
+     * @param flightTo CityEntity
      */
-    public void setFlightTo(String flightTo) {
-        this.flightTo = flightTo;
+    public void setFlightTo(CityEntity flightTo) {
+        if (this.flightFrom != null) {
+            if (this.sameOriginDestiny() == true) {
+                String errorMessage = FacesContext.getCurrentInstance().getApplication().
+                        getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("toequalsFrom");
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        errorMessage, errorMessage);
+                FacesContext.getCurrentInstance().addMessage("wellcomeForm:flightTo", message);
+            }
+            else {
+                this.flightTo = flightTo;
+            }
+        }
+        else {
+            this.flightTo = flightTo;
+        }
     }
 
     /**
@@ -174,20 +200,6 @@ public class BookingWellcomeBean {
      */
     public Date getFlightStart() {
         return flightStart;
-    }
-
-    /**
-     * Convert to string the flightStart for the view
-     *
-     * @return
-     */
-    public String flightStartToString() {
-        SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
-        if (this.flightStart == null) {
-            return sdf.format(new Date());
-        } else {
-            return sdf.format(this.flightStart);
-        }
     }
 
     /**
@@ -330,11 +342,45 @@ public class BookingWellcomeBean {
     }
 
     /**
+     * Method for filtering the result for searching city where start or finish
+     *
+     * @param query String
+     * @return List with suggested cities
+     */
+    public List<CityEntity> completeCity(String query) {
+        List<CityEntity> allCities = this.cityService.getAll();
+        List<CityEntity> filteredCities = new ArrayList<>();
+
+        for (CityEntity city : allCities) {
+            if (city.getName().toLowerCase().startsWith(query)) {
+                filteredCities.add(city);
+            }
+        }
+        return filteredCities;
+    }
+
+    /**
+     * Method for checking if origin and destiniy are the same.
+     *
+     * @return boolean with true or false if it's those are the same.
+     */
+    private boolean sameOriginDestiny() {
+        if (this.flightTo != null && this.flightFrom != null) {
+            return this.flightTo.equals(this.flightFrom);
+        }
+        return false;
+    }
+
+    /**
      * Method for submiting the forms
      *
      * @return direction to apply
      */
     public String submitAction() {
+        //Checks if origin and destiny are the same one.
+        if (this.sameOriginDestiny() == true) {
+            return "";
+        }
         //Check dates coherence
         if (this.flightOneWay == false) {
             if (this.flightFinish != null && this.flightStart.before(this.flightFinish) == true) {

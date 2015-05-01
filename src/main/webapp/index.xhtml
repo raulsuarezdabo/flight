@@ -61,16 +61,22 @@
                                     <h:form id="wellcomeForm">
                                         <h:outputLabel for="flightFrom" value="#{msg.from}"/>
                                         <br/>
-                                        <p:inputText value="#{bookingWellcomeBean.flightFrom}" id="flightFrom" label="flightFrom" required="true" placeholder="#{msg.fromPlaceholder}" requiredMessage="#{msg.fromRequired}" validatorMessage="#{msg.fromInvalid}" size="30" immediate="true">
-                                            <f:ajax event="blur" render="flightFromMessage"/>
-                                        </p:inputText>
+                                        <p:autoComplete id="flightFrom" value="#{bookingWellcomeBean.flightFrom}" completeMethod="#{bookingWellcomeBean.completeCity}"
+                                            var="city" itemLabel="#{city.name}" itemValue="#{city}" converter="#{cityConverter}"
+                                            label="flightFrom" required="true" placeholder="#{msg.fromPlaceholder}" requiredMessage="#{msg.fromRequired}"
+                                            scrollHeight="200">
+                                            <p:ajax event="blur" />
+                                        </p:autoComplete>
                                         <h:message for="flightFrom" style="color: crimson" id="flightFromMessage"/>
                                         <br/>
                                         <h:outputLabel for="flightTo" value="#{msg.to}"/>
                                         <br/>
-                                        <p:inputText value="#{bookingWellcomeBean.flightTo}" id="flightTo" label="flightTo" required="true" placeholder="#{msg.toPlaceholder}" requiredMessage="#{msg.toRequired}" validatorMessage="#{msg.ToInvalid}" size="30">
-                                            <f:ajax event="blur" render="flightToMessage"/>
-                                        </p:inputText>
+                                        <p:autoComplete id="flightTo" value="#{bookingWellcomeBean.flightTo}" completeMethod="#{bookingWellcomeBean.completeCity}"
+                                            var="city" itemLabel="#{city.name}" itemValue="#{city}" converter="#{cityConverter}"
+                                            label="flightFrom" required="true" placeholder="#{msg.toPlaceholder}" requiredMessage="#{msg.toRequired}"
+                                            scrollHeight="200">
+                                            <p:ajax event="blur" />
+                                        </p:autoComplete>
                                         <h:message for="flightTo" style="color: crimson" id="flightToMessage"/>
                                         <br/>
                                         <h:outputLabel for="flightStart" value="#{msg.flightStart}" />
