@@ -1,7 +1,9 @@
 
 package com.raulsuarezdabo.flight.dao;
 
+import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -116,6 +118,11 @@ public class FlightDAOImpl implements FlightDAO {
             System.out.println(e.getMessage());
             return false;
         }
+    }
+
+    @Override
+    public List<FlightEntity> findByCriteria(CityEntity from, CityEntity to, Date when, int numPassengers) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

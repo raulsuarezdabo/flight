@@ -91,9 +91,14 @@ public class BookingResultBean {
     private boolean flightTermsConditions;
 
     /**
-     * Airport list
+     * Flight list from to
      */
-    private List<FlightEntity> flights;
+    private List<FlightEntity> flightsGo;
+    
+    /**
+     * Flight list to from
+     */
+    private List<FlightEntity> flightsBack;
 
     /**
      * Getter flightService
@@ -118,8 +123,8 @@ public class BookingResultBean {
      *
      * @return List of flights
      */
-    public List<FlightEntity> getFlights() {
-        return flights;
+    public List<FlightEntity> getFlightsGo() {
+        return flightsGo;
     }
 
     /**
@@ -127,8 +132,26 @@ public class BookingResultBean {
      *
      * @param flights List of flights
      */
-    public void setFlights(List<FlightEntity> flights) {
-        this.flights = flights;
+    public void setFlightsGo(List<FlightEntity> flights) {
+        this.flightsGo = flights;
+    }
+    
+    /**
+     * Getter flights
+     *
+     * @return List of flights
+     */
+    public List<FlightEntity> getFlightsBack() {
+        return flightsBack;
+    }
+
+    /**
+     * Setter flights
+     *
+     * @param flights List of flights
+     */
+    public void setFlightsBack(List<FlightEntity> flights) {
+        this.flightsBack = flights;
     }
 
     /**
@@ -441,7 +464,8 @@ public class BookingResultBean {
                 this.flightFinish = sdf.parse(parameterMap.get("finish"));
             }
         } catch (ParseException ex) {
-            this.flights = new ArrayList();
+            this.flightsGo = new ArrayList();
+            this.flightsBack = new ArrayList();
         }
     }
 }

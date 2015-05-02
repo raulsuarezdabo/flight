@@ -1,8 +1,9 @@
 
 package com.raulsuarezdabo.flight.dao;
 
-import com.raulsuarezdabo.flight.entity.AirportEntity;
+import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -49,4 +50,14 @@ public interface FlightDAO {
      * @return boolean  with success or not
      */
     public boolean deleteFlight(FlightEntity flight);
+    
+    /**
+     * Method for searching results of flights with the specific criteria
+     * @param from  CityEntity
+     * @param to    CityEntity
+     * @param when  Date
+     * @param numPassengers int
+     * @return  List flights available with this criteria
+     */
+    public List<FlightEntity> findByCriteria(CityEntity from, CityEntity to, Date when, int numPassengers);
 }

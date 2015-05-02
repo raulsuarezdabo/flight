@@ -8,6 +8,7 @@ package com.raulsuarezdabo.flight.service;
 import com.raulsuarezdabo.flight.dao.FlightDAO;
 import com.raulsuarezdabo.flight.entity.AirplaneEntity;
 import com.raulsuarezdabo.flight.entity.AirportEntity;
+import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import java.util.Date;
 import java.util.List;
@@ -154,6 +155,11 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public FlightEntity getById(int id) {
         return this.flightDAO.findById(id);
+    }
+
+    @Override
+    public List<FlightEntity> searchFlights(CityEntity from, CityEntity to, Date when, int numPassengers) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

@@ -3,6 +3,7 @@ package com.raulsuarezdabo.flight.service;
 
 import com.raulsuarezdabo.flight.entity.AirplaneEntity;
 import com.raulsuarezdabo.flight.entity.AirportEntity;
+import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import java.util.Date;
 import java.util.List;
@@ -59,4 +60,14 @@ public interface FlightService {
      * @return FlightEntity
      */
     public FlightEntity getById(int id);
+    
+    /**
+     * Method for searching a flight with the specific criteria
+     * @param from  CityEntity
+     * @param to    CityEntity
+     * @param when  Date
+     * @param numPassengers int
+     * @return  List of results of flight found by this criteria
+     */
+    public List <FlightEntity> searchFlights(CityEntity from, CityEntity to, Date when, int numPassengers);
 }
