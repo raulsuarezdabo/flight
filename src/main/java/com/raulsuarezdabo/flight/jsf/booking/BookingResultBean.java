@@ -10,6 +10,8 @@ import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.service.CityService;
 import com.raulsuarezdabo.flight.service.FlightService;
+import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -352,6 +354,59 @@ public class BookingResultBean {
             }
         }
         return filteredCities;
+    }
+    
+    /**
+     * Method for checking if origin and destiniy are the same.
+     *
+     * @return boolean with true or false if it's those are the same.
+     */
+    private boolean sameOriginDestiny() {
+        if (this.flightTo != null && this.flightFrom != null) {
+            return this.flightTo.equals(this.flightFrom);
+        }
+        return false;
+    }
+    
+    /**
+     * Method for submiting the forms
+     *
+     * @return direction to apply
+     * @throws java.io.UnsupportedEncodingException
+     */
+    public String submitAction() throws UnsupportedEncodingException {
+        //Checks if origin and destiny are the same one.
+        if (this.sameOriginDestiny() == true) {
+            return "";
+        }
+        DateFormat df = new SimpleDateFormat("M/d/yyyy");
+        //Check dates coherence
+        if (this.flightOneWay == false) {
+            if (this.flightFinish != null && this.flightStart.before(this.flightFinish) == true) {
+                return "/booking-process/results?faces-redirect=true"
+                    + "&from=" + this.flightFrom.getId().toString()
+                    + "&to=" + this.flightTo.getId().toString()
+                    + "&start=" + df.format(this.flightStart)
+                    + "&finish=" + df.format(this.flightFinish)
+                    + "&oneway=" + "false"
+                    + "&passengers=" + this.flightPassengers
+                        ;
+            }
+            String errorMessage = FacesContext.getCurrentInstance().getApplication().
+                    getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("flightStartFinishError");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    errorMessage, errorMessage);
+            FacesContext.getCurrentInstance().addMessage("wellcomeForm:flightStart", message);
+            return "";
+        } else {
+            return "/booking-process/results?faces-redirect=true"
+                + "&from=" + this.flightFrom.getId().toString()
+                + "&to=" + this.flightTo.getId().toString()
+                + "&start=" + df.format(this.flightStart)
+                + "&oneway=" + "true"
+                + "&passengers=" + this.flightPassengers
+                    ;
+        }
     }
 
     @PostConstruct
