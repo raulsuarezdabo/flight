@@ -94,7 +94,7 @@
                                             <br/>
                                         </h:panelGroup>
                                         <h:outputLabel for="flightPassengers" value="#{msg.numPassengers}"/>
-                                        <h:selectOneMenu id="flightPassengers" value="}" styleClass="form-control" style="width: 100px;" required="true" requiredMessage="#{msg.numPassengersRequired}" immediate="true">
+                                        <h:selectOneMenu id="flightPassengers" value="#{bookingWellcomeBean.flightPassengers}" styleClass="form-control" style="width: 100px;" required="true" requiredMessage="#{msg.numPassengersRequired}" immediate="true">
                                             <f:selectItem itemLabel="#{msg.numPassengersPlaceholder}" itemValue=""/>
                                             <f:selectItems value="#{bookingWellcomeBean.passengers}" var="item" itemLabel="#{item}" itemValue="#{item}" />
                                             <f:ajax event="blur" render="flightPassengersMessage"/>

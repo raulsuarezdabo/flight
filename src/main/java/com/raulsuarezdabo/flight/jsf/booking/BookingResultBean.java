@@ -9,7 +9,6 @@ import com.mycompany.flight.utils.Utils;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.service.CityService;
-import com.raulsuarezdabo.flight.service.CountryService;
 import com.raulsuarezdabo.flight.service.FlightService;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -363,29 +362,28 @@ public class BookingResultBean {
 
         Map<String, String> parameterMap = (Map<String, String>) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         try {
-            if (parameterMap.containsKey("wellcomeForm:flightFrom_hinput") == true
-                    && parameterMap.containsKey("wellcomeForm:flightTo_hinput") == true
-                    && parameterMap.containsKey("wellcomeForm:flightStart_input") == true
-                    && parameterMap.containsKey("wellcomeForm:flightPassengers") == true
-                    ) {
-                this.flightFrom = this.cityService.getById(Integer.parseInt(parameterMap.get("wellcomeForm:flightFrom_hinput")));
-                this.flightTo = this.cityService.getById(Integer.parseInt(parameterMap.get("wellcomeForm:flightTo_hinput")));
-                this.flightStart = sdf.parse(parameterMap.get("wellcomeForm:flightStart_input"));
-                
-                this.flightPassengers = Integer.parseInt(parameterMap.get("wellcomeForm:flightPassengers"));
-                this.flightOneWay = ( (parameterMap.containsKey("wellcomeForm:flightOneWay") == true) )? true: false;
-                
-                if (this.flightOneWay == false && parameterMap.containsKey("wellcomeForm:flightFinish_input") == true) {
-                    this.flightFinish = sdf.parse(parameterMap.get("wellcomeForm:flightFinish_input"));
+            if (parameterMap.containsKey("oneway") == false) {
+                throw new ParseException("Not found one way field", 0);
+            }
+            this.flightOneWay = Boolean.valueOf(parameterMap.get("oneway"));
+            if (parameterMap.containsKey("from") == false || parameterMap.containsKey("to") == false) {
+                throw new ParseException("Not found from or to field or fields", 0);
+            }
+            this.flightFrom = this.cityService.getById(Integer.parseInt(parameterMap.get("from")));
+            this.flightTo = this.cityService.getById(Integer.parseInt(parameterMap.get("to")));
+            if (parameterMap.containsKey("passengers") == false){
+                throw new ParseException("Not found num passengers fields", 0);
+            }
+            this.flightPassengers = Integer.parseInt(parameterMap.get("passengers"));
+            if (parameterMap.containsKey("start") == false) {
+                throw new ParseException("Not found date to start", 0);
+            }
+            this.flightStart = sdf.parse(parameterMap.get("start"));
+            if (this.flightOneWay == false) {
+                if (parameterMap.containsKey("finish") == false) {
+                    throw new ParseException("Not found date to come back", 0);
                 }
-                else {
-                    this.flightFinish = null;
-                }
-                
-                this.flights = new ArrayList();
-                
-            } else {
-                this.flights = new ArrayList();
+                this.flightFinish = sdf.parse(parameterMap.get("finish"));
             }
         } catch (ParseException ex) {
             this.flights = new ArrayList();

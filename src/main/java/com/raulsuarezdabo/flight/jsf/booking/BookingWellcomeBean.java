@@ -9,6 +9,9 @@ import com.mycompany.flight.utils.Utils;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.service.CityService;
 import com.raulsuarezdabo.flight.service.CountryService;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -375,16 +378,25 @@ public class BookingWellcomeBean {
      * Method for submiting the forms
      *
      * @return direction to apply
+     * @throws java.io.UnsupportedEncodingException
      */
-    public String submitAction() {
+    public String submitAction() throws UnsupportedEncodingException {
         //Checks if origin and destiny are the same one.
         if (this.sameOriginDestiny() == true) {
             return "";
         }
+        DateFormat df = new SimpleDateFormat("M/d/yyyy");
         //Check dates coherence
         if (this.flightOneWay == false) {
             if (this.flightFinish != null && this.flightStart.before(this.flightFinish) == true) {
-                return "/booking-process/results";
+                return "/booking-process/results?faces-redirect=true"
+                    + "&from=" + this.flightFrom.getId().toString()
+                    + "&to=" + this.flightTo.getId().toString()
+                    + "&start=" + df.format(this.flightStart)
+                    + "&finish=" + df.format(this.flightFinish)
+                    + "&oneway=" + "false"
+                    + "&passengers=" + this.flightPassengers
+                        ;
             }
             String errorMessage = FacesContext.getCurrentInstance().getApplication().
                     getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("flightStartFinishError");
@@ -393,7 +405,13 @@ public class BookingWellcomeBean {
             FacesContext.getCurrentInstance().addMessage("wellcomeForm:flightStart", message);
             return "";
         } else {
-            return "/booking-process/results";
+            return "/booking-process/results?faces-redirect=true"
+                + "&from=" + this.flightFrom.getId().toString()
+                + "&to=" + this.flightTo.getId().toString()
+                + "&start=" + df.format(this.flightStart)
+                + "&oneway=" + "true"
+                + "&passengers=" + this.flightPassengers
+                    ;
         }
     }
 
