@@ -3,6 +3,8 @@ package com.raulsuarezdabo.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -121,8 +123,27 @@ public class FlightDAOImpl implements FlightDAO {
     }
 
     @Override
-    public List<FlightEntity> findByCriteria(CityEntity from, CityEntity to, Date when, int numPassengers) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<FlightEntity> findFlights(CityEntity from, CityEntity to, Date when, int numPassengers) {
+        try {
+            Query query = this.entityManager.createQuery("FROM FlightEntity f "
+                + "INNER JOIN f.airportFrom afrom "
+                + "INNER JOIN f.airportTo ato "
+                + "WhERE day(f.start) = :day AND month(f.start) = :month AND year(f.start) = :year "
+                + "AND afrom.city = :from AND ato.city = :to "
+                + "ORDER BY f.start DESC"
+            );
+            
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(when);
+            query.setParameter("day", cal.get(Calendar.DAY_OF_MONTH));
+            query.setParameter("month", cal.get(Calendar.MONTH)+1);
+            query.setParameter("year", cal.get(Calendar.YEAR));
+            query.setParameter("from", from);
+            query.setParameter("to", to);
+            return query.getResultList();
+        } catch (HibernateException e) {
+            return new ArrayList();
+        }
     }
     
 }

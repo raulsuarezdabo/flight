@@ -184,7 +184,12 @@ public class UserLoginBean implements Serializable {
     }
 
     public boolean isLogged() {
-        return this.userService.isLogged();
+        try {
+            return this.userService.isLogged();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     /**

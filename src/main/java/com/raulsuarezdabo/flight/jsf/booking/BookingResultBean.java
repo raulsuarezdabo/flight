@@ -463,7 +463,15 @@ public class BookingResultBean {
                 }
                 this.flightFinish = sdf.parse(parameterMap.get("finish"));
             }
+            this.flightsGo = this.flightService.searchFlights(this.flightFrom, this.flightTo, this.flightStart, this.flightPassengers);
+            if (this.flightOneWay == false) {
+                this.flightsBack = this.flightService.searchFlights(this.flightFrom, this.flightTo, this.flightFinish, this.flightPassengers);
+            }
         } catch (ParseException ex) {
+            this.flightsGo = new ArrayList();
+            this.flightsBack = new ArrayList();
+        }
+        catch (Exception e) {
             this.flightsGo = new ArrayList();
             this.flightsBack = new ArrayList();
         }

@@ -10,6 +10,7 @@ import com.raulsuarezdabo.flight.entity.AirplaneEntity;
 import com.raulsuarezdabo.flight.entity.AirportEntity;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.transaction.Transactional;
@@ -159,7 +160,11 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public List<FlightEntity> searchFlights(CityEntity from, CityEntity to, Date when, int numPassengers) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            return this.flightDAO.findFlights(from, to, when, numPassengers);
+        } catch(Exception e) {
+            return new ArrayList();
+        }
     }
     
 }

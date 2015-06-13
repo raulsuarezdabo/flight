@@ -1,5 +1,6 @@
 package com.raulsuarezdabo.flight.entity;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name = "Flight")
-public class FlightEntity {
+public class FlightEntity implements Serializable {
     
     public static final int STATUSNONE = 0;
     public static final int STATUSAVAILABLE = 1;
