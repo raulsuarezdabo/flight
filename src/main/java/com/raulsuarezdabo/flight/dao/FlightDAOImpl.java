@@ -123,12 +123,13 @@ public class FlightDAOImpl implements FlightDAO {
     }
 
     @Override
-    public List<FlightEntity> findFlights(CityEntity from, CityEntity to, Date when, int numPassengers) {
+    public List<FlightEntity> findFlights(CityEntity from, CityEntity to, Date when) {
         try {
-            Query query = this.entityManager.createQuery("FROM FlightEntity f "
+            Query query = this.entityManager.createQuery("SELECT f "
+                + "FROM FlightEntity f "
                 + "INNER JOIN f.airportFrom afrom "
                 + "INNER JOIN f.airportTo ato "
-                + "WhERE day(f.start) = :day AND month(f.start) = :month AND year(f.start) = :year "
+                + "WHERE day(f.start) = :day AND month(f.start) = :month AND year(f.start) = :year "
                 + "AND afrom.city = :from AND ato.city = :to "
                 + "ORDER BY f.start DESC"
             );

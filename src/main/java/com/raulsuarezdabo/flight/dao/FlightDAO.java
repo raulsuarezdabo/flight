@@ -59,5 +59,5 @@ public interface FlightDAO {
      * @param numPassengers int
      * @return  List flights available with this criteria
      */
-    public List<FlightEntity> findFlights(CityEntity from, CityEntity to, Date when, int numPassengers);
+    public List<FlightEntity> findFlights(CityEntity from, CityEntity to, Date when);
 }

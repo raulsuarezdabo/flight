@@ -99,6 +99,16 @@ public class BookingResultBean {
      * Flight list to from
      */
     private List<FlightEntity> flightsBack;
+    
+    /**
+     * Id for selected flight to go
+     */
+    private Integer selectedFlightGo;
+    
+    /**
+     * Id for selected flight to come back
+     */
+    private Integer selectedFlightBack;
 
     /**
      * Getter flightService
@@ -354,6 +364,38 @@ public class BookingResultBean {
      */
     public void setFlightTermsConditions(boolean flightTermsConditions) {
         this.flightTermsConditions = flightTermsConditions;
+    }
+
+    /**
+     * Getter selectedFlightGo
+     * @return Integer
+     */
+    public Integer getSelectedFlightGo() {
+        return selectedFlightGo;
+    }
+
+    /**
+     * Setter selectedFlightGo
+     * @param selectedFlightGo  Integer 
+     */
+    public void setSelectedFlightGo(Integer selectedFlightGo) {
+        this.selectedFlightGo = selectedFlightGo;
+    }
+
+    /**
+     * Getter selectedFlightBack
+     * @return Integer
+     */
+    public Integer getSelectedFlightBack() {
+        return selectedFlightBack;
+    }
+
+    /**
+     * Setter selectedFlightBack
+     * @param selectedFlightBack    Integer 
+     */
+    public void setSelectedFlightBack(Integer selectedFlightBack) {
+        this.selectedFlightBack = selectedFlightBack;
     }
 
     /**

@@ -110,13 +110,14 @@
                                                 <f:param value="#{bookingResultBean.flightTo.name}"/>
                                             </h:outputFormat>
                                         </h2>
-                                        <h:selectOneRadio>
-                                            <div class="panel panel-default">
-                                                <div class="panel-body">
-                                                    Basic panel example
-                                                </div>
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <h:selectOneRadio value="#{bookingResultBean.selectedFlightGo}">
+                                                    <f:selectItems var="item" value="#{bookingResultBean.flightsGo}" itemValue="#{item.id}" itemLabel="#{item.airportFrom.code}"/>
+                                                </h:selectOneRadio>
                                             </div>
-                                        </h:selectOneRadio>
+                                        </div>
+
                                     </div>
                                     <div class="col-xs-12 col-sm-12 col-md-6">
                                         <p:commandButton value="#{msg.buttonNext}" process="@form">

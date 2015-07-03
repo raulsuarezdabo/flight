@@ -12,6 +12,7 @@ import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,7 +162,15 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public List<FlightEntity> searchFlights(CityEntity from, CityEntity to, Date when, int numPassengers) {
         try {
-            return this.flightDAO.findFlights(from, to, when, numPassengers);
+            List <FlightEntity> flights = this.flightDAO.findFlights(from, to, when);
+            List <FlightEntity> results = new ArrayList<>();
+            
+            for (FlightEntity flight : flights) {
+                if (numPassengers <= flight.getSeats().size()) {
+                    results.add(flight);
+                }
+            }
+            return results;
         } catch(Exception e) {
             return new ArrayList();
         }

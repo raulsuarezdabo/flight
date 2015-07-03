@@ -9,17 +9,20 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  * Class for managing flights
  * @author raulsuarez
  */
 @Entity
+@Indexed
 @Table(name = "Flight")
 public class FlightEntity implements Serializable {
     
@@ -53,6 +56,10 @@ public class FlightEntity implements Serializable {
     @OneToOne
     @JoinColumn(name = "Airplane")
     private AirplaneEntity airplane;
+    
+    @IndexedEmbedded
+    @OneToMany(mappedBy = "flight")
+    private Set<SeatEntity> seats = new HashSet<>();
         
     /**
      * Getter id property
@@ -167,4 +174,21 @@ public class FlightEntity implements Serializable {
     public void setAirplane(AirplaneEntity airplane) {
         this.airplane = airplane;
     }
+
+    /**
+     * Getter Seat set
+     * @return Seat of seats
+     */
+    public Set<SeatEntity> getSeats() {
+        return seats;
+    }
+
+    /**
+     * Setter seats set
+     * @param seats 
+     */
+    public void setSeats(Set<SeatEntity> seats) {
+        this.seats = seats;
+    }
+    
 }

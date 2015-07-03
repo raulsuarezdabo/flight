@@ -3,6 +3,7 @@ package com.raulsuarezdabo.flight.entity;
 
 import java.sql.SQLException;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,11 +11,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.exception.ConstraintViolationException;
+import org.hibernate.search.annotations.Indexed;
 
 /**
  * Seat entity that defines a seat on a specific flight
  * @author raulsuarez
  */
+@Entity
+@Indexed
 @Table(name = "Seat")
 public class SeatEntity {
     @Id
