@@ -102,72 +102,73 @@
                         <c:if test="#{bookingResultBean.flightsGo.size() gt 0 or bookingResultBean.flightsBack.size() gt 0}">
                             <!-- One way form list result -->
                             <c:if test="#{bookingResultBean.flightOneWay eq true}">
-                                <h:form id="resultForm">
-                                    <div class="col-xs-12 col-sm-12 col-md-12">
-                                        <h2 class="glyphicon glyphicon-arrow-right">
-                                            <h:outputFormat value="&nbsp;#{msg.titleBookingResultGo}">
-                                                <f:param value="#{bookingResultBean.flightFrom.name}"/>
-                                                <f:param value="#{bookingResultBean.flightTo.name}"/>
-                                            </h:outputFormat>
-                                        </h2>
-                                        <div class="panel panel-default">
-                                            <div class="panel-body">
-                                                <h:selectOneRadio value="#{bookingResultBean.selectedFlightGo}">
-                                                    <f:selectItems var="item" value="#{bookingResultBean.flightsGo}" 
-                                                        itemValue="#{item.id}" 
-                                                        itemLabel="&nbsp;#{item.airportFrom.name}[#{item.airportFrom.code}] #{item.airportTo.name} [#{item.airportTo.code}] #{item.start.toString()} #{msg.flightAmount} #{item.time}"
-                                                    />
-                                                </h:selectOneRadio>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-6">
-                                        <p:commandButton value="#{msg.buttonNext}" process="@form">
-                                        </p:commandButton>
-                                    </div>
-                                </h:form>
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <h:form id="resultForm">
+                                        <h:panelGrid class="thumbnail">
+                                            <h2 class="glyphicon glyphicon-arrow-right">
+                                                <h:outputFormat value="&nbsp;#{msg.titleBookingResultGo}">
+                                                    <f:param value="#{bookingResultBean.flightFrom.name}"/>
+                                                    <f:param value="#{bookingResultBean.flightTo.name}"/>
+                                                </h:outputFormat>
+                                            </h2>
+                                            <h:selectOneRadio id="flightGoId" value="#{bookingResultBean.selectedFlightGo}" required="true" requiredMessage="#{msg.flightGoRequired}" immediate="true">
+                                                <f:selectItems var="item" value="#{bookingResultBean.flightsGo}" 
+                                                               itemValue="#{item.id}" 
+                                                               itemLabel="&nbsp;#{item.airportFrom.name}[#{item.airportFrom.code}] #{item.airportTo.name} [#{item.airportTo.code}] #{item.start.toString()} #{msg.flightAmount} #{item.time}">
+                                                </f:selectItems>
+                                            </h:selectOneRadio>
+                                            <h:message for="flightGoId" style="color: crimson" id="flightGoIdMessage" />
+                                        </h:panelGrid>
+                                        <h:panelGrid>
+                                            <p:commandButton value="#{msg.buttonNext}" action="#{bookingResultBean.bookAction()}" process="@form" partialSubmit="true">
+                                                <f:ajax execute="@form" render="resultForm" />
+                                            </p:commandButton>
+                                        </h:panelGrid>
+                                    </h:form>
+                                </div>
                             </c:if>
                             <!-- No one way form -->
                             <c:if test="#{bookingResultBean.flightOneWay eq false}">
                                 <h:form id="resultForm">
                                     <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <h2 class="glyphicon glyphicon-arrow-right">
-                                            <h:outputFormat value="&nbsp;#{msg.titleBookingResultGo}">
-                                                <f:param value="#{bookingResultBean.flightFrom.name}"/>
-                                                <f:param value="#{bookingResultBean.flightTo.name}"/>
-                                            </h:outputFormat>
-                                        </h2>
-                                        <div class="panel panel-default">
-                                            <div class="panel-body">
-                                                <h:selectOneRadio value="#{bookingResultBean.selectedFlightGo}">
-                                                    <f:selectItems var="item" value="#{bookingResultBean.flightsGo}" itemValue="#{item.id}" 
-                                                        itemLabel="&nbsp;#{item.airportFrom.name}[#{item.airportFrom.code}] #{item.airportTo.name} [#{item.airportTo.code}] #{item.start.toString()} #{msg.flightAmount} #{item.time}"
-                                                    />
-                                                </h:selectOneRadio>
-                                            </div>
-                                        </div>
+                                        <h:panelGrid class="thumbnail">
+                                            <h2 class="glyphicon glyphicon-arrow-right">
+                                                <h:outputFormat value="&nbsp;#{msg.titleBookingResultGo}">
+                                                    <f:param value="#{bookingResultBean.flightFrom.name}"/>
+                                                    <f:param value="#{bookingResultBean.flightTo.name}"/>
+                                                </h:outputFormat>
+                                            </h2>
+                                            <h:selectOneRadio value="#{bookingResultBean.selectedFlightGo}" required="true" requiredMessage="#{msg.flightGoRequired}" id="flightGoId">
+                                                <f:selectItems var="item" value="#{bookingResultBean.flightsGo}" itemValue="#{item.id}" 
+                                                               itemLabel="&nbsp;#{item.airportFrom.name}[#{item.airportFrom.code}] #{item.airportTo.name} [#{item.airportTo.code}] #{item.start.toString()} #{msg.flightAmount} #{item.time}">
+                                                </f:selectItems>
+                                            </h:selectOneRadio>
+                                            <h:message for="flightGoId" style="color: crimson" id="flightGoIdMessage" />
+                                        </h:panelGrid>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <h2 class="glyphicon glyphicon-arrow-left">
-                                            <h:outputFormat value="&nbsp;#{msg.titleBookingResultBack}">
-                                                <f:param value="#{bookingResultBean.flightTo.name}"/>
-                                                <f:param value="#{bookingResultBean.flightFrom.name}"/>
-                                            </h:outputFormat>
-                                        </h2>
-                                        <div class="panel panel-default">
-                                            <div class="panel-body">
-                                                <h:selectOneRadio value="#{bookingResultBean.selectedFlightBack}">
-                                                    <f:selectItems var="item" value="#{bookingResultBean.flightsBack}" itemValue="#{item.id}" 
-                                                        itemLabel="&nbsp;#{item.airportFrom.name}[#{item.airportFrom.code}] #{item.airportTo.name} [#{item.airportTo.code}] #{item.start.toString()} #{msg.flightAmount} #{item.time}"
-                                                    />
-                                                </h:selectOneRadio>
-                                            </div>
-                                        </div>
+                                        <h:panelGrid class="thumbnail">
+                                            <h2 class="glyphicon glyphicon-arrow-left">
+                                                <h:outputFormat value="&nbsp;#{msg.titleBookingResultBack}">
+                                                    <f:param value="#{bookingResultBean.flightTo.name}"/>
+                                                    <f:param value="#{bookingResultBean.flightFrom.name}"/>
+                                                </h:outputFormat>
+                                            </h2>
+                                            <h:selectOneRadio value="#{bookingResultBean.selectedFlightBack}" required="true" requiredMessage="#{msg.flightBackRequired}" id="flightBackId">
+                                                <f:selectItems var="item" value="#{bookingResultBean.flightsBack}" itemValue="#{item.id}" 
+                                                               itemLabel="&nbsp;#{item.airportFrom.name}[#{item.airportFrom.code}] #{item.airportTo.name} [#{item.airportTo.code}] #{item.start.toString()} #{msg.flightAmount} #{item.time}">
+                                                </f:selectItems>
+                                            </h:selectOneRadio>
+                                            <h:message for="flightBackId" style="color: crimson" id="flightBackIdMessage" />
+                                        </h:panelGrid>
                                     </div>
-                                    <div class="col-xs-12 col-sm-12 col-md-6">
-                                        <p:commandButton value="#{msg.buttonNext}" process="@form">
-                                        </p:commandButton>
+                                    <p:spacer height="50" />
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <h:panelGrid>
+                                            <p:commandButton value="#{msg.buttonNext}" action="#{bookingResultBean.bookAction()}" process="@form" partialSubmit="true">
+                                                <f:ajax execute="@form" render="resultForm" />
+                                            </p:commandButton>    
+                                        </h:panelGrid>
                                     </div>
                                 </h:form>
                             </c:if>

@@ -5,6 +5,7 @@
  */
 package com.raulsuarezdabo.flight.jsf.booking;
 
+import com.mycompany.flight.service.UserService;
 import com.mycompany.flight.utils.Utils;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
@@ -50,6 +51,10 @@ public class BookingResultBean {
     @ManagedProperty(value = "#{cityService}")
     private CityService cityService;
 
+    @Autowired
+    @ManagedProperty(value = "#{userService}")
+    private UserService userService;
+
     /**
      * comes from
      */
@@ -94,17 +99,17 @@ public class BookingResultBean {
      * Flight list from to
      */
     private List<FlightEntity> flightsGo;
-    
+
     /**
      * Flight list to from
      */
     private List<FlightEntity> flightsBack;
-    
+
     /**
      * Id for selected flight to go
      */
     private Integer selectedFlightGo;
-    
+
     /**
      * Id for selected flight to come back
      */
@@ -145,7 +150,7 @@ public class BookingResultBean {
     public void setFlightsGo(List<FlightEntity> flights) {
         this.flightsGo = flights;
     }
-    
+
     /**
      * Getter flights
      *
@@ -368,6 +373,7 @@ public class BookingResultBean {
 
     /**
      * Getter selectedFlightGo
+     *
      * @return Integer
      */
     public Integer getSelectedFlightGo() {
@@ -376,7 +382,8 @@ public class BookingResultBean {
 
     /**
      * Setter selectedFlightGo
-     * @param selectedFlightGo  Integer 
+     *
+     * @param selectedFlightGo Integer
      */
     public void setSelectedFlightGo(Integer selectedFlightGo) {
         this.selectedFlightGo = selectedFlightGo;
@@ -384,6 +391,7 @@ public class BookingResultBean {
 
     /**
      * Getter selectedFlightBack
+     *
      * @return Integer
      */
     public Integer getSelectedFlightBack() {
@@ -392,10 +400,29 @@ public class BookingResultBean {
 
     /**
      * Setter selectedFlightBack
-     * @param selectedFlightBack    Integer 
+     *
+     * @param selectedFlightBack Integer
      */
     public void setSelectedFlightBack(Integer selectedFlightBack) {
         this.selectedFlightBack = selectedFlightBack;
+    }
+
+    /**
+     * Getter of the userService
+     *
+     * @return
+     */
+    public UserService getUserService() {
+        return userService;
+    }
+
+    /**
+     * Setter of the userService
+     *
+     * @param userService
+     */
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     /**
@@ -403,16 +430,17 @@ public class BookingResultBean {
      */
     public BookingResultBean() {
     }
-    
+
     /**
      * Method for filtering the result for searching city where start or finish
+     *
      * @param query String
      * @return List with suggested cities
      */
     public List<CityEntity> completeCity(String query) {
         List<CityEntity> allCities = this.cityService.getAll();
         List<CityEntity> filteredCities = new ArrayList<>();
-        
+
         for (CityEntity city : allCities) {
             if (city.getName().toLowerCase().startsWith(query)) {
                 filteredCities.add(city);
@@ -420,7 +448,7 @@ public class BookingResultBean {
         }
         return filteredCities;
     }
-    
+
     /**
      * Method for checking if origin and destiniy are the same.
      *
@@ -432,7 +460,7 @@ public class BookingResultBean {
         }
         return false;
     }
-    
+
     /**
      * Method for submiting the forms
      *
@@ -449,13 +477,12 @@ public class BookingResultBean {
         if (this.flightOneWay == false) {
             if (this.flightFinish != null && this.flightStart.before(this.flightFinish) == true) {
                 return "/booking-process/results?faces-redirect=true"
-                    + "&from=" + this.flightFrom.getId().toString()
-                    + "&to=" + this.flightTo.getId().toString()
-                    + "&start=" + df.format(this.flightStart)
-                    + "&finish=" + df.format(this.flightFinish)
-                    + "&oneway=" + "false"
-                    + "&passengers=" + this.flightPassengers
-                        ;
+                        + "&from=" + this.flightFrom.getId().toString()
+                        + "&to=" + this.flightTo.getId().toString()
+                        + "&start=" + df.format(this.flightStart)
+                        + "&finish=" + df.format(this.flightFinish)
+                        + "&oneway=" + "false"
+                        + "&passengers=" + this.flightPassengers;
             }
             String errorMessage = FacesContext.getCurrentInstance().getApplication().
                     getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("flightStartFinishError");
@@ -465,12 +492,69 @@ public class BookingResultBean {
             return "";
         } else {
             return "/booking-process/results?faces-redirect=true"
-                + "&from=" + this.flightFrom.getId().toString()
-                + "&to=" + this.flightTo.getId().toString()
-                + "&start=" + df.format(this.flightStart)
-                + "&oneway=" + "true"
-                + "&passengers=" + this.flightPassengers
-                    ;
+                    + "&from=" + this.flightFrom.getId().toString()
+                    + "&to=" + this.flightTo.getId().toString()
+                    + "&start=" + df.format(this.flightStart)
+                    + "&oneway=" + "true"
+                    + "&passengers=" + this.flightPassengers;
+        }
+    }
+
+    /**
+     * Method for submiting flight selected from form
+     *
+     * @return  String  direction to apply
+     */
+    public String bookAction() {
+        if (this.flightOneWay == true) {
+            if (this.selectedFlightGo != null) {
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedFlightGo", this.selectedFlightGo);
+                return this.checklogged();
+            } else {
+                String errorMessage = FacesContext.getCurrentInstance().getApplication().
+                        getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("flightGoRequired");
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        errorMessage, errorMessage);
+                FacesContext.getCurrentInstance().addMessage("resultForm:flightGoId", message);
+                this.selectedFlightGo = null;
+            }
+        } else {
+            if (this.selectedFlightGo == null || this.selectedFlightBack == null) {
+                if (this.selectedFlightGo == null) {
+                    String errorMessage = FacesContext.getCurrentInstance().getApplication().
+                            getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("flightGoRequired");
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            errorMessage, errorMessage);
+                    FacesContext.getCurrentInstance().addMessage("resultForm:flightGoId", message);
+                    this.selectedFlightGo = null;
+                }
+                if (this.selectedFlightBack == null) {
+                    String errorMessage = FacesContext.getCurrentInstance().getApplication().
+                            getResourceBundle(FacesContext.getCurrentInstance(), "msg").getString("flightBackRequired");
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            errorMessage, errorMessage);
+                    FacesContext.getCurrentInstance().addMessage("resultForm:flightBackId", message);
+                    this.selectedFlightBack = null;
+                }
+            }
+            else {
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedFlightGo", this.selectedFlightGo);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("selectedFlightBack", this.selectedFlightBack);
+                return this.checklogged();
+            }
+        }
+        return "";
+    }
+    
+    /**
+     * Private method that check if user is logged and then apply the correct redirection
+     * @return  String redirection to apply
+     */
+    private String checklogged() {
+        if (this.userService.isLogged() == true) {
+            return "/booking-process/seats?faces-redirect=true";
+        } else {
+            return "/register/also-have-account?faces-redirect=true";
         }
     }
 
@@ -491,7 +575,7 @@ public class BookingResultBean {
             }
             this.flightFrom = this.cityService.getById(Integer.parseInt(parameterMap.get("from")));
             this.flightTo = this.cityService.getById(Integer.parseInt(parameterMap.get("to")));
-            if (parameterMap.containsKey("passengers") == false){
+            if (parameterMap.containsKey("passengers") == false) {
                 throw new ParseException("Not found num passengers fields", 0);
             }
             this.flightPassengers = Integer.parseInt(parameterMap.get("passengers"));
@@ -512,8 +596,7 @@ public class BookingResultBean {
         } catch (ParseException ex) {
             this.flightsGo = new ArrayList();
             this.flightsBack = new ArrayList();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             this.flightsGo = new ArrayList();
             this.flightsBack = new ArrayList();
         }
