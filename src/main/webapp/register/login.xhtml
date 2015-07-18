@@ -16,10 +16,16 @@
                 <meta name="description" content="Descripción de mi página index"></meta>
             </ui:define>
             <ui:define name="breadcrumbs">
-                <c:if test="${userLoginBean.token != null}">
-                    <li class="active"><h:outputText value="#{msg.newUserRegister}"/></li>
+                <c:if test="#{(empty session.getAttribute('selectedFlightGo'))}">
+                    <c:if test="${userLoginBean.token != null}">
+                        <li class="active"><h:outputText value="#{msg.newUserRegister}"/></li>
+                    </c:if>
+                    <c:if test="${userLoginBean.token == null}">
+                        <li class="active"><h:outputText value="#{msg.titleLogin}"/></li>
+                    </c:if>
                 </c:if>
-                <c:if test="${userLoginBean.token == null}">
+                <c:if test="#{not (empty session.getAttribute('selectedFlightGo'))}">
+                    <li><h:link outcome="/booking-process/results" value="#{msg.selectYourFlight}"/></li>
                     <li class="active"><h:outputText value="#{msg.titleLogin}"/></li>
                 </c:if>
             </ui:define>

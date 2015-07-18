@@ -1,12 +1,55 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
     </h:head>
-    <h:body>
-        Also have account page
+    <h:body role="document">
+        <ui:composition template="/template/basicTemplate.xhtml">
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleUserRegister}" /></ui:define>
+            <ui:define name="meta">
+                <meta name="description" content="¿Tienes cuenta?"></meta>
+            </ui:define>
+            <ui:define name="breadcrumbs">
+                <li><h:link outcome="/booking-process/results" value="#{msg.selectYourFlight}"/></li>
+                <li class="active"><h:outputText value="#{msg.youHaveAccount}"/></li>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <h1>&nbsp;#{msg.youHaveAccount}</h1>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="thumbnail">
+                                <img src="" alt="" class="img-circle"/>
+                                <div class="caption">
+                                    <h3>#{msg.donthaveAccountTitle}</h3>
+                                    <p><h:outputText escape="false" value="#{msg.donthaveAccountMessage}"/></p>
+                                    <button type="button" class="btn btn-default">
+                                        <h:link value="#{msg.linkDontHaveAccount}" outcome="/register/new-user" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="thumbnail">
+                                <img src="" alt="" class="img-circle"/>
+                                <div class="caption">
+                                    <h3>#{msg.youhaveAccountTitle}</h3>
+                                    <p><h:outputText escape="false" value="#{msg.youhaveAccountMessage}"/></p>
+                                    <button type="button" class="btn btn-default">
+                                        <h:link value="#{msg.linkHaveAccount}" outcome="login" />
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
 

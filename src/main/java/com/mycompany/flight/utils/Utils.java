@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -149,5 +150,18 @@ public class Utils {
             list.add(new Integer(i));
         }
         return list;
+    }
+    
+    /**
+     * Method for cleaning unnnecesari session items
+     * @param externalContext 
+     */
+    public static void clearUnfinishedBookingProcess(ExternalContext externalContext) {
+        if (externalContext.getSessionMap().containsKey("selectedFlightGo")) {
+            externalContext.getSessionMap().remove("selectedFlightGo");
+        }
+        if (externalContext.getSessionMap().containsKey("selectedFlightBack")) {
+            externalContext.getSessionMap().remove("selectedFlightBack");
+        }
     }
 }
