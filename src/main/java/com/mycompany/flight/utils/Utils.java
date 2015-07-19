@@ -152,16 +152,4 @@ public class Utils {
         return list;
     }
     
-    /**
-     * Method for cleaning unnnecesari session items
-     * @param externalContext 
-     */
-    public static void clearUnfinishedBookingProcess(ExternalContext externalContext) {
-        if (externalContext.getSessionMap().containsKey("selectedFlightGo")) {
-            externalContext.getSessionMap().remove("selectedFlightGo");
-        }
-        if (externalContext.getSessionMap().containsKey("selectedFlightBack")) {
-            externalContext.getSessionMap().remove("selectedFlightBack");
-        }
-    }
 }
