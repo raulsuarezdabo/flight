@@ -2,10 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
     </h:head>
     <h:body role="document">
@@ -26,91 +23,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <h1 class="glyphicon glyphicon-th-list">&nbsp;#{msg.titleBookingListResult}</h1>
-                        <c:if test="#{bookingSearchBean.flightOneWay eq false and bookingSearchBean.flightsGo.size() eq 0 or bookingSearchBean.flightsBack.size() eq 0}">
-                            <div class="alert alert-warning alert-dismissible" role="alert">
-                                <p><h:outputText escape="false" value="#{msg.titleBookingListNoResult}"/></p>
-                            </div>
-                        </c:if>
-                        <c:if test="#{bookingSearchBean.flightOneWay eq true and bookingSearchBean.flightsGo.size() eq 0}">
-                            <div class="alert alert-warning alert-dismissible" role="alert">
-                                <p><h:outputText escape="false" value="#{msg.titleBookingListNoResult}"/></p>
-                            </div>
-                        </c:if>
-                        <c:if test="#{bookingSearchBean.flightsGo.size() gt 0 or bookingSearchBean.flightsBack.size() gt 0}">
-                            <!-- One way form list result -->
-                            <c:if test="#{bookingSearchBean.flightOneWay eq true}">
-                                <div class="col-xs-12 col-sm-12 col-md-12">
-                                    <h:form id="resultForm">
-                                        <h:panelGrid class="thumbnail">
-                                            <h2 class="glyphicon glyphicon-arrow-right">
-                                                <h:outputFormat value="&nbsp;#{msg.titleBookingResultGo}">
-                                                    <f:param value="#{bookingSearchBean.bookingSearchPojo.flightFrom.name}"/>
-                                                    <f:param value="#{bookingSearchBean.bookingSearchPojo.flightTo.name}"/>
-                                                </h:outputFormat>
-                                            </h2>
-                                            <h:selectOneRadio id="flightGoId" value="#{bookingSearchBean.bookingSearchPojo.selectedFlightGo}" required="true" requiredMessage="#{msg.flightGoRequired}" immediate="true">
-                                                <f:selectItems var="item" value="#{bookingSearchBean.flightsGo}" 
-                                                               itemValue="#{item.id}" 
-                                                               itemLabel="&nbsp;#{item.airportFrom.name}[#{item.airportFrom.code}] #{item.airportTo.name} [#{item.airportTo.code}] #{item.start.toString()} #{msg.flightAmount} #{item.time}">
-                                                </f:selectItems>
-                                            </h:selectOneRadio>
-                                            <h:message for="flightGoId" style="color: crimson" id="flightGoIdMessage" />
-                                        </h:panelGrid>
-                                        <h:panelGrid>
-                                            <p:commandButton value="#{msg.buttonNext}" action="#{bookingSearchBean.bookAction()}" process="@form" partialSubmit="true">
-                                                <f:ajax execute="@form" render="resultForm" />
-                                            </p:commandButton>
-                                        </h:panelGrid>
-                                    </h:form>
-                                </div>
-                            </c:if>
-                            <!-- No one way form -->
-                            <c:if test="#{bookingSearchBean.flightOneWay eq false}">
-                                <h:form id="resultForm">
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <h:panelGrid class="thumbnail">
-                                            <h2 class="glyphicon glyphicon-arrow-right">
-                                                <h:outputFormat value="&nbsp;#{msg.titleBookingResultGo}">
-                                                    <f:param value="#{bookingSearchBean.bookingSearchPojo.flightFrom.name}"/>
-                                                    <f:param value="#{bookingSearchBean.bookingSearchPojo.flightTo.name}"/>
-                                                </h:outputFormat>
-                                            </h2>
-                                            <h:selectOneRadio value="#{bookingSearchBean.bookingSearchPojo.selectedFlightGo}" required="true" requiredMessage="#{msg.flightGoRequired}" id="flightGoId">
-                                                <f:selectItems var="item" value="#{bookingSearchBean.flightsGo}" itemValue="#{item.id}" 
-                                                               itemLabel="&nbsp;#{item.airportFrom.name}[#{item.airportFrom.code}] #{item.airportTo.name} [#{item.airportTo.code}] #{item.start.toString()} #{msg.flightAmount} #{item.time}">
-                                                </f:selectItems>
-                                            </h:selectOneRadio>
-                                            <h:message for="flightGoId" style="color: crimson" id="flightGoIdMessage" />
-                                        </h:panelGrid>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-6">
-                                        <h:panelGrid class="thumbnail">
-                                            <h2 class="glyphicon glyphicon-arrow-left">
-                                                <h:outputFormat value="&nbsp;#{msg.titleBookingResultBack}">
-                                                    <f:param value="#{bookingSearchBean.bookingSearchPojo.flightTo.name}"/>
-                                                    <f:param value="#{bookingSearchBean.bookingSearchPojo.flightFrom.name}"/>
-                                                </h:outputFormat>
-                                            </h2>
-                                            <h:selectOneRadio value="#{bookingSearchBean.bookingSearchPojo.selectedFlightBack}" required="true" requiredMessage="#{msg.flightBackRequired}" id="flightBackId">
-                                                <f:selectItems var="item" value="#{bookingSearchBean.flightsBack}" itemValue="#{item.id}" 
-                                                               itemLabel="&nbsp;#{item.airportFrom.name}[#{item.airportFrom.code}] #{item.airportTo.name} [#{item.airportTo.code}] #{item.start.toString()} #{msg.flightAmount} #{item.time}">
-                                                </f:selectItems>
-                                            </h:selectOneRadio>
-                                            <h:message for="flightBackId" style="color: crimson" id="flightBackIdMessage" />
-                                        </h:panelGrid>
-                                    </div>
-                                    <p:spacer height="50" />
-                                    <div class="col-xs-12 col-sm-12 col-md-12">
-                                        <h:panelGrid>
-                                            <p:commandButton value="#{msg.buttonNext}" action="#{bookingSearchBean.bookAction()}" process="@form" partialSubmit="true">
-                                                <f:ajax execute="@form" render="resultForm" />
-                                            </p:commandButton>    
-                                        </h:panelGrid>
-                                    </div>
-                                </h:form>
-                            </c:if>
-                        </c:if>
+                        <ui:include src="/booking-process/results-form/form.xhtml"></ui:include>
                     </div>
                 </div>
             </ui:define>
