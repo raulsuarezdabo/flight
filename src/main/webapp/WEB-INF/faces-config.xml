@@ -14,6 +14,11 @@
             <base-name>com.mycompany.flight.messages</base-name>
             <var>msg</var>
         </resource-bundle>
+        <!-- LISTENERS -->
+        <system-event-listener>
+            <system-event-listener-class>com.raulsuarezdabo.flight.jsf.listener.CustomSystemEventListener</system-event-listener-class>
+            <system-event-class>javax.faces.event.PreRenderViewEvent</system-event-class>
+        </system-event-listener>
     </application>
     <!-- VALIDATORS -->
     <validator>

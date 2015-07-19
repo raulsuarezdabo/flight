@@ -600,7 +600,5 @@ public class BookingResultBean {
             this.flightsGo = new ArrayList();
             this.flightsBack = new ArrayList();
         }
-        //Hook for invalidating unused booking process
-        Utils.clearUnfinishedBookingProcess(FacesContext.getCurrentInstance().getExternalContext());
     }
 }

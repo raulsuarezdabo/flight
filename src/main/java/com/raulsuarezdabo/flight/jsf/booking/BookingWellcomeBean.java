@@ -420,9 +420,6 @@ public class BookingWellcomeBean {
         SimpleDateFormat sdf = new SimpleDateFormat("M/d/yyyy");
         this.now = sdf.format(new Date());
         this.passengers = Utils.getIntegerList(BookingWellcomeBean.MIN_PASSENGERS, BookingWellcomeBean.MAX_PASSENGERS, 1);
-        
-        //Hook for invalidating unused booking process
-        Utils.clearUnfinishedBookingProcess(FacesContext.getCurrentInstance().getExternalContext());
     }
 
 }
