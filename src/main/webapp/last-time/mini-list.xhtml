@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body>
+        <h3 class="glyphicon glyphicon-bookmark">&nbsp;#{msg.lastOffers}</h3>
+        <table class="table table-hover">
+            <thead>
+                <th>Origin</th>
+                <th>Destiny</th>
+                <th>Date</th>
+                <th>Price</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Origin example</th>
+                    <th>Destiny example</th>
+                    <th>0000-00-00 00:00</th>
+                    <th>€€€</th>
+                    <th><a>more</a></th>
+                </tr>
+                <tr>
+                    <th>Origin example</th>
+                    <th>Destiny example</th>
+                    <th>0000-00-00 00:00</th>
+                    <th>€€€</th>
+                    <th><a>more</a></th>
+                </tr>
+                <tr>
+                    <th>Origin example</th>
+                    <th>Destiny example</th>
+                    <th>0000-00-00 00:00</th>
+                    <th>€€€</th>
+                    <th><a>more</a></th>
+                </tr>
+            </tbody>
+        </table>
+        <h:link value="#{msg.moreOffers}" outcome="more-offers" class="text-right"/>
+    </h:body>
+</html>
+
