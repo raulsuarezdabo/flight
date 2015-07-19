@@ -22,71 +22,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
-                            <h:panelGrid class="thumbnail">
-                                <h3 class="glyphicon glyphicon-send">&nbsp;#{msg.titleBookingCriteriaResult}</h3>
-                                <h:form id="wellcomeForm" class="form-inline">
-                                    <div class="form-group">
-                                        <h:outputLabel for="flightFrom" value="#{msg.from}"/>
-                                        <p:autoComplete id="flightFrom" value="#{bookingSearchBean.bookingSearchPojo.flightFrom}" completeMethod="#{bookingSearchBean.completeCity}"
-                                                        var="city" itemLabel="#{city.name}" itemValue="#{city}" converter="#{cityConverter}"
-                                                        label="flightFrom" required="true" placeholder="#{msg.fromPlaceholder}" requiredMessage="#{msg.fromRequired}"
-                                                        scrollHeight="200">
-                                            <p:ajax event="itemSelect" listener="#{bookingSearchBean.checkFlightFrom()}" update="flightFromMessage"/>
-                                        </p:autoComplete>
-                                        <h:message for="flightFrom" style="color: crimson" id="flightFromMessage"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <h:outputLabel for="flightTo" value="#{msg.to}"/>
-                                        <p:autoComplete id="flightTo" value="#{bookingSearchBean.bookingSearchPojo.flightTo}" completeMethod="#{bookingSearchBean.completeCity}"
-                                                        var="city" itemLabel="#{city.name}" itemValue="#{city}" converter="#{cityConverter}"
-                                                        label="flightFrom" required="true" placeholder="#{msg.toPlaceholder}" requiredMessage="#{msg.toRequired}"
-                                                        scrollHeight="200">
-                                            <p:ajax event="itemSelect" listener="#{bookingSearchBean.checkFlightTo()}" update="flightToMessage"/>
-                                        </p:autoComplete>
-                                        <h:message for="flightTo" style="color: crimson" id="flightToMessage"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <h:outputLabel for="flightStart" value="#{msg.flightStart}" />
-                                        <p:calendar value="#{bookingSearchBean.bookingSearchPojo.flightStart}" id="flightStart" pattern="MM/dd/yyyy" pages="2" mindate="#{bookingSearchBean.now}" required="true" requiredMessage="#{msg.flightStartRequired}">
-                                            <p:ajax event="dateSelect" listener="#{bookingSearchBean.checkFlightStart()}" update="flightStartMessage"/>
-                                        </p:calendar>
-                                        <h:message for="flightStart" id="flightStartMessage" style="color: crimson"/>
-                                    </div>
-                                    <h:panelGroup id="flightFinishBlock" class="form-group">
-                                        <h:outputLabel for="flightFinish" value="#{msg.flightFinish}" rendered="#{bookingSearchBean.isFlightOneWay() eq false}" />
-                                        <p:calendar value="#{bookingSearchBean.bookingSearchPojo.flightFinish}" id="flightFinish" pattern="MM/dd/yyyy" pages="2" mindate="#{bookingSearchBean.now}" required="#{bookingSearchBean.isFlightOneWay() eq false}" requiredMessage="#{msg.flightFinishRequired}" rendered="#{bookingSearchBean.isFlightOneWay() eq false}">
-                                            <p:ajax event="dateSelect" listener="#{bookingSearchBean.checkFlightFinish()}" update="flightFinishMessage"/>
-                                        </p:calendar>
-                                        <h:message for="flightFinish" id="flightFinishMessage" style="color: crimson"/>
-                                    </h:panelGroup>
-                                    <div class="form-group">
-                                        <h:outputLabel for="flightPassengers" value="#{msg.numPassengers}"/>
-                                        <h:selectOneMenu id="flightPassengers" value="#{bookingSearchBean.bookingSearchPojo.flightPassengers}" styleClass="form-control" style="width: 100px;" required="true" requiredMessage="#{msg.numPassengersRequired}" immediate="true">
-                                            <f:selectItem itemLabel="#{msg.numPassengersPlaceholder}" itemValue=""/>
-                                            <f:selectItems value="#{bookingSearchBean.passengers}" var="item" itemLabel="#{item}" itemValue="#{item}" />
-                                            <f:ajax event="blur" render="flightPassengersMessage"/>
-                                        </h:selectOneMenu>
-                                        <h:message for="flightPassengers" style="color: crimson" id="flightPassengersMessage"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <h:outputLabel for="flightOneWay" value="#{msg.oneway}&nbsp;"/>
-                                        <h:selectBooleanCheckbox value="#{bookingSearchBean.bookingSearchPojo.flightOneWay}" id="flightOneWay" immediate="true">
-                                            <f:ajax event="change" execute="@this" render="flightFinishBlock" />
-                                        </h:selectBooleanCheckbox>
-                                        <h:message for="flightOneWay" style="color: crimson" id="flightOneWayMessage"/>
-                                    </div>
-                                    <br/>
-                                    <p:commandButton value="#{msg.buttonSearchFlight}" action="#{bookingSearchBean.submitAction()}" process="@form" partialSubmit="true">
-                                        <f:ajax execute="@form" render="wellcomeForm" />
-                                    </p:commandButton>
-                                    <h:outputText escape="false" value="#{msg.acceptTermsConditions}" />
-                                    <h:selectBooleanCheckbox value="#{bookingSearchBean.bookingSearchPojo.flightTermsConditions}" id="flightTermsConditions" requiredMessage="#{msg.acceptTermsConditionsRequired}" required="true" immediate="true">
-                                        <f:validator validatorId="requiredCheckboxValidator" />
-                                        <f:ajax event="change" render="flightTermsConditionsMessage" />
-                                    </h:selectBooleanCheckbox>
-                                    <h:message for="flightTermsConditions" style="color: crimson" id="flightTermsConditionsMessage"/>
-                                </h:form>
-                            </h:panelGrid>
+                            <ui:include src="/booking-process/booking-search-form/form-line.xhtml"/>
                         </div>
                     </div>
                     <div class="row">
@@ -153,7 +89,7 @@
                                             <h2 class="glyphicon glyphicon-arrow-left">
                                                 <h:outputFormat value="&nbsp;#{msg.titleBookingResultBack}">
                                                     <f:param value="#{bookingSearchBean.bookingSearchPojo.flightTo.name}"/>
-                                                    <f:param value="#{bookingSearchBean.flightFrom.name}"/>
+                                                    <f:param value="#{bookingSearchBean.bookingSearchPojo.flightFrom.name}"/>
                                                 </h:outputFormat>
                                             </h2>
                                             <h:selectOneRadio value="#{bookingSearchBean.bookingSearchPojo.selectedFlightBack}" required="true" requiredMessage="#{msg.flightBackRequired}" id="flightBackId">
