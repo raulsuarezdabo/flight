@@ -51,3 +51,5 @@ target/flight-1.0-SNAPSHOT/template/basicTemplate.xhtml
 target/flight-1.0-SNAPSHOT/template/basicTemplate.xhtml
 
 target/flight-1.0-SNAPSHOT/template/header/headerBasic.xhtml
+
+target/flight-1.0-SNAPSHOT/index.xhtml

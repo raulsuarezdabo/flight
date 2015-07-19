@@ -19,7 +19,7 @@
                         <c:if test="#{(userLoginBean.isLogged() eq false) and 
                                         not (view.viewId eq '/register/also-have-account.xhtml') and
                                         not (view.viewId eq '/booking-process/results.xhtml') and
-                                        (empty session.getAttribute('selectedFlightGo')) 
+                                        (empty session.getAttribute('bookingsearch'))
                                     }">
                             <li class="#{view.viewId eq '/register/new-user.xhtml' ? 'active' : ''}">
                                 <h:link value="#{msg.registerUser}" outcome="/register/new-user" />

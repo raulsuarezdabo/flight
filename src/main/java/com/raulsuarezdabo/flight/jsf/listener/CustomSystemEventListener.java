@@ -1,5 +1,6 @@
 package com.raulsuarezdabo.flight.jsf.listener;
 
+import com.mycompany.flight.utils.SessionConstantsName;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;
@@ -23,11 +24,8 @@ public class CustomSystemEventListener implements SystemEventListener {
         if (event instanceof PreRenderViewEvent) {
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             if ("/index.xhtml".equals(FacesContext.getCurrentInstance().getViewRoot().getViewId())) {
-                if (externalContext.getSessionMap().containsKey("selectedFlightGo")) {
-                    externalContext.getSessionMap().remove("selectedFlightGo");
-                }
-                if (externalContext.getSessionMap().containsKey("selectedFlightBack")) {
-                    externalContext.getSessionMap().remove("selectedFlightBack");
+                if (externalContext.getSessionMap().containsKey(SessionConstantsName.BOOKINGSEARCH)) {
+                    externalContext.getSessionMap().remove(SessionConstantsName.BOOKINGSEARCH);
                 }
             }
         }
