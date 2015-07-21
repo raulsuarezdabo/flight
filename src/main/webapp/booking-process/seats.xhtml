@@ -1,12 +1,71 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
     </h:head>
-    <h:body>
-        seats
+    <h:body role="document">
+        <ui:composition template="/template/basicTemplate.xhtml">
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleAirportAdd}" /></ui:define>
+            <ui:define name="meta">
+                <meta name="description" content="Edita tus datos"></meta>
+            </ui:define>
+            <ui:define name="breadcrumbs">
+                <li>
+                    <h:link outcome="/booking-process/results" value="#{msg.selectYourFlight}">
+                        <f:param name="from" value=""/>
+                        <f:param name="to" value=""/>
+                        <f:param name="start" value=""/>
+                        <f:param name="finish" value=""/>
+                        <f:param name="oneway" value=""/>
+                        <f:param name="passengers" value=""/>
+                    </h:link>
+                </li>
+                <li class="active"><h:outputText value="#{msg.selectYourSeats}"/></li>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <h1>#{msg.titleSelectYourSeats}</h1>
+                        <h:form id="seatsForm">
+                            <div class="col-xs-12 col-sm-6 col-md-4">
+                                <div class="thumbnail">
+                                    <h:panelGrid columns="1">
+                                        <h:outputLabel for="seatName1" value="#{msg.surname} /#{msg.name}"/>
+                                        <p:inputText  value="" id="seatName1" label="seatName1" required="true" placeholder="#{msg.namePlaceholder}" requiredMessage="#{msg.nameRequired}" validatorMessage="#{msg.nameInvalid}" size="30" immediate="true" >
+                                            <f:validateLength minimum="5" maximum="35"/>
+                                            <f:ajax event="blur" render="seatNameMessage1"/>
+                                        </p:inputText>
+                                        <h:message for="seatName1" style="color: crimson" id="seatNameMessage1"/>
+                                        <h:outputLabel for="seatClass1" value="#{msg.seatClass}"/>
+                                        <h:selectOneMenu id="seatClass1" value="" styleClass="form-control" style="width: 200px;" required="true" requiredMessage="#{msg.seatClassRequired}" immediate="true">
+                                            <f:selectItem itemLabel="" itemValue=""/>
+                                            <f:selectItem itemLabel="" itemValue=""/>
+                                            <f:selectItem itemLabel="#{msg.seatClassPlaceholder}" itemValue=""/>
+                                            <f:ajax event="blur" render="seatClassMessage1"/>
+                                        </h:selectOneMenu>
+                                        <h:message for="seatClass1" style="color: crimson" id="seatClassMessage1"/>
+                                        <h:inputHidden id="seatFlight" value=""/>
+                                    </h:panelGrid>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <h:panelGrid columns="1">
+                                    <p:commandButton value="#{msg.buttonNext}" process="@form" partialSubmit="true">
+                                        <f:ajax execute="@form" render="seatsForm" />
+                                    </p:commandButton>
+                                </h:panelGrid>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
+
 
