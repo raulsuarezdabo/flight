@@ -37,8 +37,9 @@
                                             <h:message for="seatName" style="color: crimson" id="seatNameMessage"/>
                                             <h:outputLabel for="seatClass" value="#{msg.seatClass}"/>
                                             <h:selectOneMenu id="seatClass" value="" styleClass="form-control" style="width: 200px;" required="true" requiredMessage="#{msg.seatClassRequired}" immediate="true">
-                                                <f:selectItem itemLabel="" itemValue=""/>
-                                                <f:selectItem itemLabel="" itemValue=""/>
+                                                <f:selectItem itemLabel="TOURIST" itemValue="1"/>
+                                                <f:selectItem itemLabel="BUSINESS" itemValue="2"/>
+                                                <f:selectItem itemLabel="OFFER" itemValue="3"/>
                                                 <f:selectItem itemLabel="#{msg.seatClassPlaceholder}" itemValue=""/>
                                                 <f:ajax event="blur" render="seatClassMessage"/>
                                             </h:selectOneMenu>

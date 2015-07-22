@@ -2,13 +2,16 @@ package com.raulsuarezdabo.flight.jsf.booking;
 
 import com.mycompany.flight.service.UserService;
 import com.mycompany.flight.utils.SessionConstantsName;
+import com.raulsuarezdabo.flight.entity.ClassEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
+import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.pojo.BookingSearchPojo;
 import com.raulsuarezdabo.flight.service.FlightService;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -123,7 +126,11 @@ public class SeatBookingBean {
     public void setSeats(List<SeatEntity> seats) {
         this.seats = seats;
     }
-
+   
+    /**
+     * Method that creates an url to arrive at search page
+     * @return  String  url to search page
+     */
     public String flightUrlSelectFlight() {
         DateFormat df = new SimpleDateFormat("M/d/yyyy");
         if (this.bookingSearchPojo.getFlightOneWay() == true) {
@@ -154,6 +161,16 @@ public class SeatBookingBean {
         for (int i=0; i<this.bookingSearchPojo.getFlightPassengers();i++) {
             SeatEntity seat = new SeatEntity();
             this.seats.add(seat);
+        }
+        // Hook that checks if you have no seats to select
+        if (this.seats.isEmpty() == true) {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.BOOKINGSEARCH);
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER, 
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("errorSeatsSystemMessage")
+                );
+            FacesContext.getCurrentInstance().getApplication().getNavigationHandler().
+                handleNavigation(FacesContext.getCurrentInstance(), null, "/index.xhtml?faces-redirect=true");
         }
     }
     
