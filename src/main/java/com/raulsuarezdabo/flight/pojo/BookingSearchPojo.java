@@ -3,8 +3,6 @@ package com.raulsuarezdabo.flight.pojo;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import java.io.Serializable;
 import java.util.Date;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 
 /**
  * Pojo class to store parameters from search booking form

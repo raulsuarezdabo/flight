@@ -21,7 +21,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication a) throws IOException, ServletException {
         if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey(SessionConstantsName.BOOKINGSEARCH) == true) {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/booking-process/seats?faces-redirect=true");
+            FacesContext.getCurrentInstance().getExternalContext().redirect(request.getContextPath() + "/booking-process/seats.xhtml?faces-redirect=true");
         } else {
             UserEntity user = (UserEntity) a.getPrincipal();
             response.sendRedirect(request.getContextPath() + "/index.xhtml");

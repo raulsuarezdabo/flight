@@ -403,9 +403,8 @@ public class BookingSearchBean {
     public String bookAction() {
         if (this.bookingSearchPojo.getFlightOneWay() == true) {
             if (this.bookingSearchPojo.getSelectedFlightGo() != null) {
-                byte[] data = SerializationUtils.serialize(this.bookingSearchPojo);
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(
-                    SessionConstantsName.BOOKINGSEARCH, data);
+                    SessionConstantsName.BOOKINGSEARCH, this.bookingSearchPojo);
                 return this.checklogged();
             } else {
                 String errorMessage = FacesContext.getCurrentInstance().getApplication().
@@ -432,9 +431,8 @@ public class BookingSearchBean {
                 }
             }
             else {
-                byte[] data = SerializationUtils.serialize(this.bookingSearchPojo);
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(
-                    SessionConstantsName.BOOKINGSEARCH, data);
+                    SessionConstantsName.BOOKINGSEARCH, this.bookingSearchPojo);
                 return this.checklogged();
             }
         }
