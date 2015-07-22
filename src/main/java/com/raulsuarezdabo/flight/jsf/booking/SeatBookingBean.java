@@ -2,16 +2,14 @@ package com.raulsuarezdabo.flight.jsf.booking;
 
 import com.mycompany.flight.service.UserService;
 import com.mycompany.flight.utils.SessionConstantsName;
-import com.raulsuarezdabo.flight.entity.ClassEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
 import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.pojo.BookingSearchPojo;
 import com.raulsuarezdabo.flight.service.FlightService;
+import com.raulsuarezdabo.flight.service.SeatService;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -38,6 +36,10 @@ public class SeatBookingBean {
     @Autowired
     @ManagedProperty(value = "#{userService}")
     private UserService userService;
+    
+    @Autowired
+    @ManagedProperty(value = "#{seatService}")
+    private SeatService seatService;
 
     /**
      * Pojo object to store all data from search booking flight
@@ -89,6 +91,22 @@ public class SeatBookingBean {
      */
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    /**
+     * Getter seatService
+     * @return  SeatService
+     */
+    public SeatService getSeatService() {
+        return seatService;
+    }
+
+    /**
+     * Setter seatService
+     * @param seatService 
+     */
+    public void setSeatService(SeatService seatService) {
+        this.seatService = seatService;
     }
 
     /**
