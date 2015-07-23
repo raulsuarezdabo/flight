@@ -3,8 +3,10 @@ package com.raulsuarezdabo.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
+import com.raulsuarezdabo.flight.entity.SeatEntity;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Interface for defining the methods to access to flight information
@@ -56,8 +58,24 @@ public interface FlightDAO {
      * @param from  CityEntity
      * @param to    CityEntity
      * @param when  Date
-     * @param numPassengers int
      * @return  List flights available with this criteria
      */
     public List<FlightEntity> findFlights(CityEntity from, CityEntity to, Date when);
+    
+    /**
+     * Method that sets a couple of seats
+     * @param flight    FlightEntity
+     * @param seats SeatEntity
+     * @return  boolean
+     */
+    public boolean setSeatsToFlight(FlightEntity flight, Set<SeatEntity> seats);
+    
+    /**
+     * Method that sets a couple of seats
+     * @param flight    FlightEntity
+     * @param seat  SeatEntity
+     * @return  boolean
+     */
+    public boolean setSeatToFlight(FlightEntity flight, SeatEntity seat);
+    
 }

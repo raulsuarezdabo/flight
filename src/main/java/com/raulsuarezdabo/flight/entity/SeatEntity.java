@@ -29,6 +29,9 @@ public class SeatEntity {
     @Column(name = "Type", nullable = false)
     private int type;
     
+    @Column(name = "Fullname")
+    private String fullName;
+    
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FlightID")
     private FlightEntity flight;
@@ -68,6 +71,22 @@ public class SeatEntity {
             throw new ConstraintViolationException("Violation exception on type", new SQLException(), "Constraint violation seat type");
         }
         this.type = type;
+    }
+
+    /**
+     * Getter fullName
+     * @return  String
+     */
+    public String getFullName() {
+        return fullName;
+    }
+
+    /**
+     * Setter fullName
+     * @param fullName  String 
+     */
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     /**

@@ -26,17 +26,17 @@
                         <h1>#{msg.titleSelectYourSeats}</h1>
                         <h:form id="seatsForm">
                             <div class="col-xs-12 col-sm-6 col-md-4">
-                                <ui:repeat value="#{seatBookingBean.seats}" var="item">
+                                <ui:repeat value="#{seatBookingBean.seats.toArray()}" var="item">
                                     <div class="thumbnail">
                                         <h:panelGrid columns="1">
                                             <h:outputLabel for="seatName" value="#{msg.surname} /#{msg.name}"/>
-                                            <p:inputText  value="" id="seatName" label="seatName" required="true" placeholder="#{msg.namePlaceholder}" requiredMessage="#{msg.nameRequired}" validatorMessage="#{msg.nameInvalid}" size="30" immediate="true" >
+                                            <p:inputText  value="#{item.fullName}" id="seatName" label="seatName" required="true" placeholder="#{msg.namePlaceholder}" requiredMessage="#{msg.nameRequired}" validatorMessage="#{msg.nameInvalid}" size="30" immediate="true" >
                                                 <f:validateLength minimum="5" maximum="35"/>
                                                 <f:ajax event="blur" render="seatNameMessage"/>
                                             </p:inputText>
                                             <h:message for="seatName" style="color: crimson" id="seatNameMessage"/>
                                             <h:outputLabel for="seatClass" value="#{msg.seatClass}"/>
-                                            <h:selectOneMenu id="seatClass" value="" styleClass="form-control" style="width: 200px;" required="true" requiredMessage="#{msg.seatClassRequired}" immediate="true">
+                                            <h:selectOneMenu id="seatClass" value="#{item.type}" styleClass="form-control" style="width: 200px;" required="true" requiredMessage="#{msg.seatClassRequired}" immediate="true">
                                                 <f:selectItem itemLabel="TOURIST" itemValue="1"/>
                                                 <f:selectItem itemLabel="BUSINESS" itemValue="2"/>
                                                 <f:selectItem itemLabel="OFFER" itemValue="3"/>

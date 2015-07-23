@@ -2,6 +2,7 @@ package com.raulsuarezdabo.flight.jsf.booking;
 
 import com.mycompany.flight.service.UserService;
 import com.mycompany.flight.utils.SessionConstantsName;
+import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
 import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.pojo.BookingSearchPojo;
@@ -9,8 +10,8 @@ import com.raulsuarezdabo.flight.service.FlightService;
 import com.raulsuarezdabo.flight.service.SeatService;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -36,7 +37,7 @@ public class SeatBookingBean {
     @Autowired
     @ManagedProperty(value = "#{userService}")
     private UserService userService;
-    
+
     @Autowired
     @ManagedProperty(value = "#{seatService}")
     private SeatService seatService;
@@ -49,7 +50,7 @@ public class SeatBookingBean {
     /**
      * Entity seat for storing information on db
      */
-    private List<SeatEntity> seats;
+    private Set<SeatEntity> seats;
 
     /**
      * Creates a new instance of SeatBookingBean
@@ -95,7 +96,8 @@ public class SeatBookingBean {
 
     /**
      * Getter seatService
-     * @return  SeatService
+     *
+     * @return SeatService
      */
     public SeatService getSeatService() {
         return seatService;
@@ -103,7 +105,8 @@ public class SeatBookingBean {
 
     /**
      * Setter seatService
-     * @param seatService 
+     *
+     * @param seatService
      */
     public void setSeatService(SeatService seatService) {
         this.seatService = seatService;
@@ -132,7 +135,7 @@ public class SeatBookingBean {
      *
      * @return List
      */
-    public List<SeatEntity> getSeats() {
+    public Set<SeatEntity> getSeats() {
         return seats;
     }
 
@@ -141,13 +144,14 @@ public class SeatBookingBean {
      *
      * @param seats
      */
-    public void setSeats(List<SeatEntity> seats) {
+    public void setSeats(Set<SeatEntity> seats) {
         this.seats = seats;
     }
-   
+
     /**
      * Method that creates an url to arrive at search page
-     * @return  String  url to search page
+     *
+     * @return String url to search page
      */
     public String flightUrlSelectFlight() {
         DateFormat df = new SimpleDateFormat("M/d/yyyy");
@@ -172,31 +176,60 @@ public class SeatBookingBean {
     @PostConstruct
     public void init() {
         this.bookingSearchPojo = new BookingSearchPojo();
-        this.seats = new ArrayList();
+        this.seats = new HashSet<>();
 
         this.bookingSearchPojo = (BookingSearchPojo) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionConstantsName.BOOKINGSEARCH);
-        
-        for (int i=0; i<this.bookingSearchPojo.getFlightPassengers();i++) {
+
+        for (int i = 0; i < this.bookingSearchPojo.getFlightPassengers(); i++) {
             SeatEntity seat = new SeatEntity();
             this.seats.add(seat);
         }
         // Hook that checks if you have no seats to select
         if (this.seats.isEmpty() == true) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.BOOKINGSEARCH);
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER, 
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER,
                     FacesContext.getCurrentInstance().getApplication().getResourceBundle(
-                        FacesContext.getCurrentInstance(), "msg").getString("errorSeatsSystemMessage")
-                );
+                            FacesContext.getCurrentInstance(), "msg").getString("errorSeatsSystemMessage")
+            );
             FacesContext.getCurrentInstance().getApplication().getNavigationHandler().
-                handleNavigation(FacesContext.getCurrentInstance(), null, "/index.xhtml?faces-redirect=true");
+                    handleNavigation(FacesContext.getCurrentInstance(), null, "/index.xhtml?faces-redirect=true");
         }
     }
-    
+
     /**
      * Action button form
-     * @return  String with the url to apply
+     *
+     * @return String with the url to apply
      */
     public String submitAction() {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.BOOKINGSEARCH);
+        FlightEntity flighGo = this.flightService.getById(this.bookingSearchPojo.getSelectedFlightGo());
+
+        if (flighGo == null) {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER,
+                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                            FacesContext.getCurrentInstance(), "msg").getString("errorSeatsSystemMessage")
+            );
+
+            FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+                    .handleNavigation(FacesContext.getCurrentInstance(), null, "/index.xhtml?faces-redirect=true");
+        }
+
+        if (this.bookingSearchPojo.getFlightOneWay() == false) {
+            FlightEntity flightBack = this.flightService.getById(this.bookingSearchPojo.getSelectedFlightBack());
+            if (flightBack == null) {
+                FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER,
+                        FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                                FacesContext.getCurrentInstance(), "msg").getString("errorSeatsSystemMessage")
+                );
+
+                FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
+                        .handleNavigation(FacesContext.getCurrentInstance(), null, "/index.xhtml?faces-redirect=true");
+            }
+        }
+        
+        
+
         return "";
     }
 

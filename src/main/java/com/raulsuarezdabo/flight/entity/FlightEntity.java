@@ -191,4 +191,26 @@ public class FlightEntity implements Serializable {
         this.seats = seats;
     }
     
+    /**
+     * Add a seat to an specific flight
+     * @param seat 
+     */
+    public void addSeat(SeatEntity seat) {
+        Set <SeatEntity> currentSeats = this.seats;
+        if (currentSeats.contains(seat) == false) {
+            this.seats.add(seat);
+        }
+    }
+    
+    /**
+     * Remove a seat from a list of seats
+     * @param seat  SeatEntity
+     */
+    public void removeSeat(SeatEntity seat) {
+        Set <SeatEntity> currentSeats = this.seats;
+        if (currentSeats.contains(seat) == true) {
+            this.seats.remove(seat);
+        }
+    }
+    
 }

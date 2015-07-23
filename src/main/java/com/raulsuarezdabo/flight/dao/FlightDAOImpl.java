@@ -1,12 +1,13 @@
-
 package com.raulsuarezdabo.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
+import com.raulsuarezdabo.flight.entity.SeatEntity;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -15,11 +16,12 @@ import org.springframework.stereotype.Repository;
 
 /**
  * DAO that implements all abstract methods from the interface.
+ *
  * @author raulsuarez
  */
 @Repository
 public class FlightDAOImpl implements FlightDAO {
-    
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -43,6 +45,7 @@ public class FlightDAOImpl implements FlightDAO {
 
     /**
      * Get all flights
+     *
      * @return List
      */
     @Override
@@ -52,23 +55,25 @@ public class FlightDAOImpl implements FlightDAO {
 
     /**
      * Find flight by id
-     * @param id    int
-     * @return  AirportEntity   airport
+     *
+     * @param id int
+     * @return AirportEntity airport
      */
     @Override
     public FlightEntity findById(int id) {
         try {
             return (FlightEntity) this.entityManager.find(FlightEntity.class, id);
-        } catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
     }
-    
+
     /**
      * Find airport by code
-     * @param code  String
-     * @return  AirportEntity   airport
+     *
+     * @param code String
+     * @return AirportEntity airport
      */
     @Override
     public FlightEntity findByCode(String code) {
@@ -76,14 +81,15 @@ public class FlightDAOImpl implements FlightDAO {
             Query query = this.entityManager.createQuery("FROM FlightEntity  WhERE code = :code ");
             query.setParameter("code", code);
             return (FlightEntity) query.getSingleResult();
-        } catch(HibernateException e) {
+        } catch (HibernateException e) {
             return null;
         }
     }
 
     /**
      * Add new flight
-     * @param flight    FlightEntity
+     *
+     * @param flight FlightEntity
      */
     @Override
     public void addFlight(FlightEntity flight) {
@@ -92,8 +98,9 @@ public class FlightDAOImpl implements FlightDAO {
 
     /**
      * Update an airport
-     * @param flight    FlightEntity
-     * @return AirportEntity    returns the entity or null if error
+     *
+     * @param flight FlightEntity
+     * @return AirportEntity returns the entity or null if error
      */
     @Override
     public boolean updateFlight(FlightEntity flight) {
@@ -108,8 +115,9 @@ public class FlightDAOImpl implements FlightDAO {
 
     /**
      * Delete flight
-     * @param flight    FlightEntity
-     * @return boolean  with success or not
+     *
+     * @param flight FlightEntity
+     * @return boolean with success or not
      */
     @Override
     public boolean deleteFlight(FlightEntity flight) {
@@ -122,22 +130,30 @@ public class FlightDAOImpl implements FlightDAO {
         }
     }
 
+    /**
+     * Find flights using cities criteria and Date.
+     *
+     * @param from CityEntity
+     * @param to CityEntity
+     * @param when Date
+     * @return List Of FlightEntity
+     */
     @Override
     public List<FlightEntity> findFlights(CityEntity from, CityEntity to, Date when) {
         try {
             Query query = this.entityManager.createQuery("SELECT f "
-                + "FROM FlightEntity f "
-                + "INNER JOIN f.airportFrom afrom "
-                + "INNER JOIN f.airportTo ato "
-                + "WHERE day(f.start) = :day AND month(f.start) = :month AND year(f.start) = :year "
-                + "AND afrom.city = :from AND ato.city = :to "
-                + "ORDER BY f.start DESC"
+                    + "FROM FlightEntity f "
+                    + "INNER JOIN f.airportFrom afrom "
+                    + "INNER JOIN f.airportTo ato "
+                    + "WHERE day(f.start) = :day AND month(f.start) = :month AND year(f.start) = :year "
+                    + "AND afrom.city = :from AND ato.city = :to "
+                    + "ORDER BY f.start DESC"
             );
-            
+
             Calendar cal = Calendar.getInstance();
             cal.setTime(when);
             query.setParameter("day", cal.get(Calendar.DAY_OF_MONTH));
-            query.setParameter("month", cal.get(Calendar.MONTH)+1);
+            query.setParameter("month", cal.get(Calendar.MONTH) + 1);
             query.setParameter("year", cal.get(Calendar.YEAR));
             query.setParameter("from", from);
             query.setParameter("to", to);
@@ -146,5 +162,38 @@ public class FlightDAOImpl implements FlightDAO {
             return new ArrayList();
         }
     }
-    
+
+    /**
+     * Set seats to an specific Flight
+     *
+     * @param flight FlightEntity
+     * @param seats SeatEntity
+     * @return boolean
+     */
+    @Override
+    public boolean setSeatsToFlight(FlightEntity flight, Set<SeatEntity> seats) {
+        try {
+            for (SeatEntity thisSeat : seats) {
+                flight.addSeat(thisSeat);
+            }
+            this.entityManager.persist(flight);
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Set seat to an specific flight
+     *
+     * @param flight FlightEntity
+     * @param seat SeatEntity
+     * @return boolean
+     */
+    @Override
+    public boolean setSeatToFlight(FlightEntity flight, SeatEntity seat) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

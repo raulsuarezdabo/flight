@@ -159,6 +159,14 @@ public class FlightServiceImpl implements FlightService {
         return this.flightDAO.findById(id);
     }
 
+    /**
+     * Method to search using City comes and goes, and Date criteria
+     * @param from  CityEntity
+     * @param to    CityEntiy
+     * @param when  Date
+     * @param numPassengers int
+     * @return  List    of flights
+     */
     @Override
     public List<FlightEntity> searchFlights(CityEntity from, CityEntity to, Date when, int numPassengers) {
         try {
