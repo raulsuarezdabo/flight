@@ -186,14 +186,21 @@ public class SeatBookingBean {
         }
         // Hook that checks if you have no seats to select
         if (this.seats.isEmpty() == true) {
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.BOOKINGSEARCH);
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER,
-                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
-                            FacesContext.getCurrentInstance(), "msg").getString("errorSeatsSystemMessage")
-            );
-            FacesContext.getCurrentInstance().getApplication().getNavigationHandler().
-                    handleNavigation(FacesContext.getCurrentInstance(), null, "/index.xhtml?faces-redirect=true");
+            this.warningRedirect();
         }
+    }
+
+    /**
+     * Method that generates an automatic redirect and clean memcache booking node
+     */
+    private void warningRedirect() {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.BOOKINGSEARCH);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER,
+                FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("errorSeatsSystemMessage")
+        );
+        FacesContext.getCurrentInstance().getApplication().getNavigationHandler().
+                handleNavigation(FacesContext.getCurrentInstance(), null, "/index.xhtml?faces-redirect=true");
     }
 
     /**
@@ -206,29 +213,15 @@ public class SeatBookingBean {
         FlightEntity flighGo = this.flightService.getById(this.bookingSearchPojo.getSelectedFlightGo());
 
         if (flighGo == null) {
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER,
-                    FacesContext.getCurrentInstance().getApplication().getResourceBundle(
-                            FacesContext.getCurrentInstance(), "msg").getString("errorSeatsSystemMessage")
-            );
-
-            FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-                    .handleNavigation(FacesContext.getCurrentInstance(), null, "/index.xhtml?faces-redirect=true");
+            this.warningRedirect();
         }
 
         if (this.bookingSearchPojo.getFlightOneWay() == false) {
             FlightEntity flightBack = this.flightService.getById(this.bookingSearchPojo.getSelectedFlightBack());
             if (flightBack == null) {
-                FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER,
-                        FacesContext.getCurrentInstance().getApplication().getResourceBundle(
-                                FacesContext.getCurrentInstance(), "msg").getString("errorSeatsSystemMessage")
-                );
-
-                FacesContext.getCurrentInstance().getApplication().getNavigationHandler()
-                        .handleNavigation(FacesContext.getCurrentInstance(), null, "/index.xhtml?faces-redirect=true");
+                this.warningRedirect();
             }
         }
-        
-        
 
         return "";
     }
