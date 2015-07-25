@@ -1,9 +1,11 @@
 package com.raulsuarezdabo.flight.dao;
 
+import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -98,6 +100,28 @@ public class SeatDAOImpl implements SeatDAO {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
+        }
+    }
+    
+    /**
+     * Count the number of results from the query
+     * @param flight    FlightEntity
+     * @param type  int 
+     * @return  int
+     */
+    @Override
+    public int countSeats(FlightEntity flight, int type) {
+        try {
+            Query query = this.entityManager.createQuery("SELECT s "
+                + "FROM SeatEntity s "
+                + "WHERE s.flight = :flight AND s.type = :type "
+            );
+            query.setParameter("flight", flight);
+            query.setParameter("type", type);
+            return query.getResultList().size();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return 0;
         }
     }
     

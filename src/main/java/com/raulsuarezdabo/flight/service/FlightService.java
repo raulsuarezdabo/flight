@@ -5,8 +5,10 @@ import com.raulsuarezdabo.flight.entity.AirplaneEntity;
 import com.raulsuarezdabo.flight.entity.AirportEntity;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
+import com.raulsuarezdabo.flight.entity.SeatEntity;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Interface for defining the methods to implments that solve the necessities
@@ -70,4 +72,20 @@ public interface FlightService {
      * @return  List of results of flight found by this criteria
      */
     public List <FlightEntity> searchFlights(CityEntity from, CityEntity to, Date when, int numPassengers);
+    
+    /**
+     * Methods for adding seats
+     * @param flight    FlightEntity
+     * @param seats     SeatEntity
+     * @return  boolean
+     */
+    public boolean addSeats(FlightEntity flight, Set<SeatEntity> seats);
+    
+    /**
+     * Method that checks if a seat it's available with specific parameters
+     * @param flight    FlightEntity
+     * @param seat      SeatEntity
+     * @return  boolean
+     */
+    public boolean checkAvaliabilty(FlightEntity flight, SeatEntity seat);
 }

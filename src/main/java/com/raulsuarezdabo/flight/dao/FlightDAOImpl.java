@@ -173,9 +173,7 @@ public class FlightDAOImpl implements FlightDAO {
     @Override
     public boolean setSeatsToFlight(FlightEntity flight, Set<SeatEntity> seats) {
         try {
-            for (SeatEntity thisSeat : seats) {
-                flight.addSeat(thisSeat);
-            }
+            flight.setSeats(seats);
             this.entityManager.persist(flight);
             return true;
         } catch (Exception e) {
@@ -193,7 +191,14 @@ public class FlightDAOImpl implements FlightDAO {
      */
     @Override
     public boolean setSeatToFlight(FlightEntity flight, SeatEntity seat) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            flight.addSeat(seat);
+            this.entityManager.persist(flight);
+            return true;
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
 }

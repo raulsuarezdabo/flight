@@ -11,4 +11,7 @@ package com.mycompany.flight.utils;
  */
 public class SessionConstantsName {
     public static String BOOKINGSEARCH = "bookingsearch";
+    public static String INFOSEATS = "informationseats";
+    public static String INFOFLIGHTGO = "informationflightgo";
+    public static String INFOFLIGHTBACK = "informationflightback";
 }

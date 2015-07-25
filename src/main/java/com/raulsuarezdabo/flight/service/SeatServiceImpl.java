@@ -108,4 +108,15 @@ public class SeatServiceImpl implements SeatService {
         return this.seatDAO.findById(id);
     }
     
+    /**
+     * This method it's to count the number of seats used on a flight
+     * @param flight
+     * @param type
+     * @return 
+     */
+    @Override
+    public int numberSeatsUsed(FlightEntity flight, int type) {
+        return this.seatDAO.countSeats(flight, type);
+    }
+    
 }

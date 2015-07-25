@@ -1,6 +1,7 @@
 
 package com.raulsuarezdabo.flight.dao;
 
+import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
 import java.util.List;
 
@@ -41,4 +42,12 @@ public interface SeatDAO {
      * @return boolean  with success or not
      */
     public boolean deleteSeat(SeatEntity seat);
+    
+    /**
+     * Count the number of results from the query
+     * @param flight    FlightEntity
+     * @param type  int 
+     * @return  int
+     */
+    public int countSeats(FlightEntity flight, int type);
 }

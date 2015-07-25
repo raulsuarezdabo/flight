@@ -1,18 +1,17 @@
 package com.raulsuarezdabo.flight.jsf.booking;
 
-import com.mycompany.flight.service.UserService;
 import com.mycompany.flight.utils.SessionConstantsName;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
 import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.pojo.BookingSearchPojo;
 import com.raulsuarezdabo.flight.service.FlightService;
-import com.raulsuarezdabo.flight.service.SeatService;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -33,14 +32,6 @@ public class SeatBookingBean {
     @Autowired
     @ManagedProperty(value = "#{flightService}")
     private FlightService flightService;
-
-    @Autowired
-    @ManagedProperty(value = "#{userService}")
-    private UserService userService;
-
-    @Autowired
-    @ManagedProperty(value = "#{seatService}")
-    private SeatService seatService;
 
     /**
      * Pojo object to store all data from search booking flight
@@ -74,42 +65,6 @@ public class SeatBookingBean {
      */
     public void setFlightService(FlightService flightService) {
         this.flightService = flightService;
-    }
-
-    /**
-     * Getter of the userService
-     *
-     * @return
-     */
-    public UserService getUserService() {
-        return userService;
-    }
-
-    /**
-     * Setter of the userService
-     *
-     * @param userService
-     */
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-
-    /**
-     * Getter seatService
-     *
-     * @return SeatService
-     */
-    public SeatService getSeatService() {
-        return seatService;
-    }
-
-    /**
-     * Setter seatService
-     *
-     * @param seatService
-     */
-    public void setSeatService(SeatService seatService) {
-        this.seatService = seatService;
     }
 
     /**
@@ -173,6 +128,49 @@ public class SeatBookingBean {
         }
     }
 
+    /**
+     * Method to check if this class is available
+     *
+     * @param item SeatEntity
+     */
+    public void checkAvailableFlight(SeatEntity item) {
+        if (item.getType() != 0) {
+            FlightEntity flighGo = this.flightService.getById(this.bookingSearchPojo.getSelectedFlightGo());
+            if (this.flightService.checkAvaliabilty(flighGo, item) == false) {
+                String errorMessage = FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                        FacesContext.getCurrentInstance(), "msg").getString("errorSeatNotAvailableMessage");
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                        errorMessage, errorMessage);
+                FacesContext.getCurrentInstance().addMessage("seatsForm:seatClassesMessage", message);
+            }
+            if (this.bookingSearchPojo.getFlightOneWay() == false) {
+                FlightEntity flighBack = this.flightService.getById(this.bookingSearchPojo.getSelectedFlightBack());
+                if (this.flightService.checkAvaliabilty(flighBack, item) == false) {
+                    String errorMessage = FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                            FacesContext.getCurrentInstance(), "msg").getString("errorSeatNotAvailableMessage");
+                    FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                            errorMessage, errorMessage);
+                    FacesContext.getCurrentInstance().addMessage("seatsForm:seatClassesMessage", message);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Method that checks if a flight has the current seats available
+     * @param flight    FlightEntity
+     * @param seats Set of seats
+     * @return  boolean
+     */
+    public boolean checkAvailableFlight(FlightEntity flight, Set <SeatEntity> seats) {
+        for (SeatEntity seat: seats) {
+            if (this.flightService.checkAvaliabilty(flight, seat) == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     @PostConstruct
     public void init() {
         this.bookingSearchPojo = new BookingSearchPojo();
@@ -191,10 +189,10 @@ public class SeatBookingBean {
     }
 
     /**
-     * Method that generates an automatic redirect and clean memcache booking node
+     * Method that generates an automatic redirect and clean memcache booking
+     * node
      */
     private void warningRedirect() {
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.BOOKINGSEARCH);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put(Message.DANGER,
                 FacesContext.getCurrentInstance().getApplication().getResourceBundle(
                         FacesContext.getCurrentInstance(), "msg").getString("errorSeatsSystemMessage")
@@ -209,21 +207,28 @@ public class SeatBookingBean {
      * @return String with the url to apply
      */
     public String submitAction() {
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.BOOKINGSEARCH);
         FlightEntity flighGo = this.flightService.getById(this.bookingSearchPojo.getSelectedFlightGo());
 
         if (flighGo == null) {
             this.warningRedirect();
         }
-
+        if (this.checkAvailableFlight(flighGo, seats) == false) {
+            return "";
+        }
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(SessionConstantsName.INFOFLIGHTGO, flighGo);
         if (this.bookingSearchPojo.getFlightOneWay() == false) {
             FlightEntity flightBack = this.flightService.getById(this.bookingSearchPojo.getSelectedFlightBack());
             if (flightBack == null) {
                 this.warningRedirect();
             }
+            if (this.checkAvailableFlight(flightBack, seats) == false) {
+                return "";
+            }
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(SessionConstantsName.INFOFLIGHTBACK, flightBack);
         }
-
-        return "";
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(SessionConstantsName.INFOSEATS, this.seats);
+        
+        return "/booking-process/resum?faces-redirect=true";
     }
 
 }

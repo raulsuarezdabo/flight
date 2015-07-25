@@ -9,51 +9,58 @@ import com.raulsuarezdabo.flight.dao.FlightDAO;
 import com.raulsuarezdabo.flight.entity.AirplaneEntity;
 import com.raulsuarezdabo.flight.entity.AirportEntity;
 import com.raulsuarezdabo.flight.entity.CityEntity;
+import com.raulsuarezdabo.flight.entity.ClassEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
+import com.raulsuarezdabo.flight.entity.SeatEntity;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
  * Class that defines the implementacion from the FlightService
+ *
  * @author raulsuarez
  */
 @Service
 @Transactional
 public class FlightServiceImpl implements FlightService {
-    
+
     @Autowired
     private FlightDAO flightDAO;
 
+    @Autowired
+    private SeatService seatService;
+
     /**
      * Method for adding flights
-     * @param airportFrom   AirportEntity   airport it comes
-     * @param airportTo AirportEntity   airport it goes
-     * @param Start Date    when takes off
-     * @param time  int    time spending on it
-     * @param airplane  AirplaneEntity  airplane that is going to use
-     * @return  FlightEntity    New flight
+     *
+     * @param airportFrom AirportEntity airport it comes
+     * @param airportTo AirportEntity airport it goes
+     * @param Start Date when takes off
+     * @param time int time spending on it
+     * @param airplane AirplaneEntity airplane that is going to use
+     * @return FlightEntity New flight
      */
     @Override
     @Transactional
     public FlightEntity addFlight(AirportEntity airportFrom, AirportEntity airportTo, Date Start, Date time, AirplaneEntity airplane) {
         try {
-        FlightEntity flight = new FlightEntity();
-        
-        flight.setAirportFrom(airportFrom);
-        flight.setAirportTo(airportTo);
-        flight.setStart(Start);
-        flight.setTime(time);
-        flight.setAirplane(airplane);
-        flight.setStatus(FlightEntity.STATUSAVAILABLE);
-        
-        this.flightDAO.addFlight(flight);
-        return flight;
-        } catch(Exception e) {
+            FlightEntity flight = new FlightEntity();
+
+            flight.setAirportFrom(airportFrom);
+            flight.setAirportTo(airportTo);
+            flight.setStart(Start);
+            flight.setTime(time);
+            flight.setAirplane(airplane);
+            flight.setStatus(FlightEntity.STATUSAVAILABLE);
+
+            this.flightDAO.addFlight(flight);
+            return flight;
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
@@ -61,10 +68,11 @@ public class FlightServiceImpl implements FlightService {
 
     /**
      * Method for updating the flight
-     * @param id    int reference of the flight
-     * @param flight    FlightEntity    flight to update
-     * @param update    boolean to persist or not
-     * @return  FlightEntity    updated information
+     *
+     * @param id int reference of the flight
+     * @param flight FlightEntity flight to update
+     * @param update boolean to persist or not
+     * @return FlightEntity updated information
      */
     @Override
     @Transactional
@@ -83,17 +91,17 @@ public class FlightServiceImpl implements FlightService {
             if (flight.getStart() != null) {
                 flightToUpdate.setStart(flight.getStart());
             }
-            if (flight.getTime()!= null) {
+            if (flight.getTime() != null) {
                 flightToUpdate.setTime(flight.getTime());
             }
             if (flight.getAirplane() != null) {
                 flightToUpdate.setAirplane(flight.getAirplane());
             }
-            
+
             if (flight.getStatus() != FlightEntity.STATUSNONE) {
                 flightToUpdate.setStatus(flight.getStatus());
             }
-            
+
             if (this.flightDAO.updateFlight(flightToUpdate) == false) {
                 throw new Exception("Error updating the flight");
             }
@@ -106,8 +114,9 @@ public class FlightServiceImpl implements FlightService {
 
     /**
      * Method for deleting the flight
-     * @param id    int id of the flight
-     * @return  boolean success/fails to delete
+     *
+     * @param id int id of the flight
+     * @return boolean success/fails to delete
      */
     @Override
     @Transactional
@@ -126,7 +135,8 @@ public class FlightServiceImpl implements FlightService {
 
     /**
      * Method for getting all flights
-     * @return  List    List of all FlightEntity
+     *
+     * @return List List of all FlightEntity
      */
     @Override
     public List<FlightEntity> getAll() {
@@ -141,8 +151,9 @@ public class FlightServiceImpl implements FlightService {
 
     /**
      * Getter by code
-     * @param code  String  reference of the code
-     * @return  FlightEntity    the referenced flight
+     *
+     * @param code String reference of the code
+     * @return FlightEntity the referenced flight
      */
     @Override
     public FlightEntity getByCode(String code) {
@@ -151,8 +162,9 @@ public class FlightServiceImpl implements FlightService {
 
     /**
      * Getter by id
-     * @param id    int reference primary key of the flight
-     * @return  FlightEntity
+     *
+     * @param id int reference primary key of the flight
+     * @return FlightEntity
      */
     @Override
     public FlightEntity getById(int id) {
@@ -161,27 +173,65 @@ public class FlightServiceImpl implements FlightService {
 
     /**
      * Method to search using City comes and goes, and Date criteria
-     * @param from  CityEntity
-     * @param to    CityEntiy
-     * @param when  Date
+     *
+     * @param from CityEntity
+     * @param to CityEntiy
+     * @param when Date
      * @param numPassengers int
-     * @return  List    of flights
+     * @return List of flights
      */
     @Override
     public List<FlightEntity> searchFlights(CityEntity from, CityEntity to, Date when, int numPassengers) {
         try {
-            List <FlightEntity> flights = this.flightDAO.findFlights(from, to, when);
-            List <FlightEntity> results = new ArrayList<>();
-            
+            List<FlightEntity> flights = this.flightDAO.findFlights(from, to, when);
+            List<FlightEntity> results = new ArrayList<>();
+
             for (FlightEntity flight : flights) {
                 if (numPassengers <= flight.getSeats().size()) {
                     results.add(flight);
                 }
             }
             return results;
-        } catch(Exception e) {
+        } catch (Exception e) {
             return new ArrayList();
         }
     }
-    
+
+    /**
+     * Methods for adding seats
+     *
+     * @param flight FlightEntity
+     * @param seats SeatEntity
+     * @return boolean
+     */
+    @Override
+    public boolean addSeats(FlightEntity flight, Set<SeatEntity> seats) {
+        if (this.flightDAO.setSeatsToFlight(flight, seats) == true) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Method that checks if a seat it's available with specific parameters
+     *
+     * @param flight FlightEntity
+     * @param seat SeatEntity
+     * @return boolean
+     */
+    @Override
+    @Transactional
+    public boolean checkAvaliabilty(FlightEntity flight, SeatEntity seat) {
+        int numberClassSeat;
+        if (seat.getType() == ClassEntity.TOURIST) {
+            numberClassSeat = flight.getAirplane().getNumSeatsTourist();
+        } else if (seat.getType() == ClassEntity.BUSINESS) {
+            numberClassSeat = flight.getAirplane().getNumSeatsBusiness();
+        } else {
+            numberClassSeat = 0;
+        }
+
+        int numberUsed = this.seatService.numberSeatsUsed(flight, seat.getType());
+        return (numberUsed < numberClassSeat);
+    }
 }

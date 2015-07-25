@@ -46,4 +46,12 @@ public interface SeatService {
      * @return SeatEntity
      */
     public SeatEntity getById(int id);
+    
+     /**
+     * This method it's to count the number of seats used on a flight
+     * @param flight
+     * @param type
+     * @return 
+     */
+    public int numberSeatsUsed(FlightEntity flight, int type);
 }

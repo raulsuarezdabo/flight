@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -58,7 +59,7 @@ public class FlightEntity implements Serializable {
     private AirplaneEntity airplane;
     
     @IndexedEmbedded
-    @OneToMany(mappedBy = "flight")
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.ALL)
     private Set<SeatEntity> seats = new HashSet<>();
         
     /**
@@ -188,7 +189,9 @@ public class FlightEntity implements Serializable {
      * @param seats 
      */
     public void setSeats(Set<SeatEntity> seats) {
-        this.seats = seats;
+        for(SeatEntity item: seats) {
+            this.addSeat(item);
+        }
     }
     
     /**
