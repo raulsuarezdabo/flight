@@ -32,7 +32,7 @@ public class SeatEntity {
     @Column(name = "Fullname")
     private String fullName;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FlightID")
     private FlightEntity flight;
 

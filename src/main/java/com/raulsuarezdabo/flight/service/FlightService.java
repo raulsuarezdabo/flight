@@ -88,4 +88,12 @@ public interface FlightService {
      * @return  boolean
      */
     public boolean checkAvaliabilty(FlightEntity flight, SeatEntity seat);
+    
+    /**
+     * Method to check aviality 
+     * @param flight    FlightEntity
+     * @param seats     Seat
+     * @return  boolean
+     */
+    public boolean checkAvaliability(FlightEntity flight, Set<SeatEntity> seats);
 }

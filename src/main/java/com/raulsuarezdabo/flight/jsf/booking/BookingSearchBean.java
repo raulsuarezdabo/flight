@@ -29,7 +29,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.SerializationUtils;
 
 /**
  *

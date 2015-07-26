@@ -173,8 +173,11 @@ public class FlightDAOImpl implements FlightDAO {
     @Override
     public boolean setSeatsToFlight(FlightEntity flight, Set<SeatEntity> seats) {
         try {
-            flight.setSeats(seats);
-            this.entityManager.persist(flight);
+            for (SeatEntity seat: seats) {
+                if (this.setSeatToFlight(flight, seat) == false) {
+                    return false;
+                }
+            }
             return true;
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -192,11 +195,13 @@ public class FlightDAOImpl implements FlightDAO {
     @Override
     public boolean setSeatToFlight(FlightEntity flight, SeatEntity seat) {
         try {
+            seat.setFlight(flight);
+            //this.entityManager.persist(seat);
             flight.addSeat(seat);
-            this.entityManager.persist(flight);
+            this.entityManager.merge(flight);
             return true;
         } catch(Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println("fsdafdsadsfadsfas" + e.getMessage());
             return false;
         }
     }

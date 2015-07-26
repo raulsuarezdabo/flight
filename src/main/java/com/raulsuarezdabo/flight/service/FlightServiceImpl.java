@@ -184,14 +184,14 @@ public class FlightServiceImpl implements FlightService {
     public List<FlightEntity> searchFlights(CityEntity from, CityEntity to, Date when, int numPassengers) {
         try {
             List<FlightEntity> flights = this.flightDAO.findFlights(from, to, when);
-            List<FlightEntity> results = new ArrayList<>();
+//            List<FlightEntity> results = new ArrayList<>();
 
-            for (FlightEntity flight : flights) {
-                if (numPassengers <= flight.getSeats().size()) {
-                    results.add(flight);
-                }
-            }
-            return results;
+//            for (FlightEntity flight : flights) {
+//                if (numPassengers <= flight.getSeats().size()) {
+//                    results.add(flight);
+//                }
+//            }
+            return flights;
         } catch (Exception e) {
             return new ArrayList();
         }
@@ -205,6 +205,7 @@ public class FlightServiceImpl implements FlightService {
      * @return boolean
      */
     @Override
+    @Transactional
     public boolean addSeats(FlightEntity flight, Set<SeatEntity> seats) {
         if (this.flightDAO.setSeatsToFlight(flight, seats) == true) {
             return true;
@@ -233,5 +234,27 @@ public class FlightServiceImpl implements FlightService {
 
         int numberUsed = this.seatService.numberSeatsUsed(flight, seat.getType());
         return (numberUsed < numberClassSeat);
+    }
+    
+    /**
+     * Method to check aviality 
+     * @param flight    FlightEntity
+     * @param seats     Seat
+     * @return  boolean
+     */
+    @Override
+    @Transactional
+    public boolean checkAvaliability(FlightEntity flight, Set<SeatEntity> seats) {
+        try {
+            for (SeatEntity seat: seats) {
+                if (this.checkAvaliabilty(flight, seat) == false) {
+                    return false;
+                }
+            }
+            return true;
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 }

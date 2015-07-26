@@ -2,17 +2,23 @@ package com.raulsuarezdabo.flight.entity;
 
 import java.util.Date;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.search.annotations.Indexed;
 
 /**
  *
  * @author raulsuarez
  */
+@Entity
+@Indexed
+@Table(name = "Book")
 public class BookEntity {
     public static final int CONFIM = 1;
     
@@ -29,7 +35,7 @@ public class BookEntity {
     @JoinColumn(name = "UserID")
     private UserEntity user;
     
-    @Temporal(TemporalType.TIME)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedAt", nullable = false)
     private Date createdAt;
     

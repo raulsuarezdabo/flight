@@ -1,19 +1,24 @@
-
 package com.raulsuarezdabo.flight.jsf.booking;
 
+import com.mycompany.flight.service.UserService;
 import com.mycompany.flight.utils.SessionConstantsName;
+import com.raulsuarezdabo.flight.entity.BookEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
 import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.pojo.BookingSearchPojo;
+import com.raulsuarezdabo.flight.service.BookService;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  *
@@ -22,26 +27,40 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @ViewScoped
 public class ResumeBookingBean {
-    
+
     /**
      * Pojo object to store all data from search booking flight
      */
     private BookingSearchPojo bookingSearchPojo;
-    
+
     /**
      * Entity seat for storing information on db
      */
     private Set<SeatEntity> seats;
-    
+
     /**
      * Entity Flight to create the book
      */
     private FlightEntity flightGo;
-    
+
     /**
      * Entity Flight to create the book
      */
     private FlightEntity flighBack;
+
+    /**
+     * BookService
+     */
+    @Autowired
+    @ManagedProperty(value = "#{bookService}")
+    private BookService bookService;
+
+    /**
+     * User service to use on the view
+     */
+    @Autowired
+    @ManagedProperty(value = "#{userService}")
+    private UserService userService;
 
     /**
      * Getter bookingSearchPojo
@@ -81,7 +100,8 @@ public class ResumeBookingBean {
 
     /**
      * Getter flightGo
-     * @return  FlightEntity
+     *
+     * @return FlightEntity
      */
     public FlightEntity getFlightGo() {
         return flightGo;
@@ -89,7 +109,8 @@ public class ResumeBookingBean {
 
     /**
      * Setter flightGo
-     * @param flightGo  FlightEntity 
+     *
+     * @param flightGo FlightEntity
      */
     public void setFlightGo(FlightEntity flightGo) {
         this.flightGo = flightGo;
@@ -97,7 +118,8 @@ public class ResumeBookingBean {
 
     /**
      * Getter flightBack
-     * @return  FlightEntity
+     *
+     * @return FlightEntity
      */
     public FlightEntity getFlighBack() {
         return flighBack;
@@ -105,18 +127,55 @@ public class ResumeBookingBean {
 
     /**
      * Setter flightBack
-     * @param flighBack     FlightEntity
+     *
+     * @param flighBack FlightEntity
      */
     public void setFlighBack(FlightEntity flighBack) {
         this.flighBack = flighBack;
     }
-    
+
+    /**
+     * Getter bookService
+     *
+     * @return BookService
+     */
+    public BookService getBookService() {
+        return bookService;
+    }
+
+    /**
+     * Setter bookService
+     *
+     * @param bookService BookService
+     */
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
+    }
+
+    /**
+     * Getter of the userService
+     *
+     * @return
+     */
+    public UserService getUserService() {
+        return userService;
+    }
+
+    /**
+     * Setter of the userService
+     *
+     * @param userService
+     */
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
     /**
      * Creates a new instance of ResumeBookingBean
      */
     public ResumeBookingBean() {
     }
-    
+
     /**
      * Method that creates an url to arrive at search page
      *
@@ -141,12 +200,13 @@ public class ResumeBookingBean {
                     + "&passengers=" + this.bookingSearchPojo.getFlightPassengers();
         }
     }
-    
+
     /**
      * Sum initial date to time of flight
-     * @param init  Date
-     * @param time  Date
-     * @return  Date
+     *
+     * @param init Date
+     * @param time Date
+     * @return Date
      */
     public Date flightFinish(Date init, Date time) {
         if (init != null && time != null) {
@@ -154,7 +214,7 @@ public class ResumeBookingBean {
         }
         return null;
     }
-    
+
     /**
      * Method that generates an automatic redirect and clean memcache booking
      * node
@@ -167,7 +227,7 @@ public class ResumeBookingBean {
         FacesContext.getCurrentInstance().getApplication().getNavigationHandler().
                 handleNavigation(FacesContext.getCurrentInstance(), null, "/index.xhtml?faces-redirect=true");
     }
-    
+
     @PostConstruct
     void init() {
         this.bookingSearchPojo = new BookingSearchPojo();
@@ -176,29 +236,56 @@ public class ResumeBookingBean {
             this.warningRedirect();
         }
         this.seats = (Set) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionConstantsName.INFOSEATS);
-        
+
         if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey(SessionConstantsName.INFOFLIGHTGO) == false) {
             this.warningRedirect();
         }
         this.flightGo = (FlightEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionConstantsName.INFOFLIGHTGO);
-        
+
         if (this.bookingSearchPojo != null) {
-            if (this.bookingSearchPojo.getFlightOneWay() == false && 
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey(SessionConstantsName.INFOFLIGHTBACK) == false) {
+            if (this.bookingSearchPojo.getFlightOneWay() == false
+                    && FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey(SessionConstantsName.INFOFLIGHTBACK) == false) {
                 this.warningRedirect();
             }
         }
         if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey(SessionConstantsName.INFOFLIGHTBACK) == true) {
             this.flighBack = (FlightEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionConstantsName.INFOFLIGHTBACK);
-        }   
+        }
     }
-    
+
     /**
      * Method that submit the actual action
-     * @return  String
+     *
+     * @return String
      */
     public String bookAction() {
-        return "";
+        if (this.userService.isLogged() == false) {
+            String errorMessage = FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                    FacesContext.getCurrentInstance(), "msg").getString("errorSeatNotAvailableMessage");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    errorMessage, errorMessage);
+            FacesContext.getCurrentInstance().addMessage("seatsForm:seatClassesMessage", message);
+            FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(
+                FacesContext.getCurrentInstance(), null, "/index?faces-redirect=true");
+        }
+        
+        BookEntity bookGo = this.bookService.addBook(this.userService.getLoggedUser(), this.flightGo, this.seats);
+        if (bookGo == null) {
+            return "/booking-process/final/fails?faces-redirect=true";
+        }
+        if (this.flighBack != null) {
+            BookEntity bookBack = this.bookService.addBook(this.userService.getLoggedUser(), this.flighBack, seats);
+            if (bookBack == null) {
+                // TODO: ROLLBACK IF THIS BOOK FAILS
+                return "/booking-process/final/fails?faces-redirect=true";
+            }
+        }
+        //Cleaning the session from booking information.
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.BOOKINGSEARCH);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.INFOSEATS);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.INFOFLIGHTGO);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.INFOFLIGHTBACK);
+        return "/booking-process/final/success?faces-redirect=true";
     }
-    
+
 }
