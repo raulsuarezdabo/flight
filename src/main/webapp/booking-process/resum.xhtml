@@ -2,7 +2,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
     </h:head>
     <h:body role="document">
@@ -21,52 +23,89 @@
                 <div class="container">
                     <div class="row">
                         <h1>#{msg.titleResumYourBook}</h1>
-                        <div class="col-xs-12 col-sm-12 col-md-6">
+                        <div class="col-xs-12 col-sm-12 #{resumeBookingBean.flighBack eq null? 'col-md-12': 'col-md-6'}">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title glyphicon glyphicon-arrow-right">&nbsp;idsffdsadsf / dafskdsaf</h3>
+                                    <h3 class="panel-title glyphicon glyphicon-arrow-right">&nbsp;#{resumeBookingBean.flightGo.airportFrom.city.name}&nbsp;/&nbsp;#{resumeBookingBean.flightGo.airportTo.city.name}</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-6 col-md-6">
-                                            <p class="lead"><strong>aeropuerto origen</strong> <small>[XXX]</small></p>
+                                            <p class="lead"><strong>#{resumeBookingBean.flightGo.airportFrom.name}</strong> <small>[#{resumeBookingBean.flightGo.airportFrom.code}]</small></p>
                                         </div>
                                         <div class="col-xs-12 col-sm-6 col-md-6">
-                                            <p class="lead"><strong>aeropuerto de destino</strong> <small>[XXX]</small></p>
+                                            <p class="lead"><strong>#{resumeBookingBean.flightGo.airportTo.name}</strong> <small>[#{resumeBookingBean.flightGo.airportTo.code}]</small></p>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-6 col-md-6">
                                             <dl>
-                                                <dt>Código de vuelo</dt>
-                                                <dd>xxx</dd>
-                                                <dt>Modelo avión</dt>
-                                                <dd>XXX</dd>
-                                            </dl>
-                                        </div>
-                                        <div class="col-xs-12 col-sm-6 col-md-6">
-                                            <dl>
-                                                <dt>Hora salida</dt>
-                                                <dl>00:00</dl>
-                                                <dt>Hora llegada</dt>
-                                                <dl>00:00</dl>
+                                                <dt>#{msg.flightHourStart}</dt>
+                                                <dl>#{resumeBookingBean.flightGo.start.toString()}</dl>
+                                                <dt>#{msg.flightHourFinish}</dt>
+                                                <dl>#{resumeBookingBean.flightFinish(resumeBooking.flightGo.start, resumeBooking.flightGo.time)}</dl>
                                             </dl>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-12 col-md-12">
-                                            <a href="">Pasajeros</a>
+                                            <a href="">#{msg.passengers}</a>
                                         </div>
                                     </div>
                                 </div>
                                 <ul class="list-group">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Morbi leo risus</li>
-                                    <li class="list-group-item">Porta ac consectetur ac</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
+                                    <ui:repeat value="#{resumeBookingBean.seats.toArray()}" var="item">
+                                        <li class="list-group-item"><p>#{item.fullName}&nbsp;[#{item.type eq 1? 'TOURIST': 'BUSINESS'}]</p></li>
+                                    </ui:repeat>
                                 </ul>
                             </div>
+                        </div>
+                        <c:if test="#{not(resumeBookingBean.flighBack eq null)}">
+                            <div class="col-xs-12 col-sm-12 col-md-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title glyphicon glyphicon-arrow-right">&nbsp;#{resumeBookingBean.flighBack.airportFrom.city.name}&nbsp;/&nbsp;#{resumeBookingBean.flighBack.airportTo.city.name}</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                                <p class="lead"><strong>#{resumeBookingBean.flighBack.airportFrom.name}</strong> <small>[#{resumeBookingBean.flighBack.airportFrom.code}]</small></p>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                                <p class="lead"><strong>#{resumeBookingBean.flighBack.airportTo.name}</strong> <small>[#{resumeBookingBean.flighBack.airportTo.code}]</small></p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                                <dl>
+                                                    <dt>#{msg.flightHourStart}</dt>
+                                                    <dl>#{resumeBookingBean.flighBack.start.toString()}</dl>
+                                                    <dt>#{msg.flightHourFinish}</dt>
+                                                    <dl>#{resumeBookingBean.flightFinish(resumeBooking.flighBack.start, resumeBooking.flighBack.time)}</dl>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <a href="">#{msg.passengers}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="list-group">
+                                        <ui:repeat value="#{resumeBookingBean.seats.toArray()}" var="item">
+                                            <li class="list-group-item"><p>#{item.fullName}&nbsp;[#{item.type eq 1? 'TOURIST': 'BUSINESS'}]</p></li>
+                                        </ui:repeat>
+                                    </ul>
+                                </div>
+                            </div>
+                        </c:if>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <h:panelGrid columns="1">
+                                <p:commandButton value="#{msg.buttonBook}" action="#{resumeBookingBean.bookAction()}" >
+                                </p:commandButton>
+                            </h:panelGrid>
                         </div>
                     </div>
                 </div>

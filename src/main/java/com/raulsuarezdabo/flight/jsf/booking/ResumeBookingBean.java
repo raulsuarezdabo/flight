@@ -8,6 +8,7 @@ import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.pojo.BookingSearchPojo;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -142,6 +143,19 @@ public class ResumeBookingBean {
     }
     
     /**
+     * Sum initial date to time of flight
+     * @param init  Date
+     * @param time  Date
+     * @return  Date
+     */
+    public Date flightFinish(Date init, Date time) {
+        if (init != null && time != null) {
+            return new Date(init.getTime() + time.getTime());
+        }
+        return null;
+    }
+    
+    /**
      * Method that generates an automatic redirect and clean memcache booking
      * node
      */
@@ -174,10 +188,17 @@ public class ResumeBookingBean {
                 this.warningRedirect();
             }
         }
-        if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey(SessionConstantsName.INFOFLIGHTBACK) == false) {
+        if (FacesContext.getCurrentInstance().getExternalContext().getSessionMap().containsKey(SessionConstantsName.INFOFLIGHTBACK) == true) {
             this.flighBack = (FlightEntity) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(SessionConstantsName.INFOFLIGHTBACK);
-        }
-        
+        }   
+    }
+    
+    /**
+     * Method that submit the actual action
+     * @return  String
+     */
+    public String bookAction() {
+        return "";
     }
     
 }
