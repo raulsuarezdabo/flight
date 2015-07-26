@@ -16,6 +16,7 @@
         <class>com.raulsuarezdabo.flight.entity.AirplaneEntity</class>
         <class>com.raulsuarezdabo.flight.entity.FlightEntity</class>
         <class>com.raulsuarezdabo.flight.entity.SeatEntity</class>
+        <class>com.raulsuarezdabo.flight.entity.BookEntity</class>
         <properties>
             <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
             <property name="hibernate.connection.pool_size">0</property>
