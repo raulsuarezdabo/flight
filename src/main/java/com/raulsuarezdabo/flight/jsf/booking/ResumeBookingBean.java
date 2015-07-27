@@ -10,7 +10,9 @@ import com.raulsuarezdabo.flight.pojo.BookingSearchPojo;
 import com.raulsuarezdabo.flight.service.BookService;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -268,23 +270,23 @@ public class ResumeBookingBean {
             FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(
                 FacesContext.getCurrentInstance(), null, "/index?faces-redirect=true");
         }
+        List<FlightEntity> flights = new ArrayList();
+        flights.add(flightGo);
         
-        BookEntity bookGo = this.bookService.addBook(this.userService.getLoggedUser(), this.flightGo, this.seats);
-        if (bookGo == null) {
-            return "/booking-process/final/fails?faces-redirect=true";
-        }
         if (this.flighBack != null) {
-            BookEntity bookBack = this.bookService.addBook(this.userService.getLoggedUser(), this.flighBack, seats);
-            if (bookBack == null) {
-                // TODO: ROLLBACK IF THIS BOOK FAILS
-                return "/booking-process/final/fails?faces-redirect=true";
-            }
+            flights.add(flighBack);
         }
+        
         //Cleaning the session from booking information.
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.BOOKINGSEARCH);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.INFOSEATS);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.INFOFLIGHTGO);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.INFOFLIGHTBACK);
+        
+        if (this.bookService.addBook(this.userService.getLoggedUser(), flights, seats) == null) {
+            return "/booking-process/final/fails?faces-redirect=true";
+        }
+        
         return "/booking-process/final/success?faces-redirect=true";
     }
 

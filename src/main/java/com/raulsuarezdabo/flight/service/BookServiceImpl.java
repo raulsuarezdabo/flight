@@ -1,12 +1,15 @@
 
 package com.raulsuarezdabo.flight.service;
 
+import com.mycompany.flight.service.EmailService;
 import com.raulsuarezdabo.flight.dao.BookDAO;
 import com.raulsuarezdabo.flight.entity.BookEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
 import com.raulsuarezdabo.flight.entity.UserEntity;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +25,9 @@ public class BookServiceImpl implements BookService {
     
     @Autowired
     private BookDAO bookDAO;
+    
+    @Autowired
+    private EmailService emailService;
 
     /**
      * Method to add his book
@@ -46,11 +52,38 @@ public class BookServiceImpl implements BookService {
             book.setUser(user);
             book.setStatus(BookEntity.CONFIM);
             this.bookDAO.addBook(book);
+            // TODO: Add email notification with the confirmation of the book
             return book;
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return null;
         }
+    }
+    
+    /**
+     * Method for adding more than one book proces
+     * @param user  UserEntity
+     * @param flights   List of flights
+     * @param seats Set of seats
+     * @return  List of books
+     */
+    @Override
+    @Transactional
+    public List <BookEntity> addBook(UserEntity user, List<FlightEntity> flights, Set <SeatEntity> seats) {
+        try {
+            List<BookEntity> books = new ArrayList();
+            for (FlightEntity fligh: flights) {
+                BookEntity temporalBook = this.addBook(user, fligh, seats);
+                if (temporalBook == null) {
+                    throw new Exception("Book transactional list fails");
+                }
+                books.add(temporalBook);
+            }
+            return books;
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+            return null;
+        } 
     }
     
 }
