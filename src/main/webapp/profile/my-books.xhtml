@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+    </h:head>
+    <h:body role="document">
+        <ui:composition template="/template/basicTemplate.xhtml">
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleUserRegister}" /></ui:define>
+            <ui:define name="meta">
+                <meta name="description" content="Edita tus datos"></meta>
+            </ui:define>
+            <ui:define name="breadcrumbs">
+                <li class="active"><h:outputText value="#{msg.myBooks}"/></li>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <h1><h:outputText value="#{msg.titleMyBooks}"/></h1>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <ui:repeat value="#{bookUserBean.books}" var="item">
+                                <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title glyphicon glyphicon-arrow-right">&nbsp;#{item.flight.airportFrom.city.name}&nbsp;/&nbsp;#{item.flight.airportTo.city.name}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <p class="lead"><strong>#{item.flight.airportFrom.name}</strong> <small>[#{item.flight.airportFrom.code}]</small></p>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <p class="lead"><strong>#{item.flight.airportTo.name}</strong> <small>[#{item.flight.airportTo.code}]</small></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <dl>
+                                                <dt>#{msg.flightHourStart}</dt>
+                                                <dl>#{item.flight.start.toString()}</dl>
+                                                <dt>#{msg.flightHourFinish}</dt>
+                                                <dl>#{bookUserBean.flightFinish(item.flight.start, item.flight.time).toString()}</dl>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            </ui:repeat>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+

@@ -2,6 +2,7 @@
 package com.raulsuarezdabo.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.BookEntity;
+import com.raulsuarezdabo.flight.entity.UserEntity;
 import java.util.List;
 
 /**
@@ -41,4 +42,11 @@ public interface BookDAO {
      * @return boolean  with success or not
      */
     public boolean deleteBook(BookEntity book);
+    
+    /**
+     * Method for getting books from a user
+     * @param user  UserEntity
+     * @return  List of books
+     */
+    public List<BookEntity> findByUser(UserEntity user);
 }

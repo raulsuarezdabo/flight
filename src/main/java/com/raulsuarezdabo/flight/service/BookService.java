@@ -31,4 +31,11 @@ public interface BookService {
      * @return  List of books
      */
     public List <BookEntity> addBook(UserEntity user, List <FlightEntity> flights, Set <SeatEntity> seats);
+    
+    /**
+     * Method to get books from this user
+     * @param user  UserEntity
+     * @return  List of books
+     */
+    public List<BookEntity> getBooks(UserEntity user);
 }

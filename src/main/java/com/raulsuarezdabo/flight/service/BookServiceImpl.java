@@ -86,4 +86,15 @@ public class BookServiceImpl implements BookService {
         } 
     }
     
+    /**
+     * Method to get books from this user
+     * @param user  UserEntity
+     * @return  List of books
+     */
+    @Override
+    @Transactional
+    public List<BookEntity> getBooks(UserEntity user) {
+        return this.bookDAO.findByUser(user);
+    }
+    
 }

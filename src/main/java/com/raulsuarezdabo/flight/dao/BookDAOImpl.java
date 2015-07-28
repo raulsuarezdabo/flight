@@ -2,9 +2,12 @@
 package com.raulsuarezdabo.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.BookEntity;
+import com.raulsuarezdabo.flight.entity.UserEntity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -97,6 +100,24 @@ public class BookDAOImpl implements BookDAO {
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
+        }
+    }
+    
+    /**
+     * Method for getting books from a user
+     * @param user  UserEntity
+     * @return  List of books
+     */
+    @Override
+    public List<BookEntity> findByUser(UserEntity user) {
+        try {
+            List<BookEntity> books = new ArrayList();
+            Query query =  this.entityManager.createQuery("from BookEntity where user = :user");
+            query.setParameter("user", user);
+            return query.getResultList();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
     }
     
