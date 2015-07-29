@@ -2,12 +2,14 @@ package com.raulsuarezdabo.flight.jsf.user;
 
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import com.mycompany.flight.service.UserService;
+import com.raulsuarezdabo.flight.entity.RoleEntity;
 import com.raulsuarezdabo.flight.jsf.message.Message;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -200,6 +202,29 @@ public class UserLoginBean implements Serializable {
      */
     public UserEntity getLoggedUser() {
         return this.userService.getLoggedUser();
+    }
+    
+    /**
+     * Method to get user roles
+     * @return  List of roles
+     */
+    public List<RoleEntity> getLoggedUserRole() {
+        return this.getLoggedUser().getRole();
+    }
+    
+    /**
+     * Method to know if a user is admin or not
+     * @param user  UserEntity
+     * @return  boolean
+     */
+    public boolean isAdmin(UserEntity user) {
+        List <RoleEntity> roles = this.getLoggedUserRole();
+        for (RoleEntity role: roles) {
+            if (role.getName().equals(RoleEntity.ADMIN_ROLE)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @PostConstruct
