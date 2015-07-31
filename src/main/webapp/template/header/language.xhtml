@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+    </h:head>
+    <h:body>
+        <h:form>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><h:outputText value="#{msg.language}"/><span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="dropdown-header"><h:outputText value="#{msg.avaliableLanguages}"/></li>
+                        <li>
+                            <h:commandLink value="#{msg.spanish}" action="#{localeBean.chooseLocaleFromLink('ES')}"></h:commandLink>
+                        </li>
+                        <li>
+                            <h:commandLink value="#{msg.english}" action="#{localeBean.chooseLocaleFromLink('EN')}"></h:commandLink>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </h:form>
+    </h:body>
+</html>
+
