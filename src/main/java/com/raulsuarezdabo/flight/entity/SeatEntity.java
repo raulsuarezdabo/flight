@@ -1,15 +1,19 @@
 
 package com.raulsuarezdabo.flight.entity;
 
+import com.raulsuarezdabo.flight.entity.listener.SeatListener;
 import java.sql.SQLException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.search.annotations.Indexed;
 
@@ -18,6 +22,7 @@ import org.hibernate.search.annotations.Indexed;
  * @author raulsuarez
  */
 @Entity
+@EntityListeners({SeatListener.class})
 @Indexed
 @Table(name = "Seat")
 public class SeatEntity {
@@ -35,6 +40,10 @@ public class SeatEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FlightID")
     private FlightEntity flight;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CreatedAt", nullable = false)
+    private java.util.Date createdAt;
 
     /**
      * Getter id property
@@ -103,6 +112,22 @@ public class SeatEntity {
      */
     public void setFlight(FlightEntity flight) {
         this.flight = flight;
+    }
+    
+    /**
+     * Getter createdAt
+     * @return  Date
+     */
+    public java.util.Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * Setter createdAt
+     * @param createdAt Date 
+     */
+    public void setCreatedAt(java.util.Date createdAt) {
+        this.createdAt = createdAt;
     }
 
 }

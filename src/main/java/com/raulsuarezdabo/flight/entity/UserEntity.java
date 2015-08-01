@@ -1,11 +1,13 @@
 package com.raulsuarezdabo.flight.entity;
 
+import com.raulsuarezdabo.flight.entity.listener.UserListener;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,6 +16,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +28,7 @@ import org.springframework.security.core.userdetails.UserDetails;
  * @author raulsuarez
  */
 @Entity
+@EntityListeners({UserListener.class})
 @Table(name = "User")
 public class UserEntity implements UserDetails {
 
@@ -68,7 +73,14 @@ public class UserEntity implements UserDetails {
 
     @Column(name = "Token")
     private String token;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CreatedAt", nullable = false)
+    private java.util.Date createdAt;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "ModifiedAt", nullable = false)
+    private java.util.Date modifiedAt;
 
     /* Spring Security fields*/
     /**
@@ -367,6 +379,38 @@ public class UserEntity implements UserDetails {
     public void setToken(String token) {
         this.token = token;
     }
+
+    /**
+     * Getter createdAt
+     * @return  Date
+     */
+    public java.util.Date getCreatedAt() {
+        return createdAt;
+    }
+
+    /**
+     * Setter createdAt
+     * @param createdAt Date 
+     */
+    public void setCreatedAt(java.util.Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    /**
+     * Getter modifiedAt
+     * @return  Date
+     */
+    public java.util.Date getModifiedAt() {
+        return modifiedAt;
+    }
+
+    /**
+     * Setter mofidiedAt
+     * @param modifiedAt    Date 
+     */
+    public void setModifiedAt(java.util.Date modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
     
     /**
      * Getter for name
@@ -459,5 +503,5 @@ public class UserEntity implements UserDetails {
             return null;
         }
     }
-
+        
 }

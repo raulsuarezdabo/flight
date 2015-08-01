@@ -62,10 +62,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         this.user = user;
     }
 
-    public boolean persist() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     /**
      *
      * @param email

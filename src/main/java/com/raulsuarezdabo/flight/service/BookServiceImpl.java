@@ -8,7 +8,6 @@ import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +47,6 @@ public class BookServiceImpl implements BookService {
             }
             BookEntity book = new BookEntity();
             book.setFlight(flight);
-            book.setCreatedAt(new Date());
             book.setUser(user);
             book.setStatus(BookEntity.CONFIM);
             this.bookDAO.addBook(book);
