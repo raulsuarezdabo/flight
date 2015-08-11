@@ -78,4 +78,11 @@ public interface FlightDAO {
      */
     public boolean setSeatToFlight(FlightEntity flight, SeatEntity seat);
     
+    /**
+     * Method to find list of flights for tracking
+     * @param days  int
+     * @return  List
+     */
+    public List findCountFlightsByDate(int days);
+    
 }

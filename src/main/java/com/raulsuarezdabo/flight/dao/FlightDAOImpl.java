@@ -6,7 +6,9 @@ import com.raulsuarezdabo.flight.entity.SeatEntity;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -159,6 +161,33 @@ public class FlightDAOImpl implements FlightDAO {
             query.setParameter("to", to);
             return query.getResultList();
         } catch (HibernateException e) {
+            return new ArrayList();
+        }
+    }
+    
+    /**
+     * Method to find list of flights for tracking
+     * @param days  int
+     * @return  List
+     */
+    @Override
+    public List findCountFlightsByDate(int days) {
+        try {
+            Query query = this.entityManager.createQuery("SELECT count(f.id), f.start "
+                    + "FROM FlightEntity f "
+                    + "WHERE f.start > current_date() "
+                    + "GROUP BY day(f.start), month(f.start), year(f.start)"
+                    + "ORDER BY f.start DESC"
+            );
+            List result = query.getResultList(); 
+            if (result.size() >= days) {
+                return result.subList(0, days);
+            }
+            else {
+                return result.subList(0, result.size());
+            }
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
             return new ArrayList();
         }
     }

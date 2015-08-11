@@ -96,4 +96,11 @@ public interface FlightService {
      * @return  boolean
      */
     public boolean checkAvaliability(FlightEntity flight, Set<SeatEntity> seats);
+    
+    /**
+     * Method for returning a report for chart
+     * @return  HashMap
+     */
+    public List getChart();
+    
 }

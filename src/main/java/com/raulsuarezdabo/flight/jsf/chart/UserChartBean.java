@@ -84,18 +84,7 @@ public class UserChartBean implements Serializable {
         series1.set(4, 6);
         series1.set(5, 8);
  
-        LineChartSeries series2 = new LineChartSeries();
-        series2.setLabel("Series 2");
- 
-        series2.set(1, 6);
-        series2.set(2, 3);
-        series2.set(3, 2);
-        series2.set(4, 7);
-        series2.set(5, 9);
- 
         model.addSeries(series1);
-        model.addSeries(series2);
-         
         return model;
     }
     

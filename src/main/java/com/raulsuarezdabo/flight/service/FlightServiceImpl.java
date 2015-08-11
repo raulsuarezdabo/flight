@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class FlightServiceImpl implements FlightService {
+    public static int DAYS = 60;
 
     @Autowired
     private FlightDAO flightDAO;
@@ -255,6 +256,20 @@ public class FlightServiceImpl implements FlightService {
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return false;
+        }
+    }
+    
+    /**
+     * Method for returning a report for chart
+     * @return  List
+     */
+    @Override
+    public List getChart() {
+        try {
+            return this.flightDAO.findCountFlightsByDate(FlightServiceImpl.DAYS);
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return null;
         }
     }
 }

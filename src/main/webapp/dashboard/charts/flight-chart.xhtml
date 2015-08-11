@@ -6,11 +6,13 @@
     <h:head>
     </h:head>
     <h:body role="document">
-        <div class="col-sm-12 col-md-12">
-                <h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
-                    <p:chart type="bar" model="#{flightChartBean.animatedModel2}" style="width:800px;" />
-                </h:panelGrid>
-            </div>
+        <div class="col-sm-1 col-md-1"></div>
+        <div class="col-sm-8 col-md-8">
+            <h:panelGrid columns="2" columnClasses="left,right" style="width:100%">
+                <p:chart type="bar" model="#{flightChartBean.animatedModel2}" style="width:750px;" />
+            </h:panelGrid>
+        </div>
+        <div class="col-sm-1 col-md-1"></div>
     </h:body>
 </html>
 
