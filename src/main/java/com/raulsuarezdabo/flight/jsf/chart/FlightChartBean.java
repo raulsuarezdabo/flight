@@ -64,7 +64,7 @@ public class FlightChartBean {
         ChartSeries flights = new ChartSeries();
         flights.setLabel(
             FacesContext.getCurrentInstance().getApplication().getResourceBundle(
-                FacesContext.getCurrentInstance(), "msg").getString("flight")
+                FacesContext.getCurrentInstance(), "msg").getString("numberFlights")
         );
         Iterator results = this.flightService.getChart().iterator();
         while(results.hasNext()) {
@@ -83,10 +83,6 @@ public class FlightChartBean {
 
     private void createAnimatedModels() {
         animatedModel2 = initBarModel();
-        animatedModel2.setTitle(
-            FacesContext.getCurrentInstance().getApplication().getResourceBundle(
-                FacesContext.getCurrentInstance(), "msg").getString("numberFlights")
-        );
         animatedModel2.setAnimate(true);
         animatedModel2.setLegendPosition("ne");
         Axis yAxis = animatedModel2.getAxis(AxisType.Y);
