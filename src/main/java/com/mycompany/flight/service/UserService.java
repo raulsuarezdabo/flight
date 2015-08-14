@@ -120,4 +120,11 @@ public interface UserService {
      * @return  UserEntity
      */
     public UserEntity addUser(String email, String name, String surname, String address, String nif, String phone, Date birthday, CountryEntity country, CityEntity city, List<RoleEntity> roles);
+    
+    /**
+     * Method for returning a report for chart
+     * @return  List
+     */
+    public List getChart();
+    
 }

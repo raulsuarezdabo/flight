@@ -53,5 +53,12 @@ public interface UserDAO {
      * @return UserEntity with the param asociated or null
      */
     public UserEntity findByEmail(String email);
+    
+    /**
+     * Method to find list of user for tracking
+     * @param days  int
+     * @return  List
+     */
+    public List findCountUsersByDate(int days);
 
 }

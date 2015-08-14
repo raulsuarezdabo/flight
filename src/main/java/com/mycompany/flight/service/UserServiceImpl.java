@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
+    public static int DAYS = 60;
 
     @Autowired
     private UserDAOImpl userDAO;
@@ -445,6 +446,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             user.setToken(token);
             this.userDAO.addUser(user);
             return user;
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    /**
+     * Method for returning a report for chart
+     * @return  List
+     */
+    @Override
+    public List getChart() {
+        try {
+            return this.userDAO.findCountUsersByDate(UserServiceImpl.DAYS);
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return null;

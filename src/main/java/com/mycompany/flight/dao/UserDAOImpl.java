@@ -6,10 +6,12 @@
 package com.mycompany.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.UserEntity;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.hibernate.HibernateException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -127,4 +129,30 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
+    /**
+     * Method to find list of user for tracking
+     * @param days  int
+     * @return  List
+     */
+    @Override
+    public List findCountUsersByDate(int days) {
+        try {
+            Query query = this.entityManager.createQuery("SELECT count(u.id), u.createdAt "
+                    + "FROM UserEntity u "
+                    + "WHERE u.createdAt < current_date() "
+                    + "GROUP BY day(u.createdAt), month(u.createdAt), year(u.createdAt)"
+                    + "ORDER BY u.createdAt DESC"
+            );
+            List result = query.getResultList(); 
+            if (result.size() >= days) {
+                return result.subList(0, days);
+            }
+            else {
+                return result.subList(0, result.size());
+            }
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            return new ArrayList();
+        }
+    }
 }
