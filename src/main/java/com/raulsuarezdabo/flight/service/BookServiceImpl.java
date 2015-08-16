@@ -122,4 +122,35 @@ public class BookServiceImpl implements BookService {
         }
     }
     
+    /**
+     * Get all books available
+     * @return List all books listed
+     */
+    @Override
+    public List<BookEntity> getAll() {
+        try {
+            List<BookEntity> books = this.bookDAO.findAll();
+            return books;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    /**
+     * Find book by id
+     * @param id    int
+     * @return  BookEntity
+     */
+    @Override
+    public BookEntity getById(int id) {
+        try {
+            return this.bookDAO.findById(id);
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+        
+    }
+    
 }

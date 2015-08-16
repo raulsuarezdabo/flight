@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+    </h:head>
+    <h:body role="document">
+        <ui:composition template="/template/basicTemplate.xhtml">
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleAirportAdd}" /></ui:define>
+            <ui:define name="meta">
+                <meta name="description" content="Edita tus datos"></meta>
+            </ui:define>
+            <ui:define name="breadcrumbs">
+                <li class="active"><h:outputText value="#{msg.booking}"/></li>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <h1><h:outputText value="#{msg.titleBookList}"/></h1>
+                    </div>
+                    <div class="row">
+                        <p:spacer height="35" />
+                        <h:form>
+                            <p:dataTable var="book" value="#{bookListBean.books}" rows="10"
+                                         paginator="true"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15" widgetVar="bookTable">
+                                <p:column headerText="#{msg.id}" width="5%" filterBy="#{book.id}" filterMatchMode="contains">
+                                    <h:outputText value="#{book.id}" />
+                                </p:column>
+                                <p:column headerText="#{msg.createdAt}" width="20%" filterBy="#{book.createdAt}" filterMatchMode="contains">
+                                    <h:outputText value="#{book.createdAt}"/>
+                                </p:column>
+                                <p:column headerText="#{msg.user}" width="20%" filterBy="#{book.user.email}" filterMatchMode="contains">
+                                    <h:outputText value="#{book.user.email}"/>
+                                </p:column>
+                                <p:column headerText="#{msg.flight}" width="5%" filterBy="#{book.flight.id}" filterMatchMode="contains">
+                                    <h:outputText value="#{book.flight.id}" />
+                                </p:column>
+                                <p:column headerText="#{msg.departure}" width="20%" filterBy="#{book.flight.start}" filterMatchMode="contains">
+                                    <h:outputText value="#{book.flight.start}"/>
+                                </p:column>
+                                <p:column headerText="#{msg.actions}">
+                                    <button type="button" class="btn btn-default">
+                                        <h:link value="" outcome="info">
+                                            <f:param name="parameter" value="#{book.id}"/>
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </h:link>
+                                    </button>
+                                    <button type="button" class="btn btn-default">
+                                        <h:link value="" outcome="delete">
+                                            <f:param name="parameter" value="#{book.id}"/>
+                                            <span class="glyphicon glyphicon-trash"></span>
+                                        </h:link>
+                                    </button>
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+

@@ -51,4 +51,17 @@ public interface BookService {
      * @return  List
      */
     public List getChart();
+    
+    /**
+     * Get all books available
+     * @return List all books listed
+     */
+    public List<BookEntity> getAll();
+    
+    /**
+     * Find book by id
+     * @param id    int
+     * @return  BookEntity
+     */
+    public BookEntity getById(int id);
 }
