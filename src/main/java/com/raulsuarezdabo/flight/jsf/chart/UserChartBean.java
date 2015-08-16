@@ -2,12 +2,14 @@
 package com.raulsuarezdabo.flight.jsf.chart;
 
 import com.mycompany.flight.service.UserService;
+import com.raulsuarezdabo.flight.service.BookService;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -17,7 +19,6 @@ import org.primefaces.model.chart.AxisType;
 import org.primefaces.model.chart.CategoryAxis;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.LineChartModel;
-import org.primefaces.model.chart.LineChartSeries;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -37,6 +38,13 @@ public class UserChartBean implements Serializable {
     private UserService userService;
     
     /**
+     * book service to use on the view
+     */
+    @Autowired
+    @ManagedProperty(value="#{bookService}")
+    private BookService bookService;
+    
+    /**
      * userSErvice Getter
      *
      * @return
@@ -52,6 +60,22 @@ public class UserChartBean implements Serializable {
      */
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    /**
+     * Getter bookService
+     * @return  BookService
+     */
+    public BookService getBookService() {
+        return bookService;
+    }
+
+    /**
+     * Setter bookService
+     * @param bookService 
+     */
+    public void setBookService(BookService bookService) {
+        this.bookService = bookService;
     }
     
     /**
@@ -84,26 +108,47 @@ public class UserChartBean implements Serializable {
     
     private LineChartModel initLinearModel() {
         LineChartModel model = new LineChartModel();
- 
-        ChartSeries users = new ChartSeries();
-        users.setLabel(
-            FacesContext.getCurrentInstance().getApplication().getResourceBundle(
-                FacesContext.getCurrentInstance(), "msg").getString("createdUsers")
+
+        model.addSeries(
+            this.createChartSeries(
+                FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                FacesContext.getCurrentInstance(), "msg").getString("createdUsers"),
+                this.userService.getChart()
+            )
         );
         
-        Iterator results = this.userService.getChart().iterator();
+        model.addSeries(
+            this.createChartSeries(
+                FacesContext.getCurrentInstance().getApplication().getResourceBundle(
+                FacesContext.getCurrentInstance(), "msg").getString("createdBooks"),
+                this.bookService.getChart()
+            )
+        );
+        
+        return model;
+    }
+    
+    /**
+     * Method for create a new line on the chart
+     * @param title
+     * @param items
+     * @return 
+     */
+    private ChartSeries createChartSeries(String title, List items) {
+        ChartSeries chart = new ChartSeries();
+        
+        chart.setLabel(title);
+        
+        Iterator results = items.iterator();
         while(results.hasNext()) {
             Object [] tuple = (Object [])results.next();
             Long number = (Long)tuple[0];
             Timestamp time = (Timestamp)tuple[1];
             Date date = new Date(time.getTime());
             DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-            users.set(df.format(date), number);
+            chart.set(df.format(date), number);
         }
-
-        model.addSeries(users);
-
-        return model;
+        return chart;
     }
     
     @PostConstruct

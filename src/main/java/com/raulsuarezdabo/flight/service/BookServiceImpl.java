@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class BookServiceImpl implements BookService {
     
+    public static int DAYS = 60;
+    
     @Autowired
     private FlightService flightService;
     
@@ -93,6 +95,20 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public List<BookEntity> getBooks(UserEntity user) {
         return this.bookDAO.findByUser(user);
+    }
+    
+    /**
+     * Method for returning a report for chart
+     * @return  List
+     */
+    @Override
+    public List getChart() {
+        try {
+            return this.bookDAO.findCountBooksByDate(BookServiceImpl.DAYS);
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
     
 }

@@ -38,4 +38,10 @@ public interface BookService {
      * @return  List of books
      */
     public List<BookEntity> getBooks(UserEntity user);
+    
+    /**
+     * Method for returning a report for chart
+     * @return  List
+     */
+    public List getChart();
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import org.hibernate.HibernateException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -118,6 +119,33 @@ public class BookDAOImpl implements BookDAO {
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return null;
+        }
+    }
+    
+    /**
+     * Method to find list of books for tracking
+     * @param days  int
+     * @return  List
+     */
+    @Override
+    public List findCountBooksByDate(int days) {
+        try {
+            Query query = this.entityManager.createQuery("SELECT count(b.id), b.createdAt "
+                    + "FROM BookEntity b "
+                    + "WHERE b.createdAt <= current_date() "
+                    + "GROUP BY day(b.createdAt), month(b.createdAt), year(b.createdAt)"
+                    + "ORDER BY b.createdAt DESC"
+            );
+            List result = query.getResultList(); 
+            if (result.size() >= days) {
+                return result.subList(0, days);
+            }
+            else {
+                return result.subList(0, result.size());
+            }
+        } catch (HibernateException e) {
+            System.out.println(e.getMessage());
+            return new ArrayList();
         }
     }
     

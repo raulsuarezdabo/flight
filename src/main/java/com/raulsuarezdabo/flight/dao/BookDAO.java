@@ -49,4 +49,11 @@ public interface BookDAO {
      * @return  List of books
      */
     public List<BookEntity> findByUser(UserEntity user);
+    
+    /**
+     * Method to find list of books for tracking
+     * @param days  int
+     * @return  List
+     */
+    public List findCountBooksByDate(int days);
 }
