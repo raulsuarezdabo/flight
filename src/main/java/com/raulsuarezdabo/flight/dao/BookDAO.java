@@ -2,6 +2,7 @@
 package com.raulsuarezdabo.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.BookEntity;
+import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import java.util.List;
 
@@ -49,6 +50,13 @@ public interface BookDAO {
      * @return  List of books
      */
     public List<BookEntity> findByUser(UserEntity user);
+    
+    /**
+     * Method for getting books from a flight
+     * @param flight    FlightEntity
+     * @return  List of books
+     */
+    public List<BookEntity> findByFlight(FlightEntity flight);
     
     /**
      * Method to find list of books for tracking

@@ -98,6 +98,17 @@ public class BookServiceImpl implements BookService {
     }
     
     /**
+     * Method to get books from this flight
+     * @param flight    FlightEntity
+     * @return  List of books
+     */
+    @Override
+    @Transactional
+    public List<BookEntity> getBooks(FlightEntity flight) {
+        return this.bookDAO.findByFlight(flight);
+    }
+    
+    /**
      * Method for returning a report for chart
      * @return  List
      */

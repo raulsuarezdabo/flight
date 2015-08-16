@@ -40,6 +40,13 @@ public interface BookService {
     public List<BookEntity> getBooks(UserEntity user);
     
     /**
+     * Method to get books from this flight
+     * @param flight    FlightEntity
+     * @return  List of books
+     */
+    public List<BookEntity> getBooks(FlightEntity flight);
+    
+    /**
      * Method for returning a report for chart
      * @return  List
      */

@@ -2,6 +2,7 @@
 package com.raulsuarezdabo.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.BookEntity;
+import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import java.util.ArrayList;
 import java.util.List;
@@ -115,6 +116,24 @@ public class BookDAOImpl implements BookDAO {
             List<BookEntity> books = new ArrayList();
             Query query =  this.entityManager.createQuery("from BookEntity where user = :user");
             query.setParameter("user", user);
+            return query.getResultList();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    /**
+     * Method for getting books from a flight
+     * @param flight    FlightEntity
+     * @return  List of books
+     */
+    @Override
+    public List<BookEntity> findByFlight(FlightEntity flight) {
+        try {
+            List<BookEntity> books = new ArrayList();
+            Query query =  this.entityManager.createQuery("from BookEntity where flight = :flight");
+            query.setParameter("flight", flight);
             return query.getResultList();
         } catch(Exception e) {
             System.out.println(e.getMessage());

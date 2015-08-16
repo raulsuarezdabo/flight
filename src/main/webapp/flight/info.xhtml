@@ -1,12 +1,98 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
-        <title>Facelet Title</title>
     </h:head>
-    <h:body>
-        info for flight
+    <h:body role="document">
+        <ui:composition template="/template/basicTemplate.xhtml">
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleAirportAdd}" /></ui:define>
+            <ui:define name="meta">
+                <meta name="description" content="Edita tus datos"></meta>
+            </ui:define>
+            <ui:define name="breadcrumbs">
+                <li>
+                    <h:link outcome="/flight/index" value="#{msg.flight}"/>
+                </li>
+                <li class="active"><h:outputText value="#{msg.flightInfo}"/></li>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <div class="row">
+                        <h1><h:outputText value="#{msg.titleFlightInfo}"/></h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title glyphicon glyphicon-arrow-right">&nbsp;#{infoFlightBean.flight.airportFrom.city.name}&nbsp;/&nbsp;#{infoFlightBean.flight.airportTo.city.name}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <p class="lead"><strong>#{infoFlightBean.flight.airportFrom.name}</strong> <small>[#{infoFlightBean.flight.airportFrom.code}]</small></p>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <p class="lead"><strong>#{infoFlightBean.flight.airportTo.name}</strong> <small>[#{infoFlightBean.flight.airportTo.code}]</small></p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <dl>
+                                                <dt>#{msg.flightHourStart}</dt>
+                                                <dl>#{infoFlightBean.flight.start.toString()}</dl>
+                                                <dt>#{msg.flightHourFinish}</dt>
+                                                <dl>#{infoFlightBean.flightFinish(infoFlightBean.flight.start, infoFlightBean.flight.time).toString()}</dl>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title glyphicon glyphicon-plane">&nbsp;#{msg.airplane}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
+                                            <p class="lead">&nbsp;#{infoFlightBean.flight.airplane.model}&nbsp;#{infoFlightBean.flight.airplane.year}&nbsp;#{infoFlightBean.flight.airplane.maker}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <dl>
+                                                <dt>#{msg.numSeatsTotal}</dt>
+                                                <dl>#{infoFlightBean.flight.airplane.numSeatsTotal}</dl>
+                                                <dt>#{msg.numSeatsTourist}</dt>
+                                                <dl>#{infoFlightBean.flight.airplane.numSeatsTourist}</dl>
+                                                <dt>#{msg.numSeatsBusiness}</dt>
+                                                <dl>#{infoFlightBean.flight.airplane.numSeatsBusiness}</dl>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <p:chart type="pie" model="#{flightPieChartBean.pieModel1}" style="width:368px;height:300px" />
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
     </h:body>
 </html>
+
 
