@@ -56,11 +56,11 @@
                                 </div>
                                 <div class="panel-body">
                                     <div class="row">
-                                        
+                                        <ui:repeat value="#{bookInfoBean.seats}" var="item">
                                             <div class="col-xs-12 col-sm-6 col-md-6">
-                                                <p class="lead"><strong>Nombre</strong> <small>asiento: xx [class]</small></p>
+                                                <p class="lead"><strong>#{item.fullName}</strong> <small>#{msg.seat}: #{item.id} [#{item.typeName}]</small></p>
                                             </div>
-                                        
+                                        </ui:repeat>
                                     </div>
                                 </div>
                             </div>

@@ -44,6 +44,10 @@ public class SeatEntity {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "CreatedAt", nullable = false)
     private java.util.Date createdAt;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name= "BookID")
+    private BookEntity book;
 
     /**
      * Getter id property
@@ -80,6 +84,25 @@ public class SeatEntity {
             throw new ConstraintViolationException("Violation exception on type", new SQLException(), "Constraint violation seat type");
         }
         this.type = type;
+    }
+    
+    /**
+     * Method that return the name of the class
+     * @return  String
+     */
+    public String getTypeName() {
+        if (this.type == ClassEntity.TOURIST) {
+            return "TOURIST";
+        }
+        else if (this.type == ClassEntity.BUSINESS) {
+            return "BUSINESS";
+        }
+        else if (this.type == ClassEntity.OFFER) {
+            return "OFFER";
+        }
+        else {
+            return "UNKNOW";
+        }
     }
 
     /**
@@ -128,6 +151,22 @@ public class SeatEntity {
      */
     public void setCreatedAt(java.util.Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    /**
+     * Getter book
+     * @return  BookEntity
+     */
+    public BookEntity getBook() {
+        return book;
+    }
+
+    /**
+     * Setter book
+     * @param book  BookEntity 
+     */
+    public void setBook(BookEntity book) {
+        this.book = book;
     }
 
 }

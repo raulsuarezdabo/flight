@@ -2,17 +2,23 @@ package com.raulsuarezdabo.flight.entity;
 
 import com.raulsuarezdabo.flight.entity.listener.BookListener;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
 
 /**
  *
@@ -44,6 +50,10 @@ public class BookEntity {
     
     @Column(name = "Status")
     private Integer status;
+    
+    @IndexedEmbedded
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL,  fetch = FetchType.EAGER)
+    private Set<SeatEntity> seats = new HashSet<>();
     
     /**
      * Getter id property
@@ -136,6 +146,22 @@ public class BookEntity {
             return "CONFIRM";
         }
         return "UNDEFINED";
+    }
+    
+    /**
+     * Getter Seat set
+     * @return Seat of seats
+     */
+    public Set<SeatEntity> getSeats() {
+        return seats;
+    }
+
+    /**
+     * Setter seatss
+     * @param seats     Set
+     */
+    public void setSeats(Set<SeatEntity> seats) {
+        this.seats = seats;
     }
     
 }
