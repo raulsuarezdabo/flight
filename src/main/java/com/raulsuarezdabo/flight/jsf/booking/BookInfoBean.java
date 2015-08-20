@@ -1,7 +1,6 @@
 
 package com.raulsuarezdabo.flight.jsf.booking;
 
-import com.raulsuarezdabo.flight.entity.AirlineEntity;
 import com.raulsuarezdabo.flight.entity.BookEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
 import com.raulsuarezdabo.flight.service.BookService;
@@ -33,8 +32,6 @@ public class BookInfoBean {
     private BookService bookService;
     
     private BookEntity book;
-    
-    private List<SeatEntity> seats;
     
     /**
      * Getter bookService
@@ -69,22 +66,6 @@ public class BookInfoBean {
     public void setBook(BookEntity book) {
         this.book = book;
     }
-
-    /**
-     * Getter seats
-     * @return  List
-     */
-    public List<SeatEntity> getSeats() {
-        return seats;
-    }
-
-    /**
-     * Setter seats
-     * @param seats List 
-     */
-    public void setSeats(List<SeatEntity> seats) {
-        this.seats = seats;
-    }
     
     /**
      * Creates a new instance of BookInfoBean
@@ -111,11 +92,5 @@ public class BookInfoBean {
         Map<String, String> parameterMap = (Map<String, String>) FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
         Integer id = (Integer) parseInt(parameterMap.get("parameter"));
         this.book = this.bookService.getById(id);
-        if (this.book.getSeats().isEmpty() == false) {
-            this.seats = new ArrayList<>(this.book.getSeats());
-        }
-        else {
-            this.seats = new ArrayList();
-        }
     }
 }

@@ -45,22 +45,28 @@
                                                 <dl>#{bookInfoBean.flightFinish(bookInfoBean.book.flight.start, bookInfoBean.book.flight.time).toString()}</dl>
                                             </dl>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title glyphicon glyphicon-user">&nbsp;#{msg.passengers}</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <ui:repeat value="#{bookInfoBean.seats}" var="item">
-                                            <div class="col-xs-12 col-sm-6 col-md-6">
-                                                <p class="lead"><strong>#{item.fullName}</strong> <small>#{msg.seat}: #{item.id} [#{item.typeName}]</small></p>
+                                        <div class="col-xs-12 col-sm-6 col-md-6">
+                                            <div class="panel-group"  role="tablist" aria-multiselectable="false">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading" role="tab" id="heading#{status.index}">
+                                                        <h4 class="panel-title">
+                                                            <a class="collapsed glyphicon glyphicon-user" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse#{status.index}" aria-expanded="false" aria-controls="collapse#{status.index}">
+                                                                #{msg.passengers} (#{bookInfoBean.book.seatsList.size()})
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapse#{status.index}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading#{status.index}">
+                                                        <div class="panel-body">
+                                                            <ui:repeat value="#{bookInfoBean.book.seatsList}" var="passenger">
+                                                                <div class="col-xs-12 col-sm-6 col-md-6">
+                                                                    <p class="lead"><strong>#{passenger.fullName}</strong> <small>#{msg.seat}: #{passenger.id} [#{passenger.typeName}]</small></p>
+                                                                </div>
+                                                            </ui:repeat>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </ui:repeat>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

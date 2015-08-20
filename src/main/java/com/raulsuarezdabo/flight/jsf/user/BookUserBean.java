@@ -42,12 +42,6 @@ public class BookUserBean {
     private List<BookEntity> books;
     
     /**
-     * List to show or not passengers
-     */
-    private List<Boolean> showListPassengers;
-    
-    
-    /**
      * Getter of the userService
      *
      * @return
@@ -97,22 +91,6 @@ public class BookUserBean {
      */
     public void setBooks(List<BookEntity> books) {
         this.books = books;
-    }
-
-    /**
-     * Getter showListPassengers
-     * @return  List
-     */
-    public List<Boolean> getShowListPassengers() {
-        return showListPassengers;
-    }
-
-    /**
-     * Setter showListPassengers
-     * @param showListPassengers 
-     */
-    public void setShowListPassengers(List<Boolean> showListPassengers) {
-        this.showListPassengers = showListPassengers;
     }
 
     /**
