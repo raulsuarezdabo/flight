@@ -1,8 +1,10 @@
 package com.raulsuarezdabo.flight.entity;
 
 import com.raulsuarezdabo.flight.entity.listener.BookListener;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -154,6 +156,19 @@ public class BookEntity {
      */
     public Set<SeatEntity> getSeats() {
         return seats;
+    }
+    
+    /**
+     * Gets a list of seats
+     * @return  List
+     */
+    public List<SeatEntity> getSeatsList() {
+        if (this.seats.isEmpty() == false) {
+            return new ArrayList<>(this.seats);
+        }
+        else {
+            return new ArrayList<>();
+        }
     }
 
     /**

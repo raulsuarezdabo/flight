@@ -5,12 +5,13 @@ import com.mycompany.flight.service.UserService;
 import com.raulsuarezdabo.flight.entity.BookEntity;
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import com.raulsuarezdabo.flight.service.BookService;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.NoneScoped;
+import javax.faces.bean.ViewScoped;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -18,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author raulsuarez
  */
 @ManagedBean
-@NoneScoped
+@ViewScoped
 public class BookUserBean {
     
     /**
@@ -39,6 +40,11 @@ public class BookUserBean {
      * List of user books
      */
     private List<BookEntity> books;
+    
+    /**
+     * List to show or not passengers
+     */
+    private List<Boolean> showListPassengers;
     
     
     /**
@@ -94,6 +100,22 @@ public class BookUserBean {
     }
 
     /**
+     * Getter showListPassengers
+     * @return  List
+     */
+    public List<Boolean> getShowListPassengers() {
+        return showListPassengers;
+    }
+
+    /**
+     * Setter showListPassengers
+     * @param showListPassengers 
+     */
+    public void setShowListPassengers(List<Boolean> showListPassengers) {
+        this.showListPassengers = showListPassengers;
+    }
+
+    /**
      * Creates a new instance of BookUserBean
      */
     public BookUserBean() {
@@ -112,7 +134,7 @@ public class BookUserBean {
         }
         return null;
     }
-    
+        
     @PostConstruct
     public void init() {
         UserEntity user = this.userService.getLoggedUser();
