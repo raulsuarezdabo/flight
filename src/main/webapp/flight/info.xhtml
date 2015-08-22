@@ -55,26 +55,34 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-12 col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title glyphicon glyphicon-plane">&nbsp;#{msg.airplane}</h3>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-12 col-md-12">
-                                            <p class="lead">&nbsp;#{infoFlightBean.flight.airplane.model}&nbsp;#{infoFlightBean.flight.airplane.year}&nbsp;#{infoFlightBean.flight.airplane.maker}</p>
-                                        </div>
+                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading" role="tab" id="headingOne">
+                                        <h4 class="panel-title glyphicon glyphicon-plane">
+                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                &nbsp;#{msg.airplane}
+                                            </a>
+                                        </h4>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-xs-12 col-sm-6 col-md-6">
-                                            <dl>
-                                                <dt>#{msg.numSeatsTotal}</dt>
-                                                <dl>#{infoFlightBean.flight.airplane.numSeatsTotal}</dl>
-                                                <dt>#{msg.numSeatsTourist}</dt>
-                                                <dl>#{infoFlightBean.flight.airplane.numSeatsTourist}</dl>
-                                                <dt>#{msg.numSeatsBusiness}</dt>
-                                                <dl>#{infoFlightBean.flight.airplane.numSeatsBusiness}</dl>
-                                            </dl>
+                                    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                                    <p class="lead">&nbsp;#{infoFlightBean.flight.airplane.model}&nbsp;#{infoFlightBean.flight.airplane.year}&nbsp;#{infoFlightBean.flight.airplane.maker}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-12 col-sm-4 col-md-4">
+                                                    <dl>
+                                                        <dt>#{msg.numSeatsTotal}</dt>
+                                                        <dl>#{infoFlightBean.flight.airplane.numSeatsTotal}</dl>
+                                                        <dt>#{msg.numSeatsTourist}</dt>
+                                                        <dl>#{infoFlightBean.flight.airplane.numSeatsTourist}</dl>
+                                                        <dt>#{msg.numSeatsBusiness}</dt>
+                                                        <dl>#{infoFlightBean.flight.airplane.numSeatsBusiness}</dl>
+                                                    </dl>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -82,9 +90,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-12 col-md-12">
-                            
-                        </div>
                         <div class="col-xs-12 col-sm-12 col-md-12">
                             <p:chart type="pie" model="#{flightPieChartBean.pieModel1}" style="width:368px;height:300px" />
                         </div>
