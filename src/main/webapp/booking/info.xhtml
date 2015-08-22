@@ -46,6 +46,10 @@
                                             </dl>
                                         </div>
                                         <div class="col-xs-12 col-sm-6 col-md-6">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12">
                                             <div class="panel-group"  role="tablist" aria-multiselectable="false">
                                                 <div class="panel panel-default">
                                                     <div class="panel-heading" role="tab" id="heading#{status.index}">
@@ -58,7 +62,7 @@
                                                     <div id="collapse#{status.index}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading#{status.index}">
                                                         <div class="panel-body">
                                                             <ui:repeat value="#{bookInfoBean.book.seatsList}" var="passenger">
-                                                                <div class="col-xs-12 col-sm-6 col-md-6">
+                                                                <div class="col-xs-12 col-sm-12 col-md-12">
                                                                     <p class="lead"><strong>#{passenger.fullName}</strong> <small>#{msg.seat}: #{passenger.id} [#{passenger.typeName}]</small></p>
                                                                 </div>
                                                             </ui:repeat>
