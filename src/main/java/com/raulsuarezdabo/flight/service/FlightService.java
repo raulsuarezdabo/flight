@@ -3,6 +3,7 @@ package com.raulsuarezdabo.flight.service;
 
 import com.raulsuarezdabo.flight.entity.AirplaneEntity;
 import com.raulsuarezdabo.flight.entity.AirportEntity;
+import com.raulsuarezdabo.flight.entity.BookEntity;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
@@ -77,9 +78,10 @@ public interface FlightService {
      * Methods for adding seats
      * @param flight    FlightEntity
      * @param seats     SeatEntity
+     * @param <error>   BookEntity
      * @return  boolean
      */
-    public boolean addSeats(FlightEntity flight, Set<SeatEntity> seats);
+    public boolean addSeats(FlightEntity flight, Set<SeatEntity> seats, BookEntity book);
     
     /**
      * Method that checks if a seat it's available with specific parameters

@@ -44,14 +44,14 @@ public class BookServiceImpl implements BookService {
             if (this.flightService.checkAvaliability(flight, seats) == false) {
                 throw new Exception("Not available seats");
             }
-            if (this.flightService.addSeats(flight, seats) == false) {
-                throw new Exception("Error! Imposible to add this seats");
-            }
             BookEntity book = new BookEntity();
             book.setFlight(flight);
             book.setUser(user);
             book.setStatus(BookEntity.CONFIM);
             this.bookDAO.addBook(book);
+            if (this.flightService.addSeats(flight, seats, book) == false) {
+                throw new Exception("Error! Imposible to add this seats");
+            }
             // TODO: Add email notification with the confirmation of the book
             return book;
         } catch(Exception e) {

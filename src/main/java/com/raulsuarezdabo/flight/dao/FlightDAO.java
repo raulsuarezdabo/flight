@@ -1,6 +1,7 @@
 
 package com.raulsuarezdabo.flight.dao;
 
+import com.raulsuarezdabo.flight.entity.BookEntity;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
@@ -66,17 +67,19 @@ public interface FlightDAO {
      * Method that sets a couple of seats
      * @param flight    FlightEntity
      * @param seats SeatEntity
+     * @param book  BookEntity
      * @return  boolean
      */
-    public boolean setSeatsToFlight(FlightEntity flight, Set<SeatEntity> seats);
+    public boolean setSeatsToFlight(FlightEntity flight, Set<SeatEntity> seats, BookEntity book);
     
     /**
      * Method that sets a couple of seats
      * @param flight    FlightEntity
      * @param seat  SeatEntity
+     * @param book  BookEntity
      * @return  boolean
      */
-    public boolean setSeatToFlight(FlightEntity flight, SeatEntity seat);
+    public boolean setSeatToFlight(FlightEntity flight, SeatEntity seat, BookEntity book);
     
     /**
      * Method to find list of flights for tracking

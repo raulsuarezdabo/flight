@@ -8,6 +8,7 @@ package com.raulsuarezdabo.flight.service;
 import com.raulsuarezdabo.flight.dao.FlightDAO;
 import com.raulsuarezdabo.flight.entity.AirplaneEntity;
 import com.raulsuarezdabo.flight.entity.AirportEntity;
+import com.raulsuarezdabo.flight.entity.BookEntity;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.ClassEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
@@ -203,12 +204,13 @@ public class FlightServiceImpl implements FlightService {
      *
      * @param flight FlightEntity
      * @param seats SeatEntity
+     * @param book  BookEntity
      * @return boolean
      */
     @Override
     @Transactional
-    public boolean addSeats(FlightEntity flight, Set<SeatEntity> seats) {
-        if (this.flightDAO.setSeatsToFlight(flight, seats) == true) {
+    public boolean addSeats(FlightEntity flight, Set<SeatEntity> seats, BookEntity book) {
+        if (this.flightDAO.setSeatsToFlight(flight, seats, book) == true) {
             return true;
         }
         return false;

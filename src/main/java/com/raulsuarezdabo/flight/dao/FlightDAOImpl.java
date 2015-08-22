@@ -1,5 +1,6 @@
 package com.raulsuarezdabo.flight.dao;
 
+import com.raulsuarezdabo.flight.entity.BookEntity;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
@@ -200,10 +201,10 @@ public class FlightDAOImpl implements FlightDAO {
      * @return boolean
      */
     @Override
-    public boolean setSeatsToFlight(FlightEntity flight, Set<SeatEntity> seats) {
+    public boolean setSeatsToFlight(FlightEntity flight, Set<SeatEntity> seats, BookEntity book) {
         try {
             for (SeatEntity seat: seats) {
-                if (this.setSeatToFlight(flight, seat) == false) {
+                if (this.setSeatToFlight(flight, seat, book) == false) {
                     return false;
                 }
             }
@@ -219,13 +220,15 @@ public class FlightDAOImpl implements FlightDAO {
      *
      * @param flight FlightEntity
      * @param seat SeatEntity
+     * @param book
      * @return boolean
      */
     @Override
-    public boolean setSeatToFlight(FlightEntity flight, SeatEntity seat) {
+    public boolean setSeatToFlight(FlightEntity flight, SeatEntity seat, BookEntity book) {
         try {
             seat.setFlight(flight);
             //this.entityManager.persist(seat);
+            seat.setBook(book);
             flight.addSeat(seat);
             this.entityManager.merge(flight);
             return true;
