@@ -5,6 +5,7 @@ import com.mycompany.flight.utils.SessionConstantsName;
 import com.raulsuarezdabo.flight.entity.BookEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
+import com.raulsuarezdabo.flight.jsf.language.LocaleBean;
 import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.pojo.BookingSearchPojo;
 import com.raulsuarezdabo.flight.service.BookService;
@@ -13,12 +14,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -283,7 +286,12 @@ public class ResumeBookingBean {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.INFOFLIGHTGO);
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(SessionConstantsName.INFOFLIGHTBACK);
         
-        if (this.bookService.addBook(this.userService.getLoggedUser(), flights, seats) == null) {
+        FacesContext ctx = FacesContext.getCurrentInstance();
+        ExternalContext extCtx = ctx.getExternalContext();
+        Map<String, Object> sessionMap = extCtx.getSessionMap();
+        LocaleBean locale = (LocaleBean) sessionMap.get("localeBean");
+        
+        if (this.bookService.addBook(this.userService.getLoggedUser(), flights, seats, locale.getCurrent()) == null) {
             return "/booking-process/final/fails?faces-redirect=true";
         }
         

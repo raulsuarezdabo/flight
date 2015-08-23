@@ -23,4 +23,16 @@
             <tag>user</tag>
         </tags>
     </item>
+    <item id="booking_confirmation">
+        <template>booking_confirmation.ftl</template>
+        <from>
+            <email>no-reply@flight-now.com</email>
+            <name>Confirmation booking needed</name>
+        </from>
+        <tags>
+            <tag>book</tag>
+            <tag>user</tag>
+            <tab>pending</tab>
+        </tags>
+    </item>
 </collection>
