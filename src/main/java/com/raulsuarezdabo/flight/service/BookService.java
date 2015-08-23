@@ -64,4 +64,11 @@ public interface BookService {
      * @return  BookEntity
      */
     public BookEntity getById(int id);
+    
+    /**
+     * method for update book to confirm
+     * @param book  BookEntity
+     * @return  boolean
+     */
+    public BookEntity confirmBook(BookEntity book);
 }

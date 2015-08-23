@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+    </h:head>
+    <h:body role="document">
+        <ui:composition template="/template/basicTemplate.xhtml">
+            <ui:param name="showBreadcrumbs" value="true"/>
+            <ui:define name="headerTitle"><h:outputText value="#{msg.titleForgotAccount}" /></ui:define>
+            <ui:define name="meta">
+            </ui:define>
+            <ui:define name="breadcrumbs">
+                <li><h:outputText value="#{msg.booking}"/></li>
+                <li><h:outputText value="#{msg.bookingConfirmation}"/></li>
+            </ui:define>
+            <ui:define name="content">
+                <div class="container">
+                    <c:if test="#{empty confirmBook.book}">
+                        <div class="row">
+                            <h1>#{msg.titleBookFails}</h1>
+                            <div class="alert alert-danger" role="alert">
+                                <h2><span class="glyphicon glyphicon-thumbs-down">&nbsp;#{msg.titleBookConfirmFails}</span></h2>
+                                <p><h:outputText escape="false" value="#{msg.messageBookConfirmFails}"/></p>
+                            </div>
+                        </div>
+                    </c:if>
+                    <c:if test="#{not (empty confirmBook.book)}">
+                        <c:if test="#{confirmBook.book.status eq 1}">
+                            <div class="row">
+                                <h1>#{msg.titleBookSuccess}</h1>
+                                <div class="alert alert-success" role="alert">
+                                    <h2><span class="glyphicon glyphicon-thumbs-up">&nbsp;#{msg.titleBookConfirmSuccess}</span></h2>
+                                    <p><h:outputText escape="false" value="#{msg.messageBookConfirmSuccess}"/></p>
+                                    <p:spacer height="100" width="auto"/>
+                                    <h:link value="#{msg.backHome}" outcome="index" class="btn btn-default"/>
+                                </div>
+                            </div>
+                        </c:if>
+                        <c:if test="#{not (confirmBook.book.status eq 1)}">
+                            <div class="row">
+                                <h1>#{msg.titleBookFails}</h1>
+                                <div class="alert alert-danger" role="alert">
+                                    <h2><span class="glyphicon glyphicon-thumbs-down">&nbsp;#{msg.titleBookConfirmFails}</span></h2>
+                                    <p><h:outputText escape="false" value="#{msg.messageBookConfirmFails}"/></p>
+                                </div>
+                            </div>
+                        </c:if>
+                    </c:if>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
+

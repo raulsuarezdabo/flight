@@ -47,13 +47,35 @@ public class BookServiceImpl implements BookService {
             BookEntity book = new BookEntity();
             book.setFlight(flight);
             book.setUser(user);
-            book.setStatus(BookEntity.CONFIM);
+            book.setStatus(BookEntity.PENDING);
             this.bookDAO.addBook(book);
             if (this.flightService.addSeats(flight, seats, book) == false) {
                 throw new Exception("Error! Imposible to add this seats");
             }
             // TODO: Add email notification with the confirmation of the book
             return book;
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    /**
+     * method for update book to confirm
+     * @param book  BookEntity
+     * @return  boolean
+     */
+    @Override
+    @Transactional
+    public BookEntity confirmBook(BookEntity book) {
+        try {
+            book.setStatus(BookEntity.CONFIRM);
+            if (this.bookDAO.updateBook(book) == true) {
+                return this.bookDAO.findById(book.getId());
+            }
+            else {
+                return null;
+            }
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return null;

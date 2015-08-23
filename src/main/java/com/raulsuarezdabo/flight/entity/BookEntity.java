@@ -31,7 +31,8 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @Indexed
 @Table(name = "Book")
 public class BookEntity {
-    public static final int CONFIM = 1;
+    public static final int CONFIRM = 1;
+    public static final int PENDING = 0;
     
     @Id
     @GeneratedValue
@@ -144,8 +145,11 @@ public class BookEntity {
      * @return  String
      */
     public String getNameStatus() {
-        if (this.status.equals(BookEntity.CONFIM) == true) {
+        if (this.status.equals(BookEntity.CONFIRM) == true) {
             return "CONFIRM";
+        }
+        if (this.status.equals(BookEntity.PENDING) == true) {
+            return "PEDING";
         }
         return "UNDEFINED";
     }
