@@ -1,6 +1,7 @@
 package com.raulsuarezdabo.flight.jsf.booking;
 
 import com.raulsuarezdabo.flight.entity.BookEntity;
+import com.raulsuarezdabo.flight.jsf.language.LocaleBean;
 import com.raulsuarezdabo.flight.service.BookService;
 import static java.lang.Integer.parseInt;
 import java.util.Map;
@@ -9,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -73,7 +75,11 @@ public class ConfirmBook {
             Integer id = (Integer) parseInt(parameterMap.get("parameter"));
             this.book = this.bookService.getById(id);
             if (this.book instanceof BookEntity) {
-                this.book = this.bookService.confirmBook(book);
+                FacesContext ctx = FacesContext.getCurrentInstance();
+                ExternalContext extCtx = ctx.getExternalContext();
+                Map<String, Object> sessionMap = extCtx.getSessionMap();
+                LocaleBean locale = (LocaleBean) sessionMap.get("localeBean");
+                this.book = this.bookService.confirmBook(book, locale.getCurrent());
             }
         } catch(Exception e) {
             System.out.println(e.getMessage());

@@ -35,4 +35,16 @@
             <tab>pending</tab>
         </tags>
     </item>
+    <item id="booking_confirmed">
+        <template>booking_confirmed.ftl</template>
+        <from>
+            <email>no-reply@flight-now.com</email>
+            <name>Confirmed book</name>
+        </from>
+        <tags>
+            <tag>book</tag>
+            <tag>user</tag>
+            <tab>confirmed</tab>
+        </tags>
+    </item>
 </collection>

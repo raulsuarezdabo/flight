@@ -71,7 +71,8 @@ public interface BookService {
     /**
      * method for update book to confirm
      * @param book  BookEntity
+     * @param local Locale
      * @return  boolean
      */
-    public BookEntity confirmBook(BookEntity book);
+    public BookEntity confirmBook(BookEntity book, Locale local);
 }

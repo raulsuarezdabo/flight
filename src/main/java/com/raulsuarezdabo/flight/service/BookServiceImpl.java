@@ -74,10 +74,13 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     @Transactional
-    public BookEntity confirmBook(BookEntity book) {
+    public BookEntity confirmBook(BookEntity book, Locale local) {
         try {
             book.setStatus(BookEntity.CONFIRM);
             if (this.bookDAO.updateBook(book) == true) {
+                ArrayList to = new ArrayList();
+                to.add(book.getUser());
+                this.emailService.sendMail(to, this.prepareInfoForemail("booking_confirmed", local, book.getUser(), book), "booking_confirmed", local);
                 return this.bookDAO.findById(book.getId());
             }
             else {
@@ -207,6 +210,10 @@ public class BookServiceImpl implements BookService {
                 map.put("bookText", MessageFormat.format(resource.getString("bookingConfirmationText"), book.getFlight().getAirportFrom().getCity().getName(), book.getFlight().getAirportTo().getCity().getName(), new SimpleDateFormat("MM-dd-yyyy").format(book.getFlight().getStart())));
                 map.put("bookingConfirmationLink", "booking-confirmation/index.xhtml?parameter=" + book.getId());
                 map.put("confirm", resource.getString("confirm"));
+            }
+            if (type.compareTo("booking_confirmed") == 0) {
+                map.put("title", resource.getString("bookingConfirmedEmailTitle"));
+                map.put("bookText", MessageFormat.format(resource.getString("bookingConfirmedText"), book.getFlight().getAirportFrom().getCity().getName(), book.getFlight().getAirportTo().getCity().getName(), new SimpleDateFormat("MM-dd-yyyy").format(book.getFlight().getStart())));
             }
             return map;
         } catch (Exception e) {
