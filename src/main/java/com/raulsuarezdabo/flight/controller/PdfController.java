@@ -26,10 +26,8 @@ public class PdfController {
     @ResponseBody
     public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response, @PathVariable("id") int id)
             throws ServletException, IOException {
-
-        ModelAndView mv = new ModelAndView("pdf.jsp");
-        mv.addObject("id", id);
-        return mv;
+        
+        return new ModelAndView("pdfBuilder", "book", null);
     }
      
 }

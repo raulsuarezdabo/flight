@@ -16,5 +16,10 @@
 
        <!-- Configures the @Controller programming model -->
        <mvc:annotation-driven/>
+       <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+           <property name="location">
+               <value>/WEB-INF/spring-pdf-views.xml</value>
+           </property>
+       </bean>
 
 </beans>
