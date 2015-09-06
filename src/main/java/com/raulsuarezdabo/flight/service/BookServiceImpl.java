@@ -2,6 +2,7 @@
 package com.raulsuarezdabo.flight.service;
 
 import com.mycompany.flight.service.EmailService;
+import com.mycompany.flight.utils.Utils;
 import com.raulsuarezdabo.flight.dao.BookDAO;
 import com.raulsuarezdabo.flight.entity.BookEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
@@ -214,6 +215,8 @@ public class BookServiceImpl implements BookService {
             if (type.compareTo("booking_confirmed") == 0) {
                 map.put("title", resource.getString("bookingConfirmedEmailTitle"));
                 map.put("bookText", MessageFormat.format(resource.getString("bookingConfirmedText"), book.getFlight().getAirportFrom().getCity().getName(), book.getFlight().getAirportTo().getCity().getName(), new SimpleDateFormat("MM-dd-yyyy").format(book.getFlight().getStart())));
+                map.put("bookLink", Utils.getUrl("book" + book.getId() + ".pdf", null));
+                map.put("printPdf", resource.getString("printPdf"));
             }
             return map;
         } catch (Exception e) {

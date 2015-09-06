@@ -8,6 +8,7 @@
                 <td>
                     <h1>${wellcome}</h1>
                     <p class="lead">${bookText}</p>
+                    <a href="${bookLink}">${printPdf}</a>
                 </td>
                 <td class="expander"></td>
             </tr>

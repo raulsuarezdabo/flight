@@ -2,6 +2,7 @@
 package com.raulsuarezdabo.flight.jsf.user;
 
 import com.mycompany.flight.service.UserService;
+import com.mycompany.flight.utils.Utils;
 import com.raulsuarezdabo.flight.entity.BookEntity;
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import com.raulsuarezdabo.flight.service.BookService;
@@ -91,6 +92,15 @@ public class BookUserBean {
      */
     public void setBooks(List<BookEntity> books) {
         this.books = books;
+    }
+    
+    /**
+     * Method to get url 
+     * @param book  BookEntity
+     * @return  String
+     */
+    public String getBookPdf(BookEntity book) {
+        return Utils.getUrl("book" + book.getId() + ".pdf", null);
     }
 
     /**

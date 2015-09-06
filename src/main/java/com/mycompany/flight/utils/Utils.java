@@ -96,7 +96,7 @@ public class Utils {
             
             boolean first = true;
             
-            if (get.isEmpty() == false) {
+            if (get != null && get.isEmpty() == false) {
                 Set<String> key = get.keySet();
                 Iterator iterator = key.iterator();
                 while (iterator.hasNext() == true) {
