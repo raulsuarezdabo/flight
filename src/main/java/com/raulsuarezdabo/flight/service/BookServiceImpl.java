@@ -17,12 +17,14 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service to manage book layer logic
  * @author raulsuarez
  */
+@Service
 public class BookServiceImpl implements BookService {
     
     public static int DAYS = 60;
