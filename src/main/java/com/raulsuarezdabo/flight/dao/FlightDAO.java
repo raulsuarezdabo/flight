@@ -35,6 +35,13 @@ public interface FlightDAO {
     public FlightEntity findByCode(String code);
     
     /**
+     * Find flights by date of takes off
+     * @param date  Date
+     * @return  List of Flights
+     */
+    public List<FlightEntity> findByDate(Date date);
+    
+    /**
      * Add new airplane
      * @param flight
      */
@@ -87,5 +94,13 @@ public interface FlightDAO {
      * @return  List
      */
     public List findCountFlightsByDate(int days);
+    
+    /**
+     * 
+     * @param flight    FlightEntity
+     * @param type  int
+     * @return  List of seats
+     */
+    public List<SeatEntity> getSeatsByFlightClass(FlightEntity flight, int type);
     
 }

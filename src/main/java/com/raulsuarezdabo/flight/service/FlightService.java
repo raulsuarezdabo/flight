@@ -78,7 +78,7 @@ public interface FlightService {
      * Methods for adding seats
      * @param flight    FlightEntity
      * @param seats     SeatEntity
-     * @param <error>   BookEntity
+     * @param book      BookEntity
      * @return  boolean
      */
     public boolean addSeats(FlightEntity flight, Set<SeatEntity> seats, BookEntity book);
@@ -104,5 +104,12 @@ public interface FlightService {
      * @return  HashMap
      */
     public List getChart();
+    
+    /**
+     * Method to get day flights available
+     * @param date
+     * @return 
+     */
+    public List<FlightEntity> getOffersOfDay(Date date);
     
 }

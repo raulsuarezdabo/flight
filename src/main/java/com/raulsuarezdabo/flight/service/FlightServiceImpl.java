@@ -262,6 +262,29 @@ public class FlightServiceImpl implements FlightService {
     }
     
     /**
+     * Method to get day flights available
+     * @param date
+     * @return 
+     */
+    @Override
+    public List<FlightEntity> getOffersOfDay(Date date) {
+        try {
+            List <FlightEntity> dateFlights = this.flightDAO.findByDate(date);
+            List<FlightEntity> result = new ArrayList();
+            for (FlightEntity flight: dateFlights) {
+                int tourist = flight.getAirplane().getNumSeatsTourist();
+                List <SeatEntity> seats = this.flightDAO.getSeatsByFlightClass(flight, ClassEntity.TOURIST);
+                if (seats.size() < tourist) {
+                    result.add(flight);
+                }
+            }
+            return result;
+        } catch(Exception e) {
+            return new ArrayList();
+        }
+    }
+    
+    /**
      * Method for returning a report for chart
      * @return  List
      */

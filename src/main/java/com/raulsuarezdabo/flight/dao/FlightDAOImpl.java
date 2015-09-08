@@ -88,6 +88,31 @@ public class FlightDAOImpl implements FlightDAO {
             return null;
         }
     }
+    
+    /**
+     * Find flights by date of takes off
+     * @param date  Date
+     * @return  List of Flights
+     */
+    @Override
+    public List<FlightEntity> findByDate(Date date) {
+        try {
+            Query query = this.entityManager.createQuery("SELECT f "
+                    + "FROM FlightEntity f "
+                    + "WHERE day(f.start) = :day AND month(f.start) = :month AND year(f.start) = :year "
+                    + "ORDER BY f.start DESC"
+            );
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            query.setParameter("day", cal.get(Calendar.DAY_OF_MONTH));
+            query.setParameter("month", cal.get(Calendar.MONTH) + 1);
+            query.setParameter("year", cal.get(Calendar.YEAR));
+            return query.getResultList();
+        } catch (HibernateException e) {
+            return new ArrayList();
+        }
+    }
 
     /**
      * Add new flight
@@ -235,6 +260,29 @@ public class FlightDAOImpl implements FlightDAO {
         } catch(Exception e) {
             System.out.println("fsdafdsadsfadsfas" + e.getMessage());
             return false;
+        }
+    }
+    
+    /**
+     * 
+     * @param flight    FlightEntity
+     * @param type  int
+     * @return  List of seats
+     */
+    @Override
+    public List<SeatEntity> getSeatsByFlightClass(FlightEntity flight, int type) {
+        try {
+            Query query = this.entityManager.createQuery("SELECT f "
+                    + "FROM SeatEntity s "
+                    + "INNER JOIN s.flight f "
+                    + "WHERE s.flight = :flight AND s.type = :type "
+            );
+            query.setParameter("flight", flight);
+            query.setParameter("type", type);
+            return query.getResultList();
+                    
+        } catch(Exception e) {
+            return new ArrayList();
         }
     }
 
