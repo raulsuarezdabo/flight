@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
     </h:head>
     <h:body role="document">
@@ -41,10 +42,13 @@
                                                     onchange="#{seatBookingBean.checkAvailableFlight(item)}">
                                                 <f:selectItem itemLabel="TOURIST" itemValue="1"/>
                                                 <f:selectItem itemLabel="BUSINESS" itemValue="2"/>
+                                                <c:if test="#{seatBookingBean.isOffer()}">
+                                                    <f:selectItem itemLabel="OFFERT" itemValue="3"/>
+                                                </c:if>
                                                 <f:selectItem itemLabel="#{msg.seatClassPlaceholder}" itemValue=""/>
                                                 <f:ajax event="change" render="seatClassMessage"/>
                                             </h:selectOneMenu>
-                                            <h:message for="seatClass" style="color: crimson" id="seatClassMessage"/>
+                                            <h:message for="seatClass" style="color: crimson" id="seatClassMessage"/>                                            
                                         </h:panelGrid>
                                     </div>
                                 </ui:repeat>
@@ -55,6 +59,9 @@
                                     <p:commandButton value="#{msg.buttonNext}" process="@form" action="#{seatBookingBean.submitAction()}" partialSubmit="true">
                                         <f:ajax execute="@form" render="seatsForm" />
                                     </p:commandButton>
+                                    <c:if test="#{seatBookingBean.isOffer()}">
+                                        <p class="text-primary">*#{msg.offerMessage}</p>
+                                    </c:if>
                                 </h:panelGrid>
                             </div>
                         </h:form>

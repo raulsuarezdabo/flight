@@ -2,6 +2,7 @@ package com.raulsuarezdabo.flight.dao;
 
 import com.raulsuarezdabo.flight.entity.BookEntity;
 import com.raulsuarezdabo.flight.entity.CityEntity;
+import com.raulsuarezdabo.flight.entity.ClassEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
 import java.util.ArrayList;
@@ -91,23 +92,21 @@ public class FlightDAOImpl implements FlightDAO {
     
     /**
      * Find flights by date of takes off
-     * @param date  Date
+     * @param from  Date
+     * @param to    Date
      * @return  List of Flights
      */
     @Override
-    public List<FlightEntity> findByDate(Date date) {
+    public List<FlightEntity> findByDate(Date from, Date to) {
         try {
             Query query = this.entityManager.createQuery("SELECT f "
                     + "FROM FlightEntity f "
-                    + "WHERE day(f.start) = :day AND month(f.start) = :month AND year(f.start) = :year "
+                    + "WHERE f.start > :from AND f.start < :to "
                     + "ORDER BY f.start DESC"
             );
 
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(date);
-            query.setParameter("day", cal.get(Calendar.DAY_OF_MONTH));
-            query.setParameter("month", cal.get(Calendar.MONTH) + 1);
-            query.setParameter("year", cal.get(Calendar.YEAR));
+            query.setParameter("from", from);
+            query.setParameter("to", to);
             return query.getResultList();
         } catch (HibernateException e) {
             return new ArrayList();
@@ -254,6 +253,9 @@ public class FlightDAOImpl implements FlightDAO {
             seat.setFlight(flight);
             //this.entityManager.persist(seat);
             seat.setBook(book);
+            if (flight.isOffer() == false) {
+                seat.setType(ClassEntity.TOURIST);
+            }
             flight.addSeat(seat);
             this.entityManager.merge(flight);
             return true;

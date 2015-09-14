@@ -36,10 +36,11 @@ public interface FlightDAO {
     
     /**
      * Find flights by date of takes off
-     * @param date  Date
+     * @param from  Date
+     * @param to    Date
      * @return  List of Flights
      */
-    public List<FlightEntity> findByDate(Date date);
+    public List<FlightEntity> findByDate(Date from, Date to);
     
     /**
      * Add new airplane

@@ -107,9 +107,8 @@ public interface FlightService {
     
     /**
      * Method to get day flights available
-     * @param date
      * @return 
      */
-    public List<FlightEntity> getOffersOfDay(Date date);
+    public List<FlightEntity> getOffersOfDay();
     
 }

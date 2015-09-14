@@ -84,7 +84,6 @@ public class OfferFlightBean {
     
     @PostConstruct
     public void init() {
-        this.date = new Date();
-        this.flights = this.flightService.getOffersOfDay(date);
+        this.flights = this.flightService.getOffersOfDay();
     }
 }

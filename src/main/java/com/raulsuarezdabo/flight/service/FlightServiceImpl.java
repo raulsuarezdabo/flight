@@ -14,6 +14,7 @@ import com.raulsuarezdabo.flight.entity.ClassEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -227,7 +228,7 @@ public class FlightServiceImpl implements FlightService {
     @Transactional
     public boolean checkAvaliabilty(FlightEntity flight, SeatEntity seat) {
         int numberClassSeat;
-        if (seat.getType() == ClassEntity.TOURIST) {
+        if (seat.getType() == ClassEntity.TOURIST || seat.getType() == ClassEntity.OFFER) {
             numberClassSeat = flight.getAirplane().getNumSeatsTourist();
         } else if (seat.getType() == ClassEntity.BUSINESS) {
             numberClassSeat = flight.getAirplane().getNumSeatsBusiness();
@@ -263,13 +264,18 @@ public class FlightServiceImpl implements FlightService {
     
     /**
      * Method to get day flights available
-     * @param date
      * @return 
      */
     @Override
-    public List<FlightEntity> getOffersOfDay(Date date) {
+    public List<FlightEntity> getOffersOfDay() {
         try {
-            List <FlightEntity> dateFlights = this.flightDAO.findByDate(date);
+            Date now = new Date();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date());
+            cal.add(Calendar.DATE, +1);
+            Date tomorrow = cal.getTime();
+            
+            List <FlightEntity> dateFlights = this.flightDAO.findByDate(now, tomorrow);
             List<FlightEntity> result = new ArrayList();
             for (FlightEntity flight: dateFlights) {
                 int tourist = flight.getAirplane().getNumSeatsTourist();

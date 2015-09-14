@@ -1,6 +1,7 @@
 package com.raulsuarezdabo.flight.entity;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -215,6 +216,22 @@ public class FlightEntity implements Serializable {
         if (currentSeats.contains(seat) == true) {
             this.seats.remove(seat);
         }
+    }
+    
+    /**
+     * Method to know if a flight it's inside of offer or not
+     * @return  boolean
+     */
+    public boolean isOffer() {
+        Date now = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.DATE, 1);
+        Date tomorrow = cal.getTime();
+        if (this.start.after(now) && this.start.before(tomorrow)) {
+            return true;
+        }
+        return false;
     }
     
 }

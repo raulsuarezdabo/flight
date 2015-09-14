@@ -34,7 +34,7 @@
                             <h:selectOneRadio id="flightGoId" value="#{bookingSearchBean.bookingSearchPojo.selectedFlightGo}" required="true" requiredMessage="#{msg.flightGoRequired}" immediate="true">
                                 <f:selectItems var="item" value="#{bookingSearchBean.flightsGo}" 
                                                itemValue="#{item.id}" 
-                                               itemLabel="&nbsp;#{item.airportFrom.name}[#{item.airportFrom.code}] #{item.airportTo.name} [#{item.airportTo.code}] #{item.start.toString()} #{msg.flightAmount} #{item.time}">
+                                               itemLabel="&nbsp;#{item.airportFrom.name}[#{item.airportFrom.code}] #{item.airportTo.name} [#{item.airportTo.code}] #{item.start.toString()} #{msg.flightAmount} #{item.time} #{item.isOffer() ? msg.offerCall : ''}">
                                 </f:selectItems>
                             </h:selectOneRadio>
                             <h:message for="flightGoId" style="color: crimson" id="flightGoIdMessage" />

@@ -42,7 +42,7 @@ public class SeatBookingBean {
      * Entity seat for storing information on db
      */
     private Set<SeatEntity> seats;
-
+    
     /**
      * Creates a new instance of SeatBookingBean
      */
@@ -170,7 +170,26 @@ public class SeatBookingBean {
         }
         return true;
     }
-
+    
+    /**
+     * Method to know if is a offer seat available or not
+     * @return  boolean
+     */
+    public boolean isOffer() {
+        try {
+            if (this.flightService.getById(this.bookingSearchPojo.getSelectedFlightGo()).isOffer()) {
+                return true;
+            }
+            if (this.flightService.getById(this.bookingSearchPojo.getSelectedFlightBack()).isOffer()) {
+                return true;
+            }
+            return false;
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+    
     @PostConstruct
     public void init() {
         this.bookingSearchPojo = new BookingSearchPojo();
