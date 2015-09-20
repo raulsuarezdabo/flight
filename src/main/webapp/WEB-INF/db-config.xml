@@ -28,8 +28,5 @@
         <property name="jpaDialect" ref="jpaDialect" />
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager" />
-    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-        <!--<property name="dataSource" ref="dataSource"></property>
-        <property name="sessionFactory" ref="sessionFactory"></property>-->
-    </bean>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"/>
 </beans>

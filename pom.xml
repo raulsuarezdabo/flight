@@ -15,6 +15,7 @@
         <spring.version>4.1.0.RELEASE</spring.version>
         <spring-security.version>3.2.5.RELEASE</spring-security.version>
         <spring-faces.version>2.4.1.RELEASE</spring-faces.version>
+        <spring-batch.version>3.0.5.RELEASE</spring-batch.version>
         <hibernate.version>4.3.8.Final</hibernate.version>
         <hibernate-search.version>5.1.1.Final</hibernate-search.version>
     </properties>
@@ -36,12 +37,6 @@
             <artifactId>all-themes</artifactId>  
             <version>1.0.10</version>  
         </dependency>
-        <!--
-        <dependency>
-            <groupId>com.ocpsoft</groupId>
-            <artifactId>prettyfaces-jsf2</artifactId>
-            <version>3.3.3</version>
-        </dependency>-->
         <!-- HIBERNATE FRAMEWORK DEPENDENCIES -->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -177,8 +172,36 @@
             <version>2.6</version>
             <type>jar</type>
         </dependency>
+        <!-- DEPENDENCIES FOR BATCH PROCESS WITH SPRING BATCH -->
+        <dependency>
+            <groupId>org.springframework.batch</groupId>
+            <artifactId>spring-batch-core</artifactId>
+            <version>${spring-batch.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.batch</groupId>
+            <artifactId>spring-batch-infrastructure</artifactId>
+            <version>${spring-batch.version}</version>
+        </dependency>
+        <!-- DEPENDENCIES FOR LOGGIN WITH SPRING BATCH -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+        <!-- DEPENDENCIES FOR PROJECT AUTOSTART, SPRING ROO
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+            <version>1.2.5.RELEASE</version>
+        </dependency>-->
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
