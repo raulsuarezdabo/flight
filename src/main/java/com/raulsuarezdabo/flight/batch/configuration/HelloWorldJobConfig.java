@@ -29,8 +29,8 @@ public class HelloWorldJobConfig {
     private InfrastructureConfiguration infrastructureConfiguration;
      
     @Autowired
-    private DataSource dataSource; // just for show...
-
+    private DataSource dataSource;
+    
     public JobBuilderFactory getJobBuilders() {
         return jobBuilders;
     }

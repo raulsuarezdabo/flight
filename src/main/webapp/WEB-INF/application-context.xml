@@ -8,6 +8,7 @@
             http://www.springframework.org/schema/context 
             http://www.springframework.org/schema/context/spring-context-4.0.xsd">
     <context:component-scan base-package="com" />
+    <context:property-placeholder location="classpath:/com/raulsuarezdabo/flight/database.properties"/>
     <import resource="/db-config.xml"/>
     <import resource="/security-context.xml"/>
     <context:annotation-config />
