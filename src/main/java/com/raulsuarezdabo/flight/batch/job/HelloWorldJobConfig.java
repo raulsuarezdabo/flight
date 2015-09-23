@@ -1,5 +1,6 @@
-package com.raulsuarezdabo.flight.batch.configuration;
+package com.raulsuarezdabo.flight.batch.job;
 
+import com.raulsuarezdabo.flight.batch.configuration.InfrastructureConfiguration;
 import com.raulsuarezdabo.flight.batch.tasket.HelloWorldTasklet;
 import javax.sql.DataSource;
 import org.springframework.batch.core.Job;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import com.raulsuarezdabo.flight.batch.configuration.StandaloneInfrastructureConfiguration;
 
 /**
  *
