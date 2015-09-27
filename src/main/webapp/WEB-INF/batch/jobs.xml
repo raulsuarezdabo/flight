@@ -19,6 +19,5 @@
         </step>
     </job>
     
-    <task:scheduler id="scheduler" />
-    <task:annotation-driven scheduler="scheduler"/>
+    <import resource="/scheduler.xml"/>
 </beans>
