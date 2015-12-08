@@ -75,4 +75,10 @@ public interface BookService {
      * @return  boolean
      */
     public BookEntity confirmBook(BookEntity book, Locale local);
+    
+    /**
+     * Method to notify by email a incomming flight
+     * @param book  BookEntity
+     */
+    public void notifyIncommingFlight(BookEntity book);
 }

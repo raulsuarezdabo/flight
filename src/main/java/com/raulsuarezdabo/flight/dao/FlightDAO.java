@@ -104,4 +104,11 @@ public interface FlightDAO {
      */
     public List<SeatEntity> getSeatsByFlightClass(FlightEntity flight, int type);
     
+    /**
+     * Find flights that takes off by date
+     * @param date
+     * @return  List
+     */
+    public List<FlightEntity> findByDate(Date date);
+    
 }

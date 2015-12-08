@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author raulsuarez
  */
-public class HelloWorldScheduler {
+public class FlightScheduler {
     @Autowired
     private JobLauncher launcher;
     

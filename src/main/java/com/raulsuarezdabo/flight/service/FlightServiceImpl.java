@@ -303,4 +303,19 @@ public class FlightServiceImpl implements FlightService {
             return null;
         }
     }
+
+    /**
+     * Method to get flights that takes off on specific date.
+     * @param date  Date
+     * @return  List
+     */
+    @Override
+    public List<FlightEntity> getTakeOffByDate(Date date) {
+        try {
+            return this.flightDAO.findByDate(date);
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return new ArrayList();
+        }
+    }
 }

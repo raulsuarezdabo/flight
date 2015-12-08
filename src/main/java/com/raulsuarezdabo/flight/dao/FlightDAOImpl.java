@@ -8,9 +8,7 @@ import com.raulsuarezdabo.flight.entity.SeatEntity;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -109,6 +107,31 @@ public class FlightDAOImpl implements FlightDAO {
             query.setParameter("to", to);
             return query.getResultList();
         } catch (HibernateException e) {
+            return new ArrayList();
+        }
+    }
+    
+    /**
+     * Find flights by date
+     * @param date
+     * @return 
+     */
+    @Override
+    public List<FlightEntity> findByDate(Date date) {
+        try {
+            Query query = this.entityManager.createQuery("SELECT f "
+                    + "FROM FlightEntity f "
+                    + "WHERE day(f.start) = :day AND month(f.start) = :month AND year(f.start) = :year "
+                    + "ORDER BY f.start DESC"
+            );
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            query.setParameter("day", cal.get(Calendar.DAY_OF_MONTH));
+            query.setParameter("month", cal.get(Calendar.MONTH) + 1);
+            query.setParameter("year", cal.get(Calendar.YEAR));
+            return query.getResultList();
+        } catch(HibernateException e) {
             return new ArrayList();
         }
     }

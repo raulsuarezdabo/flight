@@ -111,4 +111,11 @@ public interface FlightService {
      */
     public List<FlightEntity> getOffersOfDay();
     
+    /**
+     * Method to get flight that takes off on 
+     * @param date
+     * @return 
+     */
+    public List<FlightEntity> getTakeOffByDate(Date date);
+    
 }

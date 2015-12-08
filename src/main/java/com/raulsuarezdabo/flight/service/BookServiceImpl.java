@@ -189,6 +189,18 @@ public class BookServiceImpl implements BookService {
     }
     
     /**
+     * Method to notify incomming flight
+     * @param book  BookEntity
+     */
+    @Override
+    public void notifyIncommingFlight(BookEntity book) {
+        Locale local = new Locale("ES", "ES");
+        ArrayList to = new ArrayList();
+            to.add(book.getUser());
+            this.emailService.sendMail(to, this.prepareInfoForemail("booking_reminder_take_off", local, book.getUser(), book), "booking_reminder_take_off", local);
+    }
+    
+    /**
      * Method that prepares the information for the email
      *
      * @param wellcome type of e-mail
@@ -219,6 +231,10 @@ public class BookServiceImpl implements BookService {
                 map.put("bookText", MessageFormat.format(resource.getString("bookingConfirmedText"), book.getFlight().getAirportFrom().getCity().getName(), book.getFlight().getAirportTo().getCity().getName(), new SimpleDateFormat("MM-dd-yyyy").format(book.getFlight().getStart())));
                 map.put("bookLink", Utils.getUrl("book" + book.getId() + ".pdf", null));
                 map.put("printPdf", resource.getString("printPdf"));
+            }
+            if (type.compareTo("booking_reminder_take_off") == 0) {
+                map.put("title", resource.getString("bookingReminderTakeOffEmailTitle"));
+                map.put("bookText", MessageFormat.format(resource.getString("bookingReminderTakeOffText"), book.getFlight().getAirportFrom().getCity().getName(), book.getFlight().getAirportTo().getCity().getName(), new SimpleDateFormat("MM-dd-yyyy").format(book.getFlight().getStart())));
             }
             return map;
         } catch (Exception e) {

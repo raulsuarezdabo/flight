@@ -11,10 +11,10 @@
         http://www.springframework.org/schema/task
         http://www.springframework.org/schema/task/spring-task.xsd">
     
-    <bean id="helloWorldScheduler" class="com.raulsuarezdabo.flight.batch.scheduler.HelloWorldScheduler"></bean>
+    <bean id="flightScheduler" class="com.raulsuarezdabo.flight.batch.scheduler.FlightScheduler"></bean>
     
     <task:scheduled-tasks>
-        <task:scheduled ref="helloWorldScheduler" method="run" cron="*/5 * * * * *"/>
+        <task:scheduled ref="flightScheduler" method="run" cron="*/5 * * * * *"/>
     </task:scheduled-tasks>
 
 </beans>

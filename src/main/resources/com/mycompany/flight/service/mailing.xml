@@ -47,4 +47,16 @@
             <tab>confirmed</tab>
         </tags>
     </item>
+    <item id="booking_reminder_take_off">
+        <template>booking_reminder_take_off.ftl</template>
+        <from>
+            <email>no-reply@flight-now.com</email>
+            <name>Reminder book is take off</name>
+        </from>
+        <tags>
+            <tag>book</tag>
+            <tag>user</tag>
+            <tab>reminder</tab>
+        </tags>
+    </item>
 </collection>
