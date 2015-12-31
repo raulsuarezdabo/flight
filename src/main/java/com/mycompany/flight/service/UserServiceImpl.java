@@ -1,3 +1,12 @@
+/**
+ * 
+ * This file is part of the Master Java specialization for Atrium Final Project.
+ *
+ * @author Raul Suarez Dabo <raul@suarez.com.es>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 package com.mycompany.flight.service;
 
 import com.mycompany.flight.dao.UserDAOImpl;
@@ -24,10 +33,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author raulsuarez
- */
 @Service
 @Transactional
 public class UserServiceImpl implements UserService, UserDetailsService {
