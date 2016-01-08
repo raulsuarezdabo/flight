@@ -9,7 +9,7 @@
  */
 package com.raulsuarezdabo.flight.jsf.listener;
 
-import com.mycompany.flight.utils.SessionConstantsName;
+import com.raulsuarezdabo.flight.utils.SessionConstantsName;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AbortProcessingException;

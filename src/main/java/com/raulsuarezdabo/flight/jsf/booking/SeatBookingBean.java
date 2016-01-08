@@ -9,7 +9,7 @@
  */
 package com.raulsuarezdabo.flight.jsf.booking;
 
-import com.mycompany.flight.utils.SessionConstantsName;
+import com.raulsuarezdabo.flight.utils.SessionConstantsName;
 import com.raulsuarezdabo.flight.entity.FlightEntity;
 import com.raulsuarezdabo.flight.entity.SeatEntity;
 import com.raulsuarezdabo.flight.jsf.message.Message;

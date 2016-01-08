@@ -11,7 +11,7 @@
 package com.raulsuarezdabo.flight.jsf.user;
 
 import com.mycompany.flight.service.UserService;
-import com.mycompany.flight.utils.Utils;
+import com.raulsuarezdabo.flight.utils.Utils;
 import com.raulsuarezdabo.flight.entity.BookEntity;
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import com.raulsuarezdabo.flight.service.BookService;

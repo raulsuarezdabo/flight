@@ -10,7 +10,7 @@
 package com.raulsuarezdabo.flight.service;
 
 import com.mycompany.flight.service.EmailService;
-import com.mycompany.flight.utils.Utils;
+import com.raulsuarezdabo.flight.utils.Utils;
 import com.raulsuarezdabo.flight.dao.BookDAO;
 import com.raulsuarezdabo.flight.entity.BookEntity;
 import com.raulsuarezdabo.flight.entity.FlightEntity;

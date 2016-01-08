@@ -9,7 +9,7 @@
  */
 package com.mycompany.flight.security.handler;
 
-import com.mycompany.flight.utils.SessionConstantsName;
+import com.raulsuarezdabo.flight.utils.SessionConstantsName;
 import com.raulsuarezdabo.flight.entity.RoleEntity;
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import java.io.IOException;

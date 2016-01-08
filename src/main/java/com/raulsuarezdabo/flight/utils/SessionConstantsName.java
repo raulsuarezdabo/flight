@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-package com.mycompany.flight.utils;
+package com.raulsuarezdabo.flight.utils;
 
 public class SessionConstantsName {
     public static String BOOKINGSEARCH = "bookingsearch";

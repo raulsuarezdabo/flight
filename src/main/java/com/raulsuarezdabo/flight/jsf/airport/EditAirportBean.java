@@ -9,7 +9,7 @@
  */
 package com.raulsuarezdabo.flight.jsf.airport;
 
-import com.mycompany.flight.utils.Utils;
+import com.raulsuarezdabo.flight.utils.Utils;
 import com.raulsuarezdabo.flight.entity.AirportEntity;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
