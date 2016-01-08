@@ -7,36 +7,24 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-package com.mycompany.flight.dao;
+package com.raulsuarezdabo.flight.dao;
 
-import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
 import java.util.List;
 
-/**
- *
- * @author raulsuarez
- */
-public interface CityDAO {
+public interface CountryDAO {
     /**
      * Find by code on the country table
      *
-     * @param id
+     * @param code
      * @return CountryEntity with the param asociated or null
      */
-    public CityEntity findById(int id);
-    
-    /**
-     * Find a list of Cities from a Country
-     * @param country
-     * @return 
-     */
-    public List<CityEntity> findByCountry(CountryEntity country);
+    public CountryEntity findById(String code);
     
     /**
      * Get all from country table
      * @return List of countryEntity
      */
-    public List<CityEntity> findAll();
+    public List<CountryEntity> findAll();
 
 }

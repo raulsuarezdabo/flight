@@ -9,7 +9,7 @@
  */
 package com.raulsuarezdabo.flight.service;
 
-import com.mycompany.flight.dao.CountryDAO;
+import com.raulsuarezdabo.flight.dao.CountryDAO;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
 import java.util.ArrayList;
 import java.util.List;
