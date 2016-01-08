@@ -1,7 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * 
+ * This file is part of the Master Java specialization for Atrium Final Project.
+ *
+ * @author Raul Suarez Dabo <raul@suarez.com.es>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 package com.mycompany.flight.dao;
 
@@ -14,10 +18,6 @@ import org.hibernate.HibernateException;
 import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
 
-/**
- *
- * @author raulsuarez
- */
 @Repository
 public class CityDAOImpl implements CityDAO {
 

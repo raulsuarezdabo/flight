@@ -1,8 +1,11 @@
 /**
- * Handler that choose where is the correct redirection after the login by
- * Spring Security
+ * 
+ * This file is part of the Master Java specialization for Atrium Final Project.
  *
- * @author raulsuarez
+ * @author Raul Suarez Dabo <raul@suarez.com.es>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 package com.mycompany.flight.security.handler;
 

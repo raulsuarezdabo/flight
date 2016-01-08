@@ -1,3 +1,12 @@
+/**
+ * 
+ * This file is part of the Master Java specialization for Atrium Final Project.
+ *
+ * @author Raul Suarez Dabo <raul@suarez.com.es>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 package com.raulsuarezdabo.flight.batch.scheduler;
 
 import org.springframework.batch.core.Job;
@@ -10,10 +19,6 @@ import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteExcep
 import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.beans.factory.annotation.Autowired;
 
-/**
- *
- * @author raulsuarez
- */
 public class FlightScheduler {
     @Autowired
     private JobLauncher launcher;
