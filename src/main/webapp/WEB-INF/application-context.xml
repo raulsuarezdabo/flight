@@ -31,8 +31,8 @@
     <bean id="flightService"    class="com.raulsuarezdabo.flight.service.FlightServiceImpl"></bean>
     <bean id="seatService"      class="com.raulsuarezdabo.flight.service.SeatServiceImpl"></bean>
     <bean id="bookService"      class="com.raulsuarezdabo.flight.service.BookServiceImpl"></bean>
-    <bean id="myAuthenticationSuccessHandler" class="com.mycompany.flight.security.handler.MyAuthenticationSuccessHandler"></bean>
-    <bean id="myAuthenticationFailureHandler" class="com.mycompany.flight.security.handler.MyAuthenticationFailureHandler"></bean>
+    <bean id="myAuthenticationSuccessHandler" class="com.raulsuarezdabo.flight.security.handler.MyAuthenticationSuccessHandler"></bean>
+    <bean id="myAuthenticationFailureHandler" class="com.raulsuarezdabo.flight.security.handler.MyAuthenticationFailureHandler"></bean>
     
     <!-- SPRING BATCH DEFINITIONS -->
     <import resource="/batch.xml"/>
