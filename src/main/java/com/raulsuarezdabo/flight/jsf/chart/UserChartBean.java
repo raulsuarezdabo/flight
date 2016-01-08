@@ -9,7 +9,7 @@
  */
 package com.raulsuarezdabo.flight.jsf.chart;
 
-import com.mycompany.flight.service.UserService;
+import com.raulsuarezdabo.flight.service.UserService;
 import com.raulsuarezdabo.flight.service.BookService;
 import java.io.Serializable;
 import java.sql.Timestamp;

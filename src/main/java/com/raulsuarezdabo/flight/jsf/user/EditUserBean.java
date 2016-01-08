@@ -12,7 +12,7 @@ package com.raulsuarezdabo.flight.jsf.user;
 import com.raulsuarezdabo.flight.entity.CityEntity;
 import com.raulsuarezdabo.flight.entity.CountryEntity;
 import com.raulsuarezdabo.flight.entity.UserEntity;
-import com.mycompany.flight.service.UserService;
+import com.raulsuarezdabo.flight.service.UserService;
 import com.raulsuarezdabo.flight.utils.Utils;
 import com.raulsuarezdabo.flight.jsf.message.Message;
 import com.raulsuarezdabo.flight.service.CityService;

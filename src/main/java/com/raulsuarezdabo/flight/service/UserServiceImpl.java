@@ -7,8 +7,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-package com.mycompany.flight.service;
+package com.raulsuarezdabo.flight.service;
 
+import com.mycompany.flight.service.EmailServiceImpl;
 import com.raulsuarezdabo.flight.dao.UserDAOImpl;
 import com.raulsuarezdabo.flight.utils.Utils;
 import com.raulsuarezdabo.flight.entity.CityEntity;

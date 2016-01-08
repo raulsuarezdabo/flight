@@ -10,7 +10,7 @@
 package com.raulsuarezdabo.flight.jsf.user;
 
 import com.raulsuarezdabo.flight.jsf.language.LocaleBean;
-import com.mycompany.flight.service.UserService;
+import com.raulsuarezdabo.flight.service.UserService;
 import java.io.Serializable;
 import java.util.Map;
 import javax.faces.application.FacesMessage;

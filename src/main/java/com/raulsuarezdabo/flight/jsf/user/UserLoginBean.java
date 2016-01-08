@@ -10,7 +10,7 @@
 package com.raulsuarezdabo.flight.jsf.user;
 
 import com.raulsuarezdabo.flight.entity.UserEntity;
-import com.mycompany.flight.service.UserService;
+import com.raulsuarezdabo.flight.service.UserService;
 import com.raulsuarezdabo.flight.entity.RoleEntity;
 import com.raulsuarezdabo.flight.jsf.message.Message;
 import java.io.IOException;

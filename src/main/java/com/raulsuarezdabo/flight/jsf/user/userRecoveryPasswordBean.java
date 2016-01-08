@@ -9,7 +9,7 @@
  */
 package com.raulsuarezdabo.flight.jsf.user;
 
-import com.mycompany.flight.service.UserService;
+import com.raulsuarezdabo.flight.service.UserService;
 import com.raulsuarezdabo.flight.entity.UserEntity;
 import com.raulsuarezdabo.flight.jsf.message.Message;
 import java.io.UnsupportedEncodingException;

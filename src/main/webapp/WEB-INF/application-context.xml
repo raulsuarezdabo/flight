@@ -21,7 +21,7 @@
         <property name="freemarkerConfiguration" ref="freemarkerConfiguration" />
     </bean>
     <!-- BEANS OF THE PROYECT -->
-    <bean id="userService"      class="com.mycompany.flight.service.UserServiceImpl" ></bean>
+    <bean id="userService"      class="com.raulsuarezdabo.flight.service.UserServiceImpl" ></bean>
     <bean id="countryService"   class="com.raulsuarezdabo.flight.service.CountryServiceImpl" ></bean>
     <bean id="cityService"      class="com.raulsuarezdabo.flight.service.CityServiceImpl" ></bean>
     <bean id="roleService"      class="com.raulsuarezdabo.flight.service.RoleServiceImpl" ></bean>
