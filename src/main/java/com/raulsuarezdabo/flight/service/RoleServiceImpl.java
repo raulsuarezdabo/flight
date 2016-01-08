@@ -9,7 +9,7 @@
  */
 package com.raulsuarezdabo.flight.service;
 
-import com.mycompany.flight.dao.RoleDAO;
+import com.raulsuarezdabo.flight.dao.RoleDAO;
 import com.raulsuarezdabo.flight.entity.RoleEntity;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
