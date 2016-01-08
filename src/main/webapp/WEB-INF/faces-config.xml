@@ -11,7 +11,7 @@
             <supported-locale>EN</supported-locale>
         </locale-config>
         <resource-bundle>
-            <base-name>com.mycompany.flight.messages</base-name>
+            <base-name>com.raulsuarezdabo.flight.messages</base-name>
             <var>msg</var>
         </resource-bundle>
         <!-- LISTENERS -->
@@ -23,11 +23,11 @@
     <!-- VALIDATORS -->
     <validator>
         <validator-id>ageValidator</validator-id>
-        <validator-class>com.mycompany.flight.jsf.validator.AgeValidator</validator-class>
+        <validator-class>com.raulsuarezdabo.flight.jsf.validator.AgeValidator</validator-class>
     </validator>
     <validator>
         <validator-id>requiredCheckboxValidator</validator-id>
-        <validator-class>com.mycompany.flight.jsf.validator.RequiredCheckboxValidator</validator-class>
+        <validator-class>com.raulsuarezdabo.flight.jsf.validator.RequiredCheckboxValidator</validator-class>
     </validator>
     <!-- CONVERTER DECLARATIONS -->
     <!-- NAVIGATIONS RULES -->
