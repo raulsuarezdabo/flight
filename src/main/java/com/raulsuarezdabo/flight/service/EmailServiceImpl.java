@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-package com.mycompany.flight.service;
+package com.raulsuarezdabo.flight.service;
 
 import com.microtripit.mandrillapp.lutung.MandrillApi;
 import com.microtripit.mandrillapp.lutung.model.MandrillApiError;
@@ -171,7 +171,7 @@ public class EmailServiceImpl implements EmailService {
      * @return
      */
     private String getKey() {
-        ResourceBundle resource = ResourceBundle.getBundle("com.mycompany.flight.service.properties");
+        ResourceBundle resource = ResourceBundle.getBundle("com.raulsuarezdabo.flight.mandrill");
         String key = resource.getString("key");
         return key;
     }
@@ -275,9 +275,9 @@ public class EmailServiceImpl implements EmailService {
         String subject = null;
         String messages = null;
         if (locale.getLanguage().equals("es")) {
-            messages = "com.mycompany.flight.messages";
+            messages = "com.raulsuarezdabo.flight.messages";
         } else {
-            messages = "com.mycompany.flight.messages_" + locale.getLanguage().toLowerCase();
+            messages = "com.raulsuarezdabo.flight.messages_" + locale.getLanguage().toLowerCase();
         }
         ResourceBundle resource = ResourceBundle.getBundle(messages);
         subject = resource.getString("subjectEmail" + type.substring(0, 1).toUpperCase() + type.substring(1));

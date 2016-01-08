@@ -9,7 +9,6 @@
  */
 package com.raulsuarezdabo.flight.service;
 
-import com.mycompany.flight.service.EmailServiceImpl;
 import com.raulsuarezdabo.flight.dao.UserDAOImpl;
 import com.raulsuarezdabo.flight.utils.Utils;
 import com.raulsuarezdabo.flight.entity.CityEntity;
@@ -391,9 +390,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         try {
             String messages = null;
             if (locale.getLanguage().equals("es")) {
-                messages = "com.mycompany.flight.messages";
+                messages = "com.raulsuarezdabo.flight.messages";
             } else {
-                messages = "com.mycompany.flight.messages_" + locale.getLanguage().toLowerCase();
+                messages = "com.raulsuarezdabo.flight.messages_" + locale.getLanguage().toLowerCase();
             }
             ResourceBundle resource = ResourceBundle.getBundle(messages);
             HashMap map = new HashMap();
