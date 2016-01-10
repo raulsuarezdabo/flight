@@ -19,6 +19,8 @@ import java.util.Date;
  */
 public class BookingSearchPojo implements Serializable {
     
+    private static final long serialVersionUID = 8799656478674716638L;
+    
     /**
      * comes from
      */
@@ -230,5 +232,10 @@ public class BookingSearchPojo implements Serializable {
      */
     public void setSelectedFlightBack(Integer selectedFlightBack) {
         this.selectedFlightBack = selectedFlightBack;
+    }
+
+    @Override
+    public String toString() {
+        return "BookingSearchPojo{" + "flightFrom=" + flightFrom + ", flightTo=" + flightTo + ", flightStart=" + flightStart + ", flightFinish=" + flightFinish + ", flightPassengers=" + flightPassengers + ", flightOneWay=" + flightOneWay + ", flightTermsConditions=" + flightTermsConditions + ", selectedFlightGo=" + selectedFlightGo + ", selectedFlightBack=" + selectedFlightBack + '}';
     }
 }
