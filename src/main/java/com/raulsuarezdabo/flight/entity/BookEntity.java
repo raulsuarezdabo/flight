@@ -40,6 +40,8 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @Indexed
 @Table(name = "Book")
 public class BookEntity {
+    private static final long serialVersionUID = 1112143564556L;
+    
     public static final int CONFIRM = 1;
     public static final int PENDING = 0;
     

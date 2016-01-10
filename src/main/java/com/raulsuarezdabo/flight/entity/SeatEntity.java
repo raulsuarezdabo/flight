@@ -34,6 +34,8 @@ import org.hibernate.search.annotations.Indexed;
 @Indexed
 @Table(name = "Seat")
 public class SeatEntity {
+    private static final long serialVersionUID = 13234L;
+    
     @Id
     @GeneratedValue
     @Column(name = "ID", unique = true, nullable = false)

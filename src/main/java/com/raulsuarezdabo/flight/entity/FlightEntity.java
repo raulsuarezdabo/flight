@@ -37,6 +37,7 @@ import org.hibernate.search.annotations.IndexedEmbedded;
 @Indexed
 @Table(name = "Flight")
 public class FlightEntity implements Serializable {
+    private static final long serialVersionUID = 111114345555L;
     
     public static final int STATUSNONE = 0;
     public static final int STATUSAVAILABLE = 1;

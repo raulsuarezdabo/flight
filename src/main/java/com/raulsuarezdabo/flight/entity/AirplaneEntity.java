@@ -23,6 +23,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Airplane")
 public class AirplaneEntity implements Serializable {
+    private static final long serialVersionUID = 12155674563452222L;
     @Id
     @GeneratedValue
     @Column(name = "ID", unique = true, nullable = false)

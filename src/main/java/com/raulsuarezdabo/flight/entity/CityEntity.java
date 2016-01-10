@@ -30,6 +30,8 @@ import org.hibernate.search.annotations.Store;
 @Indexed
 @Table(name = "City")
 public class CityEntity implements Serializable {
+    private static final long serialVersionUID = 12333321767896090L;
+    
     @Id
     @Column(name = "Id", unique = true, nullable = false)
     private Integer id;

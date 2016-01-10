@@ -32,6 +32,7 @@ import org.hibernate.search.annotations.Store;
 @Indexed
 @Table(name = "Country")
 public class CountryEntity implements Serializable {
+    private static final long serialVersionUID = 12324769909090L;
     
     @Id
     @Column(name = "Code", unique = true, nullable = false)

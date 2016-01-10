@@ -25,6 +25,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Airline")
 public class AirlineEntity implements Serializable {
+    private static final long serialVersionUID = 1009844437L;
+    
     @Id
     @GeneratedValue
     @Column(name = "ID", unique = true, nullable = false)

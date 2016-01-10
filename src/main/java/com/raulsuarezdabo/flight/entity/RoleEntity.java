@@ -29,7 +29,7 @@ import org.springframework.security.core.GrantedAuthority;
 @Table(name = "Role")
 public class RoleEntity implements GrantedAuthority {
     
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1326777786L;
     /**
      * Predefined roles to the users
      */

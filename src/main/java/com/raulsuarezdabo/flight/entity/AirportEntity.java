@@ -32,6 +32,8 @@ import org.hibernate.search.annotations.Store;
 @Indexed
 @Table(name = "Airport")
 public class AirportEntity implements Serializable {
+    private static final long serialVersionUID = 121234342567877L;
+    
     @Id
     @GeneratedValue
     @Column(name = "ID", unique = true, nullable = false)
