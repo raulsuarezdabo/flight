@@ -72,4 +72,10 @@ public interface BookDAO {
      * @return  List
      */
     public List findCountBooksByDate(int days);
+    
+    /**
+     * Method to get not confirmed books
+     * @return  List of not confirmed books
+     */
+    public List findNotConfirmedBooks();
 }

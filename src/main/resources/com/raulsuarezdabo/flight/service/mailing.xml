@@ -59,4 +59,16 @@
             <tab>reminder</tab>
         </tags>
     </item>
+    <item id="booking_reminder_confirm">
+        <template>booking_reminder_confirm.ftl</template>
+        <from>
+            <email>no-reply@flight-now.com</email>
+            <name>Reminder to confirm your book</name>
+        </from>
+        <tags>
+            <tag>book</tag>
+            <tag>user</tag>
+            <tab>pending</tab>
+        </tags>
+    </item>
 </collection>

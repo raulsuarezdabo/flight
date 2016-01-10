@@ -20,7 +20,7 @@ import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class ReminderFlightTasklet implements Tasklet {
+public class ReminderTasklet implements Tasklet {
     
     @Autowired
     private FlightService flightService;
@@ -38,6 +38,9 @@ public class ReminderFlightTasklet implements Tasklet {
                 this.bookService.notifyIncommingFlight(book);
                 
             }
+        }
+        for(BookEntity book: this.bookService.getBooksNotConfirmed()) {
+            this.bookService.notifyNotConfirmed(book);
         }
         return RepeatStatus.FINISHED;
     }

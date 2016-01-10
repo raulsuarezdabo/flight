@@ -14,8 +14,8 @@
     <import resource="/tasklet.xml" />
     
     <job id="flightJob" xmlns="http://www.springframework.org/schema/batch">
-        <step id="reminderFlightStep">
-            <tasklet ref="reminderFlightTasklet"/>
+        <step id="reminderStep">
+            <tasklet ref="reminderTasklet"/>
         </step>
     </job>
     

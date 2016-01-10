@@ -196,24 +196,52 @@ public class BookServiceImpl implements BookService {
     }
     
     /**
+     * Method to obtain books not confirmed
+     * @return  List of books not confirmed
+     */
+    @Override
+    public List<BookEntity> getBooksNotConfirmed() {
+         try {
+            return this.bookDAO.findNotConfirmedBooks();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return new ArrayList();
+        }
+    }
+    
+    private Locale getLocaleFromBook(BookEntity book) {
+        try {
+            if (!"ES".equals(book.getUser().getCountry().getCode2())) {
+                throw new Exception("Not in spanish");
+            }
+            return new Locale("ES", "ES");
+        } catch (Exception ex) {
+            return new Locale("EN", "EN");
+        }
+    }
+    
+    /**
      * Method to notify incomming flight
      * @param book  BookEntity
      */
     @Override
     public void notifyIncommingFlight(BookEntity book) {
-        Locale local = null;
-        try {
-            if (!"ES".equals(book.getUser().getCountry().getCode2())) {
-                throw new Exception("Not in spanish");
-            }
-            local = new Locale("ES", "ES");
-        } catch (Exception ex) {
-            local = new Locale("EN", "EN");
-        }
-        
+        Locale local = this.getLocaleFromBook(book);
         ArrayList to = new ArrayList();
             to.add(book.getUser());
             this.emailService.sendMail(to, this.prepareInfoForemail("booking_reminder_take_off", local, book.getUser(), book), "booking_reminder_take_off", local);
+    }
+    
+    /**
+     * Method to notify not confirmed books
+     * @param book 
+     */
+    @Override
+    public void notifyNotConfirmed(BookEntity book) {
+        Locale local = this.getLocaleFromBook(book);
+        ArrayList to = new ArrayList();
+            to.add(book.getUser());
+            this.emailService.sendMail(to, this.prepareInfoForemail("booking_reminder_confirm", local, book.getUser(), book), "booking_reminder_confirm", local);
     }
     
     /**
@@ -251,6 +279,10 @@ public class BookServiceImpl implements BookService {
             if (type.compareTo("booking_reminder_take_off") == 0) {
                 map.put("title", resource.getString("bookingReminderTakeOffEmailTitle"));
                 map.put("bookText", MessageFormat.format(resource.getString("bookingReminderTakeOffText"), book.getFlight().getAirportFrom().getCity().getName(), book.getFlight().getAirportTo().getCity().getName(), new SimpleDateFormat("MM-dd-yyyy").format(book.getFlight().getStart())));
+            }
+            if (type.compareTo("booking_reminder_confirm") == 0) {
+                map.put("title", resource.getString("bookingReminderConfirmEmailTitle"));
+                map.put("bookText", MessageFormat.format(resource.getString("bookingReminderConfirmText"), book.getFlight().getAirportFrom().getCity().getName(), book.getFlight().getAirportTo().getCity().getName(), new SimpleDateFormat("MM-dd-yyyy").format(book.getFlight().getStart())));
             }
             return map;
         } catch (Exception e) {

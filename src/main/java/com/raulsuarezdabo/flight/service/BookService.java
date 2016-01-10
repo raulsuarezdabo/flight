@@ -89,4 +89,16 @@ public interface BookService {
      * @param book  BookEntity
      */
     public void notifyIncommingFlight(BookEntity book);
+    
+    /**
+     * Method to obtain books not confirmed
+     * @return  List of books not confirmed
+     */
+    public List<BookEntity> getBooksNotConfirmed();
+    
+    /**
+     * Method to notify not confirmed books
+     * @param book 
+     */
+    public void notifyNotConfirmed(BookEntity book);
 }

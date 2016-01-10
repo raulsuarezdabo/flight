@@ -150,6 +150,23 @@ public class BookDAOImpl implements BookDAO {
     }
     
     /**
+     * Method to get not confirmed books
+     * @return  List of not confirmed books
+     */
+    @Override
+    public List findNotConfirmedBooks() {
+        try {
+            List<BookEntity> books = new ArrayList();
+            Query query =  this.entityManager.createQuery("from BookEntity where status = :pending");
+            query.setParameter("pending", BookEntity.PENDING);
+            return query.getResultList();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+    
+    /**
      * Method to find list of books for tracking
      * @param days  int
      * @return  List
