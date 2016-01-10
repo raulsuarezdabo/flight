@@ -241,6 +241,15 @@ public class ResumeBookingBean {
         FacesContext.getCurrentInstance().getApplication().getNavigationHandler().
                 handleNavigation(FacesContext.getCurrentInstance(), null, "/index.xhtml?faces-redirect=true");
     }
+    
+    /**
+     * Method to transform a Set to List for JSF
+     * @param set   Set
+     * @return  List
+     */
+    public List transformSetToList(Set set) {
+        return new ArrayList(set);
+    }
 
     @PostConstruct
     void init() {

@@ -27,7 +27,7 @@
                         <h1>#{msg.titleSelectYourSeats}</h1>
                         <h:form id="seatsForm">
                             <div class="col-xs-12 col-sm-6 col-md-4">
-                                <ui:repeat value="#{seatBookingBean.seats.toArray()}" var="item" size="5">
+                                <ui:repeat value="#{seatBookingBean.transformSetToList(seatBookingBean.seats)}" var="item">
                                     <div class="thumbnail">
                                         <h:panelGrid columns="1">
                                             <h:outputLabel for="seatName" value="#{msg.surname} /#{msg.name}"/>

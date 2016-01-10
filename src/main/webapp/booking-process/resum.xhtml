@@ -54,7 +54,7 @@
                                     </div>
                                 </div>
                                 <ul class="list-group">
-                                    <ui:repeat value="#{resumeBookingBean.seats.toArray()}" var="item">
+                                    <ui:repeat value="#{resumeBookingBean.transformSetToList(resumeBookingBean.seats)}" var="item">
                                         <li class="list-group-item"><p>#{item.fullName}&nbsp;[#{item.type eq 1? 'TOURIST': 'BUSINESS'}]</p></li>
                                     </ui:repeat>
                                 </ul>
@@ -92,7 +92,7 @@
                                         </div>
                                     </div>
                                     <ul class="list-group">
-                                        <ui:repeat value="#{resumeBookingBean.seats.toArray()}" var="item">
+                                        <ui:repeat value="#{resumeBookingBean.transformSetToList(resumeBookingBean.seats)}" var="item">
                                             <li class="list-group-item"><p>#{item.fullName}&nbsp;[#{item.type eq 1? 'TOURIST': (item.type eq 2? 'BUSINESS': 'OFFER')}]</p></li>
                                         </ui:repeat>
                                     </ul>
