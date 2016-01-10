@@ -201,7 +201,16 @@ public class BookServiceImpl implements BookService {
      */
     @Override
     public void notifyIncommingFlight(BookEntity book) {
-        Locale local = new Locale("ES", "ES");
+        Locale local = null;
+        try {
+            if (!"ES".equals(book.getUser().getCountry().getCode2())) {
+                throw new Exception("Not in spanish");
+            }
+            local = new Locale("ES", "ES");
+        } catch (Exception ex) {
+            local = new Locale("EN", "EN");
+        }
+        
         ArrayList to = new ArrayList();
             to.add(book.getUser());
             this.emailService.sendMail(to, this.prepareInfoForemail("booking_reminder_take_off", local, book.getUser(), book), "booking_reminder_take_off", local);
