@@ -33,7 +33,6 @@
             login-page="/register/login.xhtml" 
             authentication-failure-url="/register/login-fails.xhtml"
             authentication-success-handler-ref="myAuthenticationSuccessHandler"
-            authentication-failure-handler-ref="myAuthenticationFailureHandler"
         />
     </sec:http>
    
