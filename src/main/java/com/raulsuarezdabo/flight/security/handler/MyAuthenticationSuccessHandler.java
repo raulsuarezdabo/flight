@@ -29,12 +29,16 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
             FacesContext.getCurrentInstance().getExternalContext().redirect(request.getContextPath() + "/booking-process/seats.xhtml?faces-redirect=true");
         } else {
             boolean isAdmin = false;
+            boolean isManager = false;
             for (GrantedAuthority role: a.getAuthorities()) {
                 if (role.getAuthority().equals(RoleEntity.ADMIN_ROLE) == true) {
                     isAdmin = true;
                 }
+                if (role.getAuthority().equals(RoleEntity.MANAGER_ROLE) == true) {
+                    isManager = true;
+                }
             }
-            if (isAdmin == true) {
+            if (isAdmin == true || isManager == true) {
                 response.sendRedirect(request.getContextPath() + "/dashboard/index.xhtml");   
             }
             else {

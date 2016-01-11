@@ -235,6 +235,21 @@ public class UserLoginBean implements Serializable {
         }
         return false;
     }
+    
+    /**
+     * Method to know if a user is manager or not
+     * @param user  UserEntity
+     * @return  boolean
+     */
+    public boolean isManager(UserEntity user) {
+        List <RoleEntity> roles = this.getLoggedUserRole();
+        for (RoleEntity role: roles) {
+            if (role.getName().equals(RoleEntity.MANAGER_ROLE)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @PostConstruct
     public void init() {

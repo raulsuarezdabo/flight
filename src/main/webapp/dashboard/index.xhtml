@@ -21,6 +21,9 @@
                     <c:if test="#{userLoginBean.isAdmin(userLoginBean.getLoggedUser())}">
                         <ui:include src="/dashboard/admin.xhtml"></ui:include>
                     </c:if>
+                    <c:if test="#{userLoginBean.isManager(userLoginBean.getLoggedUser()) and userLoginBean.isAdmin(userLoginBean.getLoggedUser()) eq false}">
+                        <ui:include src="/dashboard/manager.xhtml"></ui:include>
+                    </c:if>
                 </div>
             </ui:define>
         </ui:composition>

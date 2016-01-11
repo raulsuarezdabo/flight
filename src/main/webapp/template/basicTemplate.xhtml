@@ -28,9 +28,15 @@
                 <ui:include src="/template/header/headerBasic.xhtml"></ui:include>
             </c:if>
             <c:if test="#{(userLoginBean.isLogged() eq true)}">
-                <c:if test="#{userLoginBean.isAdmin(userLoginBean.getLoggedUser()) eq false}">
+                <!-- USER -->
+                <c:if test="#{userLoginBean.isAdmin(userLoginBean.getLoggedUser()) eq false and userLoginBean.isManager(userLoginBean.getLoggedUser()) eq false}">
                     <ui:include src="/template/header/headerUser.xhtml"></ui:include>
                 </c:if>
+                <!-- MANAGER -->
+                <c:if test="#{userLoginBean.isManager(userLoginBean.getLoggedUser()) eq true and userLoginBean.isAdmin(userLoginBean.getLoggedUser()) eq false}">
+                    <ui:include src="/template/header/headerManager.xhtml"></ui:include>
+                </c:if>
+                <!-- ADMIN -->
                 <c:if test="#{userLoginBean.isAdmin(userLoginBean.getLoggedUser()) eq true}">
                     <ui:include src="/template/header/headerAdmin.xhtml"></ui:include>
                 </c:if>
