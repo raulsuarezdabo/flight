@@ -10,8 +10,25 @@
     http://www.springframework.org/schema/security/spring-security-3.2.xsd">
     <!-- Enable method level Spring Security by annotations  -->
     <sec:http use-expressions="true">
-        <!-- Page level Spring Security : Permit access to resources in /pages/unsecure/** -->
-        <sec:intercept-url pattern="/profile/**" access="hasRole('USER_ROLE')"/>     
+        <!-- USER SECURITY BEGIN -->
+        <!-- user profile -->
+        <sec:intercept-url pattern="/profile/**" access="hasRole('USER_ROLE')"/>
+        <!-- user registered to buy book -->
+        <sec:intercept-url pattern="/booking-process/seats.xhtml" access="hasRole('USER_ROLE')"/>
+        <sec:intercept-url pattern="/booking-process/resum.xhtml" access="hasRole('USER_ROLE')"/>
+        <sec:intercept-url pattern="/booking-process/final/**" access="hasRole('USER_ROLE')"/>
+        <!-- USER SECURITY FINISH -->
+        <!-- MANAGER/ADMIN SECURITY BEGIN -->
+        <sec:intercept-url pattern="/flight/**" access="hasAnyRole('ADMIN_ROLE', 'MANAGER_ROLE')"/>
+        <sec:intercept-url pattern="/booking/**" access="hasRole('ADMIN_ROLE')"/>
+        <sec:intercept-url pattern="/airport/**" access="hasRole('ADMIN_ROLE')"/>
+        <sec:intercept-url pattern="/airplane/**" access="hasRole('ADMIN_ROLE')"/>
+        <sec:intercept-url pattern="/airline/**" access="hasRole('ADMIN_ROLE')"/>
+        <sec:intercept-url pattern="/user/**" access="hasRole('ADMIN_ROLE')"/>
+        <!-- MANAGER/ADMIN SECURITY FINISH -->
+        <!-- dashboard access -->
+        <sec:intercept-url pattern="/dashboard/**" access="hasAnyRole('ADMIN_ROLE', 'MANAGER_ROLE')"/>
+         
         <sec:form-login 
             login-page="/register/login.xhtml" 
             authentication-failure-url="/register/login-fails.xhtml"
