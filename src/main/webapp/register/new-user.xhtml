@@ -29,79 +29,85 @@
                     <div class="row">
                         <h1><h:outputText value="#{msg.titleUserRegister}"/></h1>
                         <h:form id="userForm">
-                            <h2><span class="glyphicon glyphicon-user">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock1}"/></span></h2>
-                            <h:panelGrid columns="1">
-                                <h:outputLabel for="userName" value="#{msg.name}"/>
-                                <p:inputText  value="#{newUserBean.name}" id="userName" label="userName" required="true" placeholder="#{msg.namePlaceholder}" requiredMessage="#{msg.nameRequired}" validatorMessage="#{msg.nameInvalid}" size="35" immediate="true" >
-                                    <f:validateLength minimum="5" maximum="35"/>
-                                    <f:ajax event="blur" render="userNameMessage"/>
-                                </p:inputText>
-                                <h:message for="userName" style="color: crimson" id="userNameMessage"/>
-                                <h:outputLabel for="userSurName" value="#{msg.surname}"/>
-                                <p:inputText value="#{newUserBean.surname}" id="userSurName" label="userSurName" required="true" placeholder="#{msg.surnamePlaceholder}" requiredMessage="#{msg.surnameRequired}" validatorMessage="#{msg.surnameInvalid}" size="35" immediate="true" >
-                                    <f:validateLength minimum="5" maximum="80"/>
-                                    <f:ajax event="blur" render="userSurNameMessage"/>
-                                </p:inputText>
-                                <h:message for="userSurName" style="color: crimson" id="userSurNameMessage"/>
-                                <h:outputLabel for="userBithDay" value="#{msg.birthday}"/>
-                                <p:inputMask value="#{newUserBean.birthday}" id="userBirthDay" label="userBirthDay" mask="99/99/9999" required="true" placeholder="#{msg.birthdayPlaceholder}" requiredMessage="#{msg.birthdayRequired}" validatorMessage="#{msg.birthdayInvalid}" converterMessage="#{msg.birthdayInvalid}" size="10" immediate="true" >
-                                    <f:convertDateTime pattern="dd/MM/yyyy"  />
-                                    <f:validator validatorId="ageValidator" />
-                                    <f:ajax event="blur" render="userBirthDayMessage"/>
-                                </p:inputMask>
-                                <h:message for="userBirthDay" style="color: crimson" id="userBirthDayMessage" />
-                                <h:outputLabel for="userNif" value="#{msg.nif}"/>
-                                <p:inputText value="#{newUserBean.nif}" id="userNif" label="userNif" required="true" placeholder="#{msg.nifPlaceholder}" requiredMessage="#{msg.nifRequired}" validatorMessage="#{msg.nifInvalid}" size="10" immediate="true">
-                                    <f:validateRegex pattern="^(\d{8})([A-Z]{1})$"/>
-                                    <f:ajax event="blur" render="userNifMessage"/>
-                                </p:inputText>
-                                <h:message for="userNif" style="color: crimson" id="userNifMessage"/>
-                            </h:panelGrid>
-                            <p:spacer height="35" />
-                            <h2><span class="glyphicon glyphicon-home">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock2}"/></span></h2>
-                            <h:panelGrid columns="1">
-                                <h:outputLabel for="userPhone" value="#{msg.phone}" />
-                                <p:inputMask value="#{newUserBean.phone}" id="userPhone" mask="99 9999999" required="true" requiredMessage="#{msg.phoneRequired}" size="10" placeholder="#{msg.phonePlaceholder}">
-                                    <f:ajax event="blur" render="userPhoneMessage"/>
-                                </p:inputMask>
-                                <h:message for="userPhone" style="color: crimson" id="userPhoneMessage" />
-                                <h:outputLabel for="userAddress" value="#{msg.address}"/>
-                                <p:inputText value="#{newUserBean.address}" id="userAddress" label="userAddress" required="true" placeholder="#{msg.addressPlaceholder}" requiredMessage="#{msg.addressRequired}" validatorMessage="#{msg.addressInvalid}" size="35" immediate="true">
-                                    <f:validateLength minimum="20" maximum="200"/>
-                                    <f:ajax event="blur" render="userAddressMessage"/>
-                                </p:inputText>
-                                <h:message for="userAddress" style="color: crimson" id="userAddressMessage" />
-                                <h:outputLabel for="userCountry" value="#{msg.country}"/>
-                                <h:selectOneMenu id="userCountry" value="#{newUserBean.country}" styleClass="form-control" style="width: 285px;" required="true" requiredMessage="#{msg.countryRequired}" immediate="true">   
-                                    <f:selectItem itemLabel="#{msg.countryPlaceholder}" itemValue=""/>
-                                    <f:selectItems value="#{newUserBean.countries}" var="item" itemLabel="#{item.name}" itemValue="#{item.code}" />
-                                    <f:ajax event="blur" execute="userCountry" render="userCity"/>
-                                </h:selectOneMenu>
-                                <h:message for="userCountry" style="color: crimson"/>
-                                <h:outputLabel for="userCity" value="#{msg.city}"/>
-                                <h:selectOneMenu id="userCity" value="#{newUserBean.city}" styleClass="form-control" style="width: 285px;" required="true" requiredMessage="#{msg.cityRequired}" immediate="true">   
-                                    <f:selectItem itemLabel="#{msg.cityPlaceholder}" itemValue=""/>
-                                    <f:selectItems value="#{newUserBean.cities}" var="item" itemLabel="#{item.name}" itemValue="#{item.id}" />
-                                    <f:ajax event="blur" render="userCityMessage"/>
-                                </h:selectOneMenu>
-                                <h:message for="userCity" style="color: crimson" id="userCityMessage" />
-                            </h:panelGrid>
-                            <p:spacer height="35" />
-                            <h2><span class="glyphicon glyphicon-registration-mark">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock3}"/></span></h2>
-                            <h:panelGrid columns="1">
-                                <h:outputLabel for="userEmail" value="#{msg.email}"/>
-                                <p:inputText value="#{newUserBean.email}" id="userEmail" label="userEmail" required="true" placeholder="#{msg.emailPlaceholder}" requiredMessage="#{msg.emailRequired}" validatorMessage="#{msg.emailInvalid}" size="35" immediate="true" >
-                                    <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-                                    <f:ajax event="blur" render="userEmailMessage"/>
-                                </p:inputText>
-                                <h:message for="userEmail" style="color: crimson" id="userEmailMessage" />
-                            </h:panelGrid>
-                            <p:spacer height="35" />
-                            <h:panelGrid columns="2">
-                                <p:commandButton value="#{msg.registerUserButton}" action="#{newUserBean.singUpAction()}" process="@form" partialSubmit="true">
-                                </p:commandButton>
-                                <p:button outcome="index" value="#{msg.buttonCancel}"/>
-                            </h:panelGrid>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <h2><span class="glyphicon glyphicon-user">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock1}"/></span></h2>
+                                <h:panelGrid columns="1">
+                                    <h:outputLabel for="userName" value="#{msg.name}"/>
+                                    <p:inputText  value="#{newUserBean.name}" id="userName" label="userName" required="true" placeholder="#{msg.namePlaceholder}" requiredMessage="#{msg.nameRequired}" validatorMessage="#{msg.nameInvalid}" size="35" immediate="true" >
+                                        <f:validateLength minimum="5" maximum="35"/>
+                                        <f:ajax event="blur" render="userNameMessage"/>
+                                    </p:inputText>
+                                    <h:message for="userName" style="color: crimson" id="userNameMessage"/>
+                                    <h:outputLabel for="userSurName" value="#{msg.surname}"/>
+                                    <p:inputText value="#{newUserBean.surname}" id="userSurName" label="userSurName" required="true" placeholder="#{msg.surnamePlaceholder}" requiredMessage="#{msg.surnameRequired}" validatorMessage="#{msg.surnameInvalid}" size="35" immediate="true" >
+                                        <f:validateLength minimum="5" maximum="80"/>
+                                        <f:ajax event="blur" render="userSurNameMessage"/>
+                                    </p:inputText>
+                                    <h:message for="userSurName" style="color: crimson" id="userSurNameMessage"/>
+                                    <h:outputLabel for="userBithDay" value="#{msg.birthday}"/>
+                                    <p:inputMask value="#{newUserBean.birthday}" id="userBirthDay" label="userBirthDay" mask="99/99/9999" required="true" placeholder="#{msg.birthdayPlaceholder}" requiredMessage="#{msg.birthdayRequired}" validatorMessage="#{msg.birthdayInvalid}" converterMessage="#{msg.birthdayInvalid}" size="10" immediate="true" >
+                                        <f:convertDateTime pattern="dd/MM/yyyy"  />
+                                        <f:validator validatorId="ageValidator" />
+                                        <f:ajax event="blur" render="userBirthDayMessage"/>
+                                    </p:inputMask>
+                                    <h:message for="userBirthDay" style="color: crimson" id="userBirthDayMessage" />
+                                    <h:outputLabel for="userNif" value="#{msg.nif}"/>
+                                    <p:inputText value="#{newUserBean.nif}" id="userNif" label="userNif" required="true" placeholder="#{msg.nifPlaceholder}" requiredMessage="#{msg.nifRequired}" validatorMessage="#{msg.nifInvalid}" size="10" immediate="true">
+                                        <f:validateRegex pattern="^(\d{8})([A-Z]{1})$"/>
+                                        <f:ajax event="blur" render="userNifMessage"/>
+                                    </p:inputText>
+                                    <h:message for="userNif" style="color: crimson" id="userNifMessage"/>
+                                </h:panelGrid>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-6">
+                                <h2><span class="glyphicon glyphicon-home">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock2}"/></span></h2>
+                                <h:panelGrid columns="1">
+                                    <h:outputLabel for="userPhone" value="#{msg.phone}" />
+                                    <p:inputMask value="#{newUserBean.phone}" id="userPhone" mask="99 9999999" required="true" requiredMessage="#{msg.phoneRequired}" size="10" placeholder="#{msg.phonePlaceholder}">
+                                        <f:ajax event="blur" render="userPhoneMessage"/>
+                                    </p:inputMask>
+                                    <h:message for="userPhone" style="color: crimson" id="userPhoneMessage" />
+                                    <h:outputLabel for="userAddress" value="#{msg.address}"/>
+                                    <p:inputText value="#{newUserBean.address}" id="userAddress" label="userAddress" required="true" placeholder="#{msg.addressPlaceholder}" requiredMessage="#{msg.addressRequired}" validatorMessage="#{msg.addressInvalid}" size="35" immediate="true">
+                                        <f:validateLength minimum="20" maximum="200"/>
+                                        <f:ajax event="blur" render="userAddressMessage"/>
+                                    </p:inputText>
+                                    <h:message for="userAddress" style="color: crimson" id="userAddressMessage" />
+                                    <h:outputLabel for="userCountry" value="#{msg.country}"/>
+                                    <h:selectOneMenu id="userCountry" value="#{newUserBean.country}" styleClass="form-control" style="width: 285px;" required="true" requiredMessage="#{msg.countryRequired}" immediate="true">   
+                                        <f:selectItem itemLabel="#{msg.countryPlaceholder}" itemValue=""/>
+                                        <f:selectItems value="#{newUserBean.countries}" var="item" itemLabel="#{item.name}" itemValue="#{item.code}" />
+                                        <f:ajax event="blur" execute="userCountry" render="userCity"/>
+                                    </h:selectOneMenu>
+                                    <h:message for="userCountry" style="color: crimson"/>
+                                    <h:outputLabel for="userCity" value="#{msg.city}"/>
+                                    <h:selectOneMenu id="userCity" value="#{newUserBean.city}" styleClass="form-control" style="width: 285px;" required="true" requiredMessage="#{msg.cityRequired}" immediate="true">   
+                                        <f:selectItem itemLabel="#{msg.cityPlaceholder}" itemValue=""/>
+                                        <f:selectItems value="#{newUserBean.cities}" var="item" itemLabel="#{item.name}" itemValue="#{item.id}" />
+                                        <f:ajax event="blur" render="userCityMessage"/>
+                                    </h:selectOneMenu>
+                                    <h:message for="userCity" style="color: crimson" id="userCityMessage" />
+                                </h:panelGrid>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <h2><span class="glyphicon glyphicon-registration-mark">&nbsp;<h:outputText value="#{msg.titleUserRegisterBlock3}"/></span></h2>
+                                <h:panelGrid columns="1">
+                                    <h:outputLabel for="userEmail" value="#{msg.email}"/>
+                                    <p:inputText value="#{newUserBean.email}" id="userEmail" label="userEmail" required="true" placeholder="#{msg.emailPlaceholder}" requiredMessage="#{msg.emailRequired}" validatorMessage="#{msg.emailInvalid}" size="35" immediate="true" >
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        <f:ajax event="blur" render="userEmailMessage"/>
+                                    </p:inputText>
+                                    <h:message for="userEmail" style="color: crimson" id="userEmailMessage" />
+                                </h:panelGrid>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <p:spacer height="35" />
+                                <h:panelGrid columns="2">
+                                    <p:commandButton value="#{msg.registerUserButton}" action="#{newUserBean.singUpAction()}" process="@form" partialSubmit="true">
+                                    </p:commandButton>
+                                    <p:button outcome="index" value="#{msg.buttonCancel}"/>
+                                </h:panelGrid>
+                            </div>
                         </h:form>
                     </div>
                 </div>
