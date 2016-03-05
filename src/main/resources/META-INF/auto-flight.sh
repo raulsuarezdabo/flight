@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ $# -eq 2 ]
   then
-    INAMONTH=$(date -v +30d +"%Y-%m-%d")
+    INAMONTH=$(date --date="30 day" +"%Y-%m-%d")
     GO="INSERT INTO Flight (Status, AirportFrom, AirportTo, Start, Time, Airplane, CreatedAt) VALUES(1,1,2, '$INAMONTH 09:00', '00:59',2,now());
     INSERT INTO Flight (Status, AirportFrom, AirportTo, Start, Time, Airplane, CreatedAt) VALUES(1,1,3, '$INAMONTH 09:00', '02:30',2,now());
     INSERT INTO Flight (Status, AirportFrom, AirportTo, Start, Time, Airplane, CreatedAt) VALUES(1,1,4, '$INAMONTH 09:00', '02:20',2,now());
@@ -37,6 +37,6 @@ if [ $# -eq 2 ]
     INSERT INTO Flight (Status, AirportFrom, AirportTo, Start, Time, Airplane, CreatedAt) VALUES(1,16,1, '$INAMONTH 13:00', '13:15',2,now());
     INSERT INTO Flight (Status, AirportFrom, AirportTo, Start, Time, Airplane, CreatedAt) VALUES(1,17,1, '$INAMONTH 14:00', '10:50',2,now());"
 
-    mysql -u $1 -p $2 < $GO
-    mysql -u $1 -p $2 < $BACK
+    mysql --user=$1 --password=$2 flight -e "$GO"
+    mysql --user=$1 --password=$2 flight -e "$BACK"
 fi
