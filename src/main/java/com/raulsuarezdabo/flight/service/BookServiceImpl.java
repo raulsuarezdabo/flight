@@ -267,7 +267,7 @@ public class BookServiceImpl implements BookService {
             if (type.compareTo("booking_confirmation") == 0) {
                 map.put("title", resource.getString("bookingConfirmationEmailTitle"));
                 map.put("bookText", MessageFormat.format(resource.getString("bookingConfirmationText"), book.getFlight().getAirportFrom().getCity().getName(), book.getFlight().getAirportTo().getCity().getName(), new SimpleDateFormat("MM-dd-yyyy").format(book.getFlight().getStart())));
-                map.put("bookingConfirmationLink", "booking-confirmation/index.xhtml?parameter=" + book.getId());
+                map.put("bookingConfirmationLink", Utils.getUrl("booking-confirmation/index.xhtml?parameter=" + book.getId(), null));
                 map.put("confirm", resource.getString("confirm"));
             }
             if (type.compareTo("booking_confirmed") == 0) {

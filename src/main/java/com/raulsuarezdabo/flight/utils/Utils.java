@@ -88,7 +88,7 @@ public class Utils {
      */
     public static String getUrl(String target, HashMap get) {
         HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        String url = "http://localhost" + origRequest.getContextPath() + "/";
+        String url = "http://http://ec2-52-29-193-229.eu-central-1.compute.amazonaws.com" + origRequest.getContextPath() + "/";
         if (target != null || get != null ) {
             if (target != null) {
                 url = url.concat(target);
