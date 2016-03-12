@@ -13,6 +13,7 @@ import com.raulsuarezdabo.flight.entity.UserEntity;
 import com.raulsuarezdabo.flight.service.UserService;
 import com.raulsuarezdabo.flight.entity.RoleEntity;
 import com.raulsuarezdabo.flight.jsf.message.Message;
+import com.raulsuarezdabo.flight.utils.Utils;
 import java.io.IOException;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -188,7 +189,7 @@ public class UserLoginBean implements Serializable {
             } else {
 //                FacesContext.getCurrentInstance().getExternalContext().getFlash().put("param1", "logoutErrorMessage");
             }
-            FacesContext.getCurrentInstance().getExternalContext().redirect(FacesContext.getCurrentInstance().getExternalContext().getApplicationContextPath());
+            FacesContext.getCurrentInstance().getExternalContext().redirect(Utils.getUrl(null, null));
         } catch (IOException ex) {
             Logger.getLogger(UserLoginBean.class.getName()).log(Level.SEVERE, null, ex);
         }
