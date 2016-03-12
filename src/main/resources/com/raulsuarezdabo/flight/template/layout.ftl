@@ -793,7 +793,7 @@
                                                 <table class="twelve columns">
                                                     <tr>
                                                         <td class="six sub-columns">
-                                                            <img src="#">
+                                                            <img src="http://flightnow.project.suarez.com.es/resources/images/logo.png">
                                                         </td>
                                                         <td class="six sub-columns last" style="text-align:right; vertical-align:middle;">
                                                             <span class="template-label">${title}</span>
