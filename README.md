@@ -1,4 +1,4 @@
-![Atrium icon](http://www.grupoatrium.com/imgEstructura/logoAtrium.jpg)
+![Atrium icon](http://www.tlcursos.com/sites/default/files/imagecache/250x250_logo_large/logo_atrium.jpg)
 
 # Final Master's Project<br /><br />Specialized on Web's Applications in Java
 <br />
